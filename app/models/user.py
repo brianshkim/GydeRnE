@@ -10,6 +10,18 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    firstname = db.Column(db.String(255), nullable=False)
+    professor = db.Column(db.Boolean)
+    lastname = db.Column(db.String(255), nullable=False)
+    phone_number = db.Column(db.String(10))
+    school_name = db.Column(db.String(255))
+    gpa = db.Column(db.String(255))
+    degree_timeline = db.Column(db.String(255))
+    company = db.Column(db.String(255))
+    role_title=db.Column(db.String(255))
+    start_date=db.Column(db.BigInteger)
+    end_Date=db.Column(db.Integer)
+    present_role = db.Column(db.Boolean)
 
     @property
     def password(self):
