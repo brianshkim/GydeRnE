@@ -10,3 +10,5 @@ from .posts import Post
 from .publications_citations import publicationcitations
 from .publications_users import publicationusers
 from .publications import Publications
+from .folders import Folders
+from .folders_users import folderusers

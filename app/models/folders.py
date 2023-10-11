@@ -20,6 +20,7 @@ class Folders(db.Model):
      url13= db.Column(db.Text)
      url14= db.Column(db.Text)
      url15= db.Column(db.Text)
+     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
      users = db.relationship("User", back_populates="accomplishments")

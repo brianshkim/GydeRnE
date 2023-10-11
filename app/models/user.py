@@ -51,4 +51,4 @@ class User(db.Model, UserMixin):
     publication_users = db.relationship("Publications", secondary=publicationusers, back_populates="users", cascade="all, delete")
     journals = db.relationship("Journals", back_populates="users")
     posts = db.relationship("Post", back_populates="posts")
-    folders = db.relationship("Folders", secondary=folderusers, back_populates="users", cascade="all, delete")
+    folders = db.relationship("Folders", secondary=folderusers, back_populates="foldersusers", cascade="all, delete")
