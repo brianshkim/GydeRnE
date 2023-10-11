@@ -1,6 +1,9 @@
 from .db import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from .course_users import courseusers
+from .publications_users import publicationusers
+from .folders_users import folderusers
 
 
 class User(db.Model, UserMixin):
@@ -22,6 +25,7 @@ class User(db.Model, UserMixin):
     start_date=db.Column(db.BigInteger)
     end_Date=db.Column(db.Integer)
     present_role = db.Column(db.Boolean)
+    bio = db.Column(db.String(200))
 
     @property
     def password(self):
@@ -40,3 +44,11 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'email': self.email
         }
+
+    vitae = db.relationship('Education', back_populates="users")
+    accomplishments = db.relationship("Accomplishments", back_populates="users")
+    course_users = db.relationship("Courses", secondary=courseusers, back_populates="users", cascade="all, delete")
+    publication_users = db.relationship("Publications", secondary=publicationusers, back_populates="users", cascade="all, delete")
+    journals = db.relationship("Journals", back_populates="users")
+    posts = db.relationship("Post", back_populates="posts")
+    folders = db.relationship("Folders", secondary=folderusers, back_populates="users", cascade="all, delete")

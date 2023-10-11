@@ -1,8 +1,8 @@
 from .db import db
 
-courseusers = db.Table(
-    'courseusers',
+folderusers = db.Table(
+    'folderusers',
      db.Model.metadata,
     db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('course_id', db.Integer, db.ForeignKey('courses.id'))
+    db.Column('folder_id', db.Integer, db.ForeignKey('folders.id'))
     )
