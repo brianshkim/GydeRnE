@@ -23,11 +23,11 @@ class Post(db.Model):
             'content': self.content,
             'comment': self.comment,
             'root': self.root,
-            'responder details': self.get_responder_id(),
+            'responder details': self.get_response_id(),
             'created_at' :self.created_at,
             'updated_at':self.updated_at
         }
 
-     def get_responder_id(self):
+     def get_response_id(self):
          user=User.query.get(id=self.resp_id)
          return [user.to_dict()]

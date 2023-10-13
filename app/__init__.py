@@ -12,6 +12,7 @@ from .api.accomplishments_routes import accomplishments_routes
 from .api.journals_routes import journals_routes
 from .api.folders_routes import folders_routes
 from .api.publications_routes import publications_routes
+from .api.posts_routes import posts_routes
 
 
 from .seeds import seed_commands
@@ -40,6 +41,7 @@ app.register_blueprint(accomplishments_routes, url_prefix='/api/accomplishments'
 app.register_blueprint(journals_routes, url_prefix='/api/journals')
 app.register_blueprint(folders_routes, url_prefix='/api/folders')
 app.register_blueprint(publications_routes, url_prefix='/api/publications')
+app.register_blueprint(posts_routes, url_prefix='/api/posts')
 
 db.init_app(app)
 Migrate(app, db)
