@@ -4,6 +4,9 @@ from flask_login import UserMixin
 from .course_users import courseusers
 from .publications_users import publicationusers
 from .folders_users import folderusers
+from .folders import Folders
+from .accomplishments import Accomplishments
+from .publications import Publications
 
 
 class User(db.Model, UserMixin):
@@ -44,6 +47,19 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'email': self.email
         }
+
+    def get_folders(self):
+        folders = Folders.query.filter_by(user_id=id)
+        return [folders.to_dict() for folder in folders]
+
+    def get_accomplishments(self):
+        accomplishments = Accomplishments.query.filter_by(user_id=id)
+        return [accomplishments.to_dict() for folder in accomplishments]
+
+    def get_publications(self):
+        publications = Publications.query.filter_by(user_id=id)
+        return [publications.to_dict() for folder in Publications]
+
 
     vitae = db.relationship('Education', back_populates="users")
     accomplishments = db.relationship("Accomplishments", back_populates="users")
