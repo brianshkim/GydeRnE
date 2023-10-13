@@ -8,5 +8,12 @@ class Citations(db.Model):
      publication_id = db.Column(db.Integer)
      content = db.Column(db.Text)
 
+     def to_dict(self):
+        return {
+            'id': self.id,
+            'publication_id': self.publication_id,
+            'content': self.content
+        }
 
-publications = db.relationship("Publications", secondary=publicationcitations, back_populates="citations", cascade="all, delete")
+
+     publications = db.relationship("Publications", secondary=publicationcitations, back_populates="citations", cascade="all, delete")

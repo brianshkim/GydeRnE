@@ -1,4 +1,5 @@
 from .db import db
+from .user import User
 
 
 class Post(db.Model):
@@ -14,3 +15,19 @@ class Post(db.Model):
      updated_at = db.Column(db.DateTime)
 
      users = db.relationship("User", back_populates="posts")
+
+     def to_dict(self):
+        return {
+            'id': self.id,
+            'poster': self.user_id,
+            'content': self.content,
+            'comment': self.comment,
+            'root': self.root,
+            'responder details': self.get_response_id(),
+            'created_at' :self.created_at,
+            'updated_at':self.updated_at
+        }
+
+     def get_response_id(self):
+         user=User.query.get(id=self.resp_id)
+         return [user.to_dict()]

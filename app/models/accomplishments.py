@@ -4,7 +4,7 @@ class Accomplishments(db.Model):
      __tablename__ = 'accomplishments'
 
      id = db.Column(db.Integer, primary_key=True, nullable=False)
-     date = db.Column(db.String(255))
+     date = db.Column(db.DateTime)
      title = db.Column(db.String(600))
      place = db.Column(db.String(255))
      user_id = db.Column(db.Integer,db.ForeignKey('users.id'))

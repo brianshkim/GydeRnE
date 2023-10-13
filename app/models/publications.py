@@ -14,3 +14,13 @@ class Publications(db.Model):
 
      publication_users = db.relationship("User", secondary=publicationusers, back_populates="publications", cascade="all, delete")
      citations = db.relationship("Citations", secondary=publicationcitations, back_populates="publications", cascade="all, delete")
+
+
+     def to_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'content': self.content
+        }
+     def get_authors(self):
+          return [user.to_dict() for user in self.publication_users]

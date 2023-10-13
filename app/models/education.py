@@ -13,3 +13,16 @@ class Education(db.Model):
      user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
      users = db.relationship("User", back_populates="education")
+
+
+     def to_dict(self):
+        return {
+            'id': self.id,
+            'degree': self.degree,
+            'university': self.university,
+            'advisor': self.advisor,
+            'subject': self.subject,
+            'date': self.date,
+            'thesis': self.thesis,
+
+        }

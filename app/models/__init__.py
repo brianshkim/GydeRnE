@@ -12,3 +12,4 @@ from .publications_users import publicationusers
 from .publications import Publications
 from .folders import Folders
 from .folders_users import folderusers
+from .posts import Post
