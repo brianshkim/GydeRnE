@@ -51,9 +51,9 @@ def req_friend():
     db.session.commit()
 
     #error handling for if friend is user or friend is blocked
-    if friend != current_user | friend.blocked != True
+    if friend != current_user | friend.blocked != True:
         return friend.to_dict()
-    else
+    else:
         return {'Error: something went wrong!'}, 404
 
 #friend request accepted
@@ -75,9 +75,9 @@ def add_friend():
     db.session.commit()
 
     #error handling for if friend is user or friend is blocked
-    if new_friend != current_user
+    if new_friend != current_user:
         return new_friend.to_dict()
-    else
+    else:
         return {'Error: something went wrong!'}, 404
 
 #remove friend
