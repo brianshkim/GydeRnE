@@ -6,7 +6,7 @@ class FriendReq(db.Model):
     __tablename__ = 'friend_requests'
 
     id = db.Column(db.Integer, primary_key=True)
-    userId = db.Column(db.Integer), nullable=False)
+    userId = db.Column(db.Integer, nullable=False)
     userId2 = db.Column(db.Integer)
     request = db.Column(db.Boolean, default=False)
     requestTime = db.Column(db.DateTime)
