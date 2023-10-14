@@ -40,7 +40,7 @@ def their_friends():
 
 #send friend request
 
-@user_routes.route('/<int:id>/req', methods=['POST'])
+@user_routes.route('/<int:id>/req/add', methods=['POST'])
 @login_required
 def req_friend():
     friend = User.query.get(id)
@@ -55,6 +55,43 @@ def req_friend():
         return friend.to_dict()
     else:
         return {'Error: something went wrong!'}, 404
+
+#delete request
+
+@user_routes.route('/<int:id>/req/unsend', methods=['DELETE'])
+@login_required
+def unsend_request():
+
+    yeet_friend = User.query.get(id)
+    current_reqs = current_user.friend_requests
+
+    to_delete = delete(friend_requests).where(
+        (friend_requests.userId == current_user.id) & (ffriend_requests.userId2 == id)
+    )
+
+    db.session.delete(to_delete)
+    db.session.commit()
+
+    return yeet_friend.to_dict()
+
+#reject request
+
+@user_routes.route('/<int:id>/req/reject', methods=['DELETE'])
+@login_required
+def reject_request():
+
+    yeet_friend = User.query.get(id)
+    current_reqs = current_user.friend_requests
+
+    to_delete = delete(friend_requests).where(
+        (friend_requests.userId == id) & (friend_requests.userId2 == current_user.id)
+    )
+
+    db.session.delete(to_delete)
+    db.session.commit()
+
+    return yeet_friend.to_dict()
+
 
 #friend request accepted
 
