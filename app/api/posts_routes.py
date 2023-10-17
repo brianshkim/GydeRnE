@@ -21,9 +21,9 @@ def delete_posts(postid):
 
 
 
-@posts_routes.route('/<int:postsid>', methods=['post'])
+@posts_routes.route('/<int:postid>', methods=['post'])
 @login_required
-def create_posts(postsid):
+def create_posts(postid):
     req = request.get_json()
     post = Post(
         user_id=current_user.id,
@@ -36,12 +36,12 @@ def create_posts(postsid):
     db.session.commit()
     return post.to_dict()
 
-@posts_routes.route('/<int:postsid>', methods=['post'])
+@posts_routes.route('/<int:postid>', methods=['post'])
 @login_required
-def edit_posts(postsid):
+def edit_posts(postid):
     req = request.get_json()
 
-    post = Post.query.get(postsid)
+    post = Post.query.get(postid)
     if post.user_id == current_user.id:
         post.content=req['content']
         post.root=req['root']

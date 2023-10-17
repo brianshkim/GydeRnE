@@ -1,8 +1,16 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import Publications, db, publications_users
+from app.models import Publications, db, publications_users, Citations
+from app.forms import CitationForm
 
 publications_routes = Blueprint('publications', __name__)
+
+def errors_list(validation_errors):
+    errorMessages = []
+    for field in validation_errors:
+        for error in validation_errors[field]:
+            errorMessages.append(f'{field} : {error}')
+    return errorMessages
 
 @publications_routes.route('/')
 def user():
@@ -42,7 +50,7 @@ def create_publications(publicationid):
 
 @publications_routes.route('/<int:publicationid>', methods=['post'])
 @login_required
-def edit_publication(publicationid):
+def edit_citations(publicationid):
     req = request.get_json()
 
     publication = Publications.query.get(id=publicationid)
@@ -50,3 +58,55 @@ def edit_publication(publicationid):
         publication.key = req['key']
     db.session.commit()
     return publication.to_dict()
+
+
+@publications_routes.route("/<int:publicationid>/citations")
+@login_required
+def get_CITATIONS(publicationid):
+    all_messages = Citations.query.filter(publication_id = publicationid)
+    return {
+        "messages":[message.to_dict() for message in all_messages]
+    }
+
+@publications_routes.route("/<int:publicationid>/citations", methods=["POST"])
+@login_required
+def new_message():
+    form = CitationForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        newCitation = form.data["citation"]
+        data = request.json
+        add_citation = Citations(
+            publication_id= data['publication_id'],
+            content = newCitation,
+
+            )
+        db.session.add(add_citation)
+        db.session.commit()
+        return{
+            "message": add_citation.to_dict()
+        }
+    return {'Failed'}, 401
+
+@publications_routes.route("/<int:publicationid>/citations/<int:citationid>", methods=["PUT", "DELETE"])
+@login_required
+def edit_delete_citations(citationid):
+
+    if request.method == "PUT":
+        form = CitationForm()
+        form['csrf_token'].data = request.cookies['csrf_token']
+        if form.validate_on_submit():
+            edit_citation = Citations.query.get(citationid)
+            edit_citation.content = form.data["citation"]
+            db.session.commit()
+            return { "citation": edit_citation.to_dict() }
+
+        return {'errors': errors_list(form.errors)}, 401
+
+    if request.method == "DELETE":
+        citation = Citations.query.get(citationid)
+
+        db.session.delete(citation)
+        db.session.commit()
+
+        return { "citation": "Success" }

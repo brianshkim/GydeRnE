@@ -13,3 +13,5 @@ from .publications import Publications
 from .folders import Folders
 from .folders_users import folderusers
 from .posts import Post
+from .friend import Friend
+from .friend_reqs import FriendReq
