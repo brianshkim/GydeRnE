@@ -4,9 +4,9 @@ from flask_login import UserMixin
 from .course_users import courseusers
 from .publications_users import publicationusers
 from .folders_users import folderusers
-from .folders import Folders
+from .folder import Folders
 from .accomplishments import Accomplishments
-from .publications import Publications
+from .publication import Publications
 
 
 class User(db.Model, UserMixin):

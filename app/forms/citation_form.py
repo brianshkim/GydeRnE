@@ -3,6 +3,7 @@ from wtforms import StringField
 from wtforms.validators import DataRequired, Length
 
 class CitationForm(FlaskForm):
-    message = StringField(
+   citation = StringField(
         "citation",
-        validators=[DataRequired(), Length(1, 200, message="Citation cannot exceed 200 characters.")])
+        validators=[DataRequired(), Length(1, 6000, message="Message cannot be more than 6000 characters.")])
+

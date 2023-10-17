@@ -2,7 +2,7 @@ from .db import db
 from .user import User
 
 
-class Journals(db.Model):
+class Journal(db.Model):
      __tablename__ = 'journals'
 
      id = db.Column(db.Integer, primary_key=True, nullable=False)

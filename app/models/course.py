@@ -1,7 +1,7 @@
 from .db import db
 from .course_users import courseusers
 
-class Courses(db.Model):
+class Course(db.Model):
      __tablename__ = 'courses'
 
      id = db.Column(db.Integer, primary_key=True, nullable=False)
