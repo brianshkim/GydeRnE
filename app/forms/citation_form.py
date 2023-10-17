@@ -6,3 +6,4 @@ class CitationForm(FlaskForm):
    citation = StringField(
         "citation",
         validators=[DataRequired(), Length(1, 6000, message="Message cannot be more than 6000 characters.")])
+
