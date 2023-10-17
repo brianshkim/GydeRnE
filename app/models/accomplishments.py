@@ -1,6 +1,6 @@
 from .db import db
 
-class Accomplishments(db.Model):
+class Accomplishment(db.Model):
      __tablename__ = 'accomplishments'
 
      id = db.Column(db.Integer, primary_key=True, nullable=False)

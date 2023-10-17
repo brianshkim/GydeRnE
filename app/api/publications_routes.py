@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import Publications, db, publications_users, Citations
+from app.models import Publication, db, publications_users, Citation
 from app.forms import CitationForm
 
 publications_routes = Blueprint('publications', __name__)
@@ -21,7 +21,7 @@ def user():
 @publications_routes.route('/<int:publicationid>', methods=['delete'])
 @login_required
 def delete_publications(publicationid):
-    publication = Publications.query.get(publicationid)
+    publication = Publication.query.get(publicationid)
     publication.delete()
     db.session.commit()
     return jsonify(publicationid)
@@ -33,7 +33,7 @@ def delete_publications(publicationid):
 @login_required
 def create_publications(publicationid):
     req = request.get_json()
-    newpublication = Publications(
+    newpublication = Publication(
         user_id=current_user.id,
         title=req['title'],
         content=req['content']
@@ -53,7 +53,7 @@ def create_publications(publicationid):
 def edit_citations(publicationid):
     req = request.get_json()
 
-    publication = Publications.query.get(id=publicationid)
+    publication = Publication.query.get(id=publicationid)
     for key in req:
         publication.key = req['key']
     db.session.commit()
@@ -63,7 +63,7 @@ def edit_citations(publicationid):
 @publications_routes.route("/<int:publicationid>/citations")
 @login_required
 def get_CITATIONS(publicationid):
-    all_messages = Citations.query.filter(publication_id = publicationid)
+    all_messages = Citation.query.filter(publication_id = publicationid)
     return {
         "messages":[message.to_dict() for message in all_messages]
     }
@@ -76,7 +76,7 @@ def new_message():
     if form.validate_on_submit():
         newCitation = form.data["citation"]
         data = request.json
-        add_citation = Citations(
+        add_citation = Citation(
             publication_id= data['publication_id'],
             content = newCitation,
 
@@ -96,7 +96,7 @@ def edit_delete_citations(citationid):
         form = CitationForm()
         form['csrf_token'].data = request.cookies['csrf_token']
         if form.validate_on_submit():
-            edit_citation = Citations.query.get(citationid)
+            edit_citation = Citation.query.get(citationid)
             edit_citation.content = form.data["citation"]
             db.session.commit()
             return { "citation": edit_citation.to_dict() }
@@ -104,7 +104,7 @@ def edit_delete_citations(citationid):
         return {'errors': errors_list(form.errors)}, 401
 
     if request.method == "DELETE":
-        citation = Citations.query.get(citationid)
+        citation = Citation.query.get(citationid)
 
         db.session.delete(citation)
         db.session.commit()

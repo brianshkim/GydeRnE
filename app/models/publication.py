@@ -4,7 +4,7 @@ from .publications_citations import publicationcitations
 
 
 
-class Publications(db.Model):
+class Publication(db.Model):
      __tablename__ = 'publications'
      id = db.Column(db.Integer, primary_key=True, nullable=False)
      user_id = db.Column(db.Integer, db.ForeignKey('users.id'))

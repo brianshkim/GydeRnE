@@ -1,7 +1,7 @@
 from .db import db
 from .folders_users import folderusers
 
-class Folders(db.Model):
+class Folder(db.Model):
      __tablename__ = 'folders'
 
      id = db.Column(db.Integer, primary_key=True, nullable=False)
