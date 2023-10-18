@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 
-from app.models import User, ProfileImage, db, Friend, FriendReq
+from app.models import User, db, Friend, FriendReq
 #add models for all profile nonsense ree
 from app.forms import Bio
 from app.api.auth_routes import validation_errors_to_error_messages

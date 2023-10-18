@@ -5,9 +5,9 @@ from app.models import Course, db
 courses_routes = Blueprint('courses', __name__)
 
 @courses_routes.route('/')
-def user():
-    courses = Course.query.filter_by(user_id=id)
-    return courses.to_dict()
+def courses():
+    courses = Course.query.filter_by(user_id=current_user.id)
+    return [course.to_dict() for course in courses]
 
 
 @courses_routes.route('/<int:courseid>', methods=['delete'])

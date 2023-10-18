@@ -12,8 +12,8 @@ class Publication(db.Model):
      content = db.Column(db.Text, nullable=False)
 
 
-     publication_users = db.relationship("User", secondary=publicationusers, back_populates="publications", cascade="all, delete")
-     citations = db.relationship("Citations", secondary=publicationcitations, back_populates="publications", cascade="all, delete")
+     users = db.relationship("User", secondary=publicationusers, back_populates="publications", cascade="all, delete")
+     citations = db.relationship("Citation", secondary=publicationcitations, back_populates="publications", cascade="all, delete")
 
 
      def to_dict(self):
@@ -23,4 +23,4 @@ class Publication(db.Model):
             'content': self.content
         }
      def get_authors(self):
-          return [user.to_dict() for user in self.publication_users]
+          return [user.to_dict() for user in self.users]

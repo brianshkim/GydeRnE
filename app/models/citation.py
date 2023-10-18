@@ -18,4 +18,4 @@ class Citation(db.Model):
         }
 
 
-     publications = db.relationship("Publications", secondary=publicationcitations, back_populates="citations", cascade="all, delete")
+     publications = db.relationship("Publication", secondary=publicationcitations, back_populates="citations", cascade="all, delete")

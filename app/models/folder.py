@@ -1,6 +1,4 @@
 from .db import db
-from .folders_users import folderusers
-
 class Folder(db.Model):
      __tablename__ = 'folders'
 
@@ -23,5 +21,4 @@ class Folder(db.Model):
      user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
-     users = db.relationship("User", back_populates="accomplishments")
-     user_folders = db.relationship("User", secondary=folderusers, back_populates="folders", cascade="all, delete")
+     users = db.relationship("User", back_populates="folders")

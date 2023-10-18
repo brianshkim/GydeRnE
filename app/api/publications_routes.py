@@ -14,8 +14,8 @@ def errors_list(validation_errors):
 
 @publications_routes.route('/')
 def user():
-    publications = publications.query.filter_by(user_id=id)
-    return publications.to_dict()
+    publications = Publication.query.filter_by(user_id=id)
+    return Publication.to_dict()
 
 
 @publications_routes.route('/<int:publicationid>', methods=['delete'])
@@ -54,18 +54,18 @@ def edit_citations(publicationid):
     req = request.get_json()
 
     publication = Publication.query.get(id=publicationid)
-    for key in req:
-        publication.key = req['key']
+    publication.title = req['title']
+    publication.content = req['content']
     db.session.commit()
     return publication.to_dict()
 
 
 @publications_routes.route("/<int:publicationid>/citations")
 @login_required
-def get_CITATIONS(publicationid):
-    all_messages = Citation.query.filter(publication_id = publicationid)
+def get_citations(publicationid):
+    all_citations = Citation.query.filter(publication_id = publicationid)
     return {
-        "messages":[message.to_dict() for message in all_messages]
+        "citations":[citation.to_dict() for citation in all_citations]
     }
 
 @publications_routes.route("/<int:publicationid>/citations", methods=["POST"])
