@@ -3,11 +3,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from .course_users import courseusers
 from .publications_users import publicationusers
-from .folders_users import folderusers
-from .folder import Folders
-from .accomplishments import Accomplishments
-from .publication import Publications
-
+from .folder import Folder
+from .accomplishment import Accomplishment
+from .publication import Publication
+from .journals_authors import journalscommittee
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -48,23 +47,24 @@ class User(db.Model, UserMixin):
             'email': self.email
         }
 
-    def get_folders(self):
-        folders = Folders.query.filter_by(user_id=id)
-        return [folders.to_dict() for folder in folders]
 
-    def get_accomplishments(self):
-        accomplishments = Accomplishments.query.filter_by(user_id=id)
-        return [accomplishments.to_dict() for folder in accomplishments]
+
+
+    education = db.relationship('Education', back_populates="users")
+    accomplishments = db.relationship("Accomplishment", back_populates="users")
+    courses = db.relationship("Course", secondary=courseusers, back_populates="users", cascade="all, delete")
+    publications = db.relationship("Publication", secondary=publicationusers, back_populates="users", cascade="all, delete")
+    journals = db.relationship("Journal", secondary=journalscommittee, back_populates="users", cascade="all, delete")
+    posts = db.relationship("Post", back_populates="users")
+    folders = db.relationship("Folder", back_populates="users")
+    friendedFirst = db.relationship('Friend', back_populates='user', foreign_keys='[Friend.userId]')
+    friendedSecond = db.relationship('Friend', back_populates='user2', foreign_keys='[Friend.userId2]')
 
     def get_publications(self):
-        publications = Publications.query.filter_by(user_id=id)
-        return [publications.to_dict() for folder in Publications]
+        return [publication.to_dict() for publication in self.publications]
 
+    def get_accomplishments(self):
+        return [accomplishment.to_dict() for accomplishment in self.accomplishments]
 
-    vitae = db.relationship('Education', back_populates="users")
-    accomplishments = db.relationship("Accomplishments", back_populates="users")
-    course_users = db.relationship("Courses", secondary=courseusers, back_populates="users", cascade="all, delete")
-    publication_users = db.relationship("Publications", secondary=publicationusers, back_populates="users", cascade="all, delete")
-    journals = db.relationship("Journals", back_populates="users")
-    posts = db.relationship("Post", back_populates="posts")
-    folders = db.relationship("Folders", secondary=folderusers, back_populates="foldersusers", cascade="all, delete")
+    def get_folders(self):
+        return [folder.to_dict() for folder in self.folders]

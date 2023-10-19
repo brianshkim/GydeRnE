@@ -1,12 +1,17 @@
 from .db import db
+from sqlalchemy.dialects.postgresql import ARRAY
 
 class Education(db.Model):
      __tablename__ = 'education'
 
      id = db.Column(db.Integer, primary_key=True, nullable=False)
-     degree = db.Column(db.String(600))
-     university = db.Column(db.String(255))
-     advisor = db.Column(db.String(600))
+     degree_undergrad = db.Column(ARRAY(db.String))
+     university_undergrad = db.Column(ARRAY(db.String))
+     degree_masters = db.Column(ARRAY(db.String))
+     university_masters = db.Column(ARRAY(db.String))
+     degree_postdoc = db.Column(ARRAY(db.String))
+     university_postdoc = db.Column(ARRAY(db.String))
+     doctoral_advisor = db.Column(db.String(600))
      subject = db.Column(db.String(600))
      date = db.Column(db.String(255))
      thesis = db.Column(db.Text)

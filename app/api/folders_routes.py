@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import Folder, db, folderusers
+from app.models import Folder, db
 
 folders_routes = Blueprint('folders', __name__)
 
@@ -21,9 +21,9 @@ def delete_folders(folderid):
 
 
 
-@folders_routes.route('/<int:folderid>', methods=['post'])
+@folders_routes.route('/', methods=['post'])
 @login_required
-def create_folders(folderid):
+def create_folders():
     req = request.get_json()
     newFolder = Folder(
         user_id=current_user.id,
@@ -47,9 +47,7 @@ def create_folders(folderid):
     db.session.add(newFolder)
     db.session.commit()
     newfolderlist = newFolder.to_dict()
-    ins = folderusers.insert().values(userId=current_user.id, folder_id=newfolderlist['id'])
-    conn = db.engine.connect()
-    conn.execute(ins)
+
     return {"newfolder":newFolder.to_dict()}
 
 

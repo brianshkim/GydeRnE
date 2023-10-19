@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 
-from app.models import User, ProfileImage, db, Friend, FriendReq
+from app.models import User, db, Friend, FriendReq
 #add models for all profile nonsense ree
 from app.forms import Bio
 from app.api.auth_routes import validation_errors_to_error_messages
@@ -10,7 +10,7 @@ user_routes = Blueprint('users', __name__)
 
 
 @user_routes.route('/')
-@login_required
+
 def users():
     users = User.query.all()
     return {'users': [user.to_dict() for user in users]}
