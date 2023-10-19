@@ -4,9 +4,9 @@ from flask_login import UserMixin
 from .course_users import courseusers
 from .publications_users import publicationusers
 from .folder import Folder
-from .accomplishments import Accomplishment
+from .accomplishment import Accomplishment
 from .publication import Publication
-
+from .journals_authors import journalscommittee
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -54,9 +54,11 @@ class User(db.Model, UserMixin):
     accomplishments = db.relationship("Accomplishment", back_populates="users")
     courses = db.relationship("Course", secondary=courseusers, back_populates="users", cascade="all, delete")
     publications = db.relationship("Publication", secondary=publicationusers, back_populates="users", cascade="all, delete")
-    journals = db.relationship("Journal", back_populates="users")
+    journals = db.relationship("Journal", secondary=journalscommittee, back_populates="users", cascade="all, delete")
     posts = db.relationship("Post", back_populates="users")
     folders = db.relationship("Folder", back_populates="users")
+    friendedFirst = db.relationship('Friend', back_populates='user', foreign_keys='[Friend.userId]')
+    friendedSecond = db.relationship('Friend', back_populates='user2', foreign_keys='[Friend.userId2]')
 
     def get_publications(self):
         return [publication.to_dict() for publication in self.publications]

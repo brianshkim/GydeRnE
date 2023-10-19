@@ -1,6 +1,6 @@
 from .db import db
 from .user import User
-from .accomplishments import Accomplishment
+from .accomplishment import Accomplishment
 from .citation import Citation
 from .course_users import courseusers
 from .course import Course

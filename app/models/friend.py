@@ -16,7 +16,7 @@ class Friend(db.Model):
     #friended
     user = db.relationship('User', back_populates='friendedFirst', foreign_keys=[userId])
     user2 = db.relationship('User', back_populates='friendedSecond', foreign_keys=[userId2])
-    messages = db.relationship('Message', back_populates='friend')
+    ###messages = db.relationship('Message', back_populates='friend')
 
     def to_dict(self):
         return {
