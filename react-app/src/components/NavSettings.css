@@ -79,8 +79,9 @@
 /* triangle added*/
 .section-dropdown {
   position: absolute;
+  display: flex;
   padding: 5px;
-  background-color: #111;
+  background-color: #333333;
   top: 70px;
   right: -18px;
   width: 250%;
@@ -116,9 +117,40 @@
   height: 0; 
   border-left: 8px solid transparent;
   border-right: 8px solid transparent; 
-  border-bottom: 8px solid #111;
+  border-bottom: 8px solid #333333;
   content: '';
   display: block;
   z-index: 2;
   transition: all 200ms linear;
+}
+
+.settings-drop-item,
+.logout-button
+{
+  color:white;
+  font-size: 14px;
+  font-style: normal;
+  font-family:'Open Sans', sans-serif; 
+  background-color: transparent;
+  border: none;
+  text-decoration: none;
+  list-style: none;
+  width:100%;
+  padding: 8px 0px 8px 0px;
+}
+
+.settings-drop-item:hover,
+.logout-button:hover{
+  background-color: #222222;
+  cursor: pointer;
+  transition: all 200ms linear;
+}
+
+.settings-drop-item a {
+  text-decoration: none;
+  color: white;
+}
+
+.fa-gear, .fa-circle-question, .fa-arrow-right-from-bracket{
+  margin-right: 5px;
 }

@@ -27,7 +27,7 @@ const NavHeader = () => {
         </div>
         <div className="nav-items-right">
           <i class=" fa-regular fa-bell"></i>
-          <div className="button-SM"> + Create Post</div>
+          <div className="nav-create-post"> + Create Post</div>
           <SettingsDropdown />
         <i class=" fa-solid fa-circle-user"></i>
         </div>
