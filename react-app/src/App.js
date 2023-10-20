@@ -33,6 +33,9 @@ function App() {
         <Route path='/login' exact={true}>
           <LoginForm />
         </Route>
+        <Route path='/profile' exact={true}>
+          <LoginForm />
+        </Route>
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
