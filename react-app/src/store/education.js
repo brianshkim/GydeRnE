@@ -89,13 +89,36 @@ export const create_education = (
 
 }
 
-export const update_education = (id, name) => async (dispatch) => {
+export const update_education = (
+    id,
+    degree_undergrad=[],
+    university_undergrad=[],
+    degree_masters=[],
+    university_masters=[],
+    degree_postdoc=[],
+    university_postdoc=[],
+    doctoral_advisor="",
+    subject="",
+    date="",
+    thesis=""
+    ) => async (dispatch) => {
     const response = await fetch(`/api/education/${id}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(name)
+        body: JSON.stringify({
+            "degree_undergrad": degree_undergrad,
+            "university_undergrad": university_undergrad,
+            "degree_masters": degree_masters,
+            "university_masters": university_masters,
+            "degree_postdoc": degree_postdoc,
+            "university_postdoc": university_postdoc,
+            "doctoral_advisor": doctoral_advisor,
+            "subject": subject,
+            "date": date,
+            "thesis": thesis,
+        })
     });
 
     const data = await response.json()
@@ -165,25 +188,19 @@ export const delete_education = (educationId) => async (dispatch) => {
 //}
 
 
-let initialState = {state:{}};
+let initialState = {};
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case LOAD_EDUCATION:
 
 
-            return action.education
+            return {...state, ...action.education}
         case CREATE_EDUCATION:
 
             state.list.push(action.education)
             return {...state}
         case UPDATE_EDUCATION:
-            let newstate = state.list.map((education)=>{
-                if( education.id === action.education.id){
-                    education.name = action.education.name
-                }
-                return education
-
-            })
+            let newstate = action.education
 
             return newstate
         case DELETE_EDUCATION:
