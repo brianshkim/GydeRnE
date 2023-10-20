@@ -14,6 +14,7 @@ from .api.folders_routes import folders_routes
 from .api.publications_routes import publications_routes
 from .api.posts_routes import posts_routes
 from .api.courses_routes import courses_routes
+from .api.education_routes import education_routes
 
 
 
@@ -40,11 +41,12 @@ app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(accomplishments_routes, url_prefix='/api/accomplishments')
-###app.register_blueprint(journals_routes, url_prefix='/api/journals')
+app.register_blueprint(journals_routes, url_prefix='/api/journals')
 app.register_blueprint(folders_routes, url_prefix='/api/folders')
-###app.register_blueprint(publications_routes, url_prefix='/api/publications')
+app.register_blueprint(publications_routes, url_prefix='/api/publications')
 app.register_blueprint(posts_routes, url_prefix='/api/posts')
 app.register_blueprint(courses_routes, url_prefix='/api/courses')
+app.register_blueprint(education_routes,url_prefix='/api/education' )
 
 
 db.init_app(app)

@@ -6,7 +6,7 @@ from .publications_users import publicationusers
 from .folder import Folder
 from .accomplishment import Accomplishment
 from .publication import Publication
-from .journals_authors import journalscommittee
+from .journals_committee import journalscommittee
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'

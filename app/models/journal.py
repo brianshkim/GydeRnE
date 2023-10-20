@@ -1,6 +1,6 @@
 from .db import db
 from .user import User
-from .journals_authors import journalscommittee
+from .journals_committee import journalscommittee
 
 
 class Journal(db.Model):
