@@ -11,7 +11,7 @@
     background-color: #ffffff;
     border-bottom: 1px solid #E5E5E5;
     z-index: 99;
-    font-family: 'Urbanist', sans-serif;
+    font-family:'Open Sans', sans-serif; 
   }
 
 .nav-content {
@@ -70,8 +70,9 @@
   font-size: 18px;
   line-height: 2;
   height: 40px;
-  transition: all 200ms linear;
+  transition: all 100ms linear;
   border-radius: 25px;
+  border: 2px solid white;
   width: 40px;
   letter-spacing: 1px;
   display: -webkit-inline-flex;
@@ -87,11 +88,13 @@
   justify-content: center;
   -ms-flex-pack: center;
   text-align: center;
-  border: 1px solid #E5E5E5;
-  background-color: #c6c6c6;
   cursor: pointer;
   color: #222222;
-  box-shadow: 0 12px 35px 0 rgba(255, 255, 255, 0.15);
+}
+
+.fa-bell:hover, .fa-circle-user:hover{
+  background: #E5E5E5;
+  border: 2px solid #E5E5E5
 }
 
 .nav-items-right{
@@ -110,10 +113,11 @@
   align-items: center;
   border-radius: 25px;
   display: inline-flex;
+  
   gap: 5px;
   justify-content: center;
   overflow: hidden;
-  padding: 9px 14px;
+  padding: 10px 10px 10px 10px;
   position: relative;
   font-size: 16px;
   cursor: pointer;
@@ -121,6 +125,11 @@
   text-decoration: none;
   outline: none;
   color: #fff;
+  transition: all 200ms linear;
+  background-color: #333333;
+}
+
+.button-SM:hover {
   background-color: #222222;
 }
 
