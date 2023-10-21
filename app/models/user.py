@@ -28,6 +28,10 @@ class User(db.Model, UserMixin):
     end_Date=db.Column(db.Integer)
     present_role = db.Column(db.Boolean)
     bio = db.Column(db.String(200))
+    profile_image = db.Column(db.String())
+
+
+
 
     @property
     def password(self):
@@ -44,7 +48,11 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'professor': self.professor,
+            'profileImage':self.profile_image,
+            'school_name': self.school_name,
+            'bio': self.bio
         }
 
 
@@ -59,6 +67,7 @@ class User(db.Model, UserMixin):
     folders = db.relationship("Folder", back_populates="users")
     friendedFirst = db.relationship('Friend', back_populates='user', foreign_keys='[Friend.userId]')
     friendedSecond = db.relationship('Friend', back_populates='user2', foreign_keys='[Friend.userId2]')
+    friend_requests = db.relationship('FriendReq', back_populates='users')
 
     def get_publications(self):
         return [publication.to_dict() for publication in self.publications]
