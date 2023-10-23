@@ -91,7 +91,7 @@ def reject_request():
     yeet_friend = User.query.get(id)
     current_reqs = current_user.friend_requests
 
-    to_delete = delete(friend_requests).where(
+    to_delete = db.delete(friend_requests).where(
         (friend_requests.userId == id) & (friend_requests.userId2 == current_user.id)
     )
 

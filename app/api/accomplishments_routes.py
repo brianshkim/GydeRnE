@@ -27,8 +27,11 @@ def create_accomplishments(id):
     req = request.get_json()
     accomplishments = Accomplishment(
         user_id=current_user.id,
-        title=req['title'],
-        place=req['place'],
+        firstname = req['firstname'],
+        lastname=req['lastname'],
+        highest_degree=req['highest_degree'],
+        publications=req['publications'],
+        awards=req['awards']
 
     )
     db.session.add(accomplishments)
@@ -42,8 +45,9 @@ def edit_accomplishments(accomplishmentid):
     req = request.get_json()
 
     accomplishments = Accomplishment.query.filter_by(id=accomplishmentid)
-    accomplishments.title=req['title']
-    accomplishments.place=req['place']
-    accomplishments.date=req['date']
+    accomplishments.firstname=req['firstname']
+    accomplishments.lastname=req['lastname']
+    accomplishments.publications=req['publications']
+    accomplishments.awards=req['awards']
     db.session.commit()
     return accomplishments.to_dict()
