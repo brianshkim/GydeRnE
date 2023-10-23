@@ -9,6 +9,7 @@ class Post(db.Model):
      user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
      content = db.Column(db.Text, nullable=False )
      comment = db.Column(db.String(600), nullable=False)
+     research = db.Column(db.Boolean)
      root= db.Column(db.Boolean)
      resp_id = db.Column(db.Integer)
      created_at = db.Column(db.DateTime)

@@ -21,7 +21,7 @@ def delete_journals(journalid):
 
 
 
-@journals_routes.route('/<int:journalid>', methods=['post'])
+@journals_routes.route('/', methods=['post'])
 @login_required
 def create_journals(journalid):
     req = request.get_json()

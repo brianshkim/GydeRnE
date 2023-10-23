@@ -21,7 +21,7 @@ def delete_courses(courseid):
 
 
 
-@courses_routes.route('/<int:courseid>', methods=['post'])
+@courses_routes.route('/', methods=['post'])
 @login_required
 def create_courses(courseid):
     req = request.get_json()
