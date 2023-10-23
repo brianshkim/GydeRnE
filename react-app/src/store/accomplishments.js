@@ -37,19 +37,19 @@ export const unload_accomplishments = () => async(dispatch)=>{
 export const get_accomplishments= (id) => async (dispatch) => {
     const response = await fetch(`/api/accomplishments/${id}`);
     const data = await response.json()
-    console.log(data)
+
     dispatch(getAccomplishments(data));
 
 }
 
-export const create_accomplishement = (
+export const create_accomplishment = (
     firstname="",
     lastname="",
     highest_degree="",
     publications=[],
     awards=[]
        ) => async (dispatch) => {
-    const response = await fetch(`/api/accomplishements/`, {
+    const response = await fetch(`/api/accomplishments/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -150,13 +150,10 @@ export default function reducer(state = initialState, action) {
 
             return newstate
         case DELETE_ACCOMPLISHMENTS:
+            return initialState
 
-            return state.list.filter(accomplishment=>(
-                accomplishment.id !== action.accomplishment
-
-            ))
         case UNLOAD_ACCOMPLISHMENTS:
-            initialState = {list:[]}
+
             return initialState
 
 

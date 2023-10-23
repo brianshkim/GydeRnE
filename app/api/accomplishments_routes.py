@@ -28,9 +28,9 @@ def create_accomplishments(id):
     accomplishments = Accomplishment(
         user_id=current_user.id,
         firstname = req['firstname'],
-        lastname=req['lastname']
-        highest_degree=req['highest_degree']
-        publications=req['publications']
+        lastname=req['lastname'],
+        highest_degree=req['highest_degree'],
+        publications=req['publications'],
         awards=req['awards']
 
     )

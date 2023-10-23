@@ -7,7 +7,7 @@ posts_routes = Blueprint('posts', __name__)
 @posts_routes.route('/')
 def user():
     posts = Post.query.filter_by(user_id=id)
-    return posts.to_dict()
+    return [post.to_dict() for post in posts.to_dict()]
 
 
 @posts_routes.route('/<int:postid>', methods=['delete'])
@@ -30,6 +30,7 @@ def create_posts(postid):
         content=req['content'],
         comment=req['comment'],
         root=req['root'],
+        research=req['research'],
         resp_id=req['resp_id'],
         )
     db.session.add(post)
@@ -45,7 +46,10 @@ def edit_posts(postid):
     if post.user_id == current_user.id:
         post.content=req['content']
         post.root=req['root']
-        post.resp_id=req['resp_id']
+        post.comment=req['comment']
+        post.resesarch=req['resesarch']
+        post.created_at=req['created_at']
+        post.updated_at=req['updated_at']
 
 
     db.session.commit()

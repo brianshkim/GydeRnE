@@ -24,7 +24,8 @@ class Post(db.Model):
             'content': self.content,
             'comment': self.comment,
             'root': self.root,
-            'responder details': self.users.to_dict(),
+            'self.research': self.research,
+            'responder details': [user.to_dict() for user in self.users.to_dict()],
             'created_at' :self.created_at,
             'updated_at':self.updated_at
         }
