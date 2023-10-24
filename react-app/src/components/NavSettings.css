@@ -1,4 +1,3 @@
-
 .settings-button {
   position: relative;
   max-width: 100%;
@@ -19,13 +18,14 @@
 .dropdown:not(:checked) + label{
   position: relative;
   border-radius: 100px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 500;
   font-size: 18px;
   line-height: 2;
   height: 40px;
   transition: all 200ms linear;
   border-radius: 25px;
+  border: 2px solid rgb(255, 255, 255);
   width: 40px;
   letter-spacing: 1px;
   display: -webkit-inline-flex;
@@ -41,15 +41,13 @@
   justify-content: center;
   -ms-flex-pack: center;
   text-align: center;
-  border: 1px solid #E5E5E5;
-  background-color: #c6c6c6;
   cursor: pointer;
   color: #222222;
-  box-shadow: 0 12px 35px 0 rgba(255, 255, 255, 0.15);
 }
 
-.dropdown:hover {
-
+.dropdown:hover +label {
+  background: #E5E5E5;
+  border: 2px solid #E5E5E5;
 }
 
 .dropdown:checked + label:before,
@@ -81,8 +79,9 @@
 /* triangle added*/
 .section-dropdown {
   position: absolute;
+  display: flex;
   padding: 5px;
-  background-color: #111;
+  background-color: #333333;
   top: 70px;
   right: -18px;
   width: 250%;
@@ -118,37 +117,40 @@
   height: 0; 
   border-left: 8px solid transparent;
   border-right: 8px solid transparent; 
-  border-bottom: 8px solid #111;
+  border-bottom: 8px solid #333333;
   content: '';
   display: block;
   z-index: 2;
   transition: all 200ms linear;
 }
 
-a {
-  position: relative;
-  color: #fff;
-  transition: all 200ms linear;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 500;
-  font-size: 15px;
-  border-radius: 2px;
-  padding: 5px 0;
-  padding-left: 20px;
-  padding-right: 15px;
-  margin: 2px 0;
-  text-align: left;
+.settings-drop-item,
+.logout-button
+{
+  color:white;
+  font-size: 14px;
+  font-style: normal;
+  font-family:'Open Sans', sans-serif; 
+  background-color: transparent;
+  border: none;
   text-decoration: none;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -moz-align-items: center;
-  -ms-align-items: center;
-  align-items: center;
-  justify-content: space-between;
-    -ms-flex-pack: distribute;
+  list-style: none;
+  width:100%;
+  padding: 8px 0px 8px 0px;
 }
 
-a .uil {
-  font-size: 22px;
+.settings-drop-item:hover,
+.logout-button:hover{
+  background-color: #222222;
+  cursor: pointer;
+  transition: all 200ms linear;
+}
+
+.settings-drop-item a {
+  text-decoration: none;
+  color: white;
+}
+
+.fa-gear, .fa-circle-question, .fa-arrow-right-from-bracket{
+  margin-right: 5px;
 }

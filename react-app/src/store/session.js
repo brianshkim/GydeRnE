@@ -78,10 +78,10 @@ export const logout = () => async (dispatch) => {
 
 export const signUp = (
   username,
-  email,
-  password,
   firstname,
   lastname,
+  email,
+  password,
   bio,
   professor,
   phone_number,
@@ -97,11 +97,11 @@ export const signUp = (
     },
     body: JSON.stringify({
       'username':username ,
-      'email':email,
-      'password':password,
       'firstname':firstname,
       'lastname': lastname,
-      'bio':bio,
+      'email':email,
+      'password':password,
+      'bio': bio,
       'professor':professor,
       'phone_number':phone_number,
       'school_name':school_name,

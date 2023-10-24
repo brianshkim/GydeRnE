@@ -9,9 +9,16 @@ const SettingsDropdown = () => {
             <input class="dropdown" type="checkbox" id="dropdown" name="dropdown" />
                 <label class="for-dropdown" for="dropdown"><i class="fa-solid fa-bars"></i></label>
             <div class="section-dropdown">
-                <input class="dropdown-sub" type="checkbox" id="dropdown-sub" name="dropdown-sub" />
-                <a href="#"><i class="fa-solid fa-gear"></i>Settings</a>
-                <a href="#"><i class="fa-regular fa-circle-question"></i>Help</a>
+            <li className='settings-drop-item'><NavLink to="/settings" 
+              onClick={() => {
+                window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+              }}
+              exact={true}className="navitem"><i class="fa-solid fa-gear"></i> Settings</NavLink></li>
+            <li className='settings-drop-item'><NavLink to="/help" 
+              onClick={() => {
+                window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+              }}
+              exact={true}className="navitem"><i class="fa-regular fa-circle-question"></i> Help</NavLink></li>
                 <LogoutButton />
             </div>
         </div>

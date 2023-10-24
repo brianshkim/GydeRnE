@@ -10,6 +10,7 @@ import UsersList from './components/UsersList';
 import User from './components/User';
 import Test from './components/test';
 import { authenticate } from './store/session';
+import Profile from './components/Profile';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -28,19 +29,26 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavHeader />
+
       <NavBar />
       <Switch>
         <Route path='/test'>
+        <NavHeader />
           <Test />
         </Route>
         <Route path='/login' exact={true}>
+        <NavHeader />
           <LoginForm />
+        </Route>
+        <Route path='/profile' exact={true}>
+        <NavHeader />
+          <Profile />
         </Route>
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
         <ProtectedRoute path='/users' exact={true} >
+        <NavHeader />
           <UsersList/>
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
