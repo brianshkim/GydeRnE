@@ -23,17 +23,24 @@ def user(id):
     user = User.query.get(id)
     return user.to_dict()
 
-@user_routes.route('/>', methods=['post'])
+@user_routes.route('/', methods=['post'])
 @login_required
 def edit_user():
     req = request.get_json()
 
-    user = User.query.filter_by(id=current_user.id)
+    user = User.query.get(current_user.id)
     user.firstname=req['firstname']
     user.lastname=req['lastname']
-    user.publications=req['publications']
-    user.awards=req['awards']
-    db.session.commit()
+    user.professor=req['professor']
+    user.phone_number=req['phone_number']
+    user.school_name=req['school_name']
+    user.degree_timeline=req['degree_timeline']
+    user.company = req['company']
+    user.role_title=req['role_title']
+    user.start_date=req['start_date']
+    user.bio = req['bio']
+    user.profile_image=req['profile_image']
+    user.session.commit()
     return user.to_dict()
 
 #getting my/user friends
