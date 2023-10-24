@@ -13,8 +13,8 @@ def seed_education():
 
 
     db.session.add(demo)
-    db.session.add(marnie)
-    db.session.add(bobbie)
+    db.session.add(Matilda)
+    db.session.add(Brian)
 
     db.session.commit()
 
