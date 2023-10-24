@@ -127,6 +127,7 @@ export const signUp = (
 }
 
 export const update_user = (
+  id,
   username,
   email,
   password,
@@ -142,7 +143,7 @@ export const update_user = (
   start_date
 
   ) => async (dispatch) => {
-  const response = await fetch(`/api/accomplishments/${id}`, {
+  const response = await fetch(`/api/users/${id}`, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'
