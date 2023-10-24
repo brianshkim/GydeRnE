@@ -43,11 +43,12 @@ export const get_posts= (id) => async (dispatch) => {
 }
 
 export const create_posts = (
-    firstname="",
-    lastname="",
-    highest_degree="",
-    publications=[],
-    awards=[]
+    user_id,
+    content,
+    comment,
+    research,
+    root,
+    resp_id
        ) => async (dispatch) => {
     const response = await fetch(`/api/posts/`, {
         method: 'POST',
@@ -55,12 +56,12 @@ export const create_posts = (
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            "firstname": firstname,
-            "lastname": lastname,
-            "highest_degree": highest_degree,
-            "publications": publications,
-            "awards": awards,
-
+            "user_id": user_id,
+            "content": content,
+            "comment": comment,
+            "research": research,
+            "root": root,
+            "resp_id": resp_id
 
         })
     });
@@ -83,11 +84,11 @@ export const create_posts = (
 
 export const update_posts = (
     id,
-    firstname,
-    lastname,
-    highest_degree,
-    publications,
-    awards,
+    content,
+    comment,
+    research,
+    root,
+    resp_id
 
     ) => async (dispatch) => {
     const response = await fetch(`/api/posts/${id}`, {
@@ -96,11 +97,11 @@ export const update_posts = (
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            "firstname": firstname,
-            "lastname": lastname,
-            "highest_degree": highest_degree,
-            "publications": publications,
-            "awards": awards,
+            "content": content,
+            "comment": comment,
+            "research": research,
+            "root": root,
+            "resp_id": resp_id
 
         })
     });
@@ -134,7 +135,7 @@ export const delete_posts = (postsId) => async (dispatch) => {
 
 
 
-let initialState = {};
+let initialState = {list:[]};
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case LOAD_POSTS:

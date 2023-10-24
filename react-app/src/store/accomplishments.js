@@ -41,7 +41,6 @@ export const get_accomplishments= (id) => async (dispatch) => {
     dispatch(getAccomplishments(data));
 
 }
-
 export const create_accomplishment = (
     firstname="",
     lastname="",

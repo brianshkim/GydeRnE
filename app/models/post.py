@@ -1,5 +1,6 @@
 from .db import db
 from .user import User
+from sqlalchemy.dialects.postgresql import ARRAY
 
 
 class Post(db.Model):
@@ -10,6 +11,7 @@ class Post(db.Model):
      content = db.Column(db.Text, nullable=False )
      comment = db.Column(db.String(600), nullable=False)
      research = db.Column(db.Boolean)
+     research_paper=db.Column(db.String)
      root= db.Column(db.Boolean)
      resp_id = db.Column(db.Integer)
      created_at = db.Column(db.DateTime)
