@@ -125,15 +125,20 @@ const Test = () => {
       Create Education
       <form onSubmit={onSubmit}>
         <label>Undergraduate Degree</label>
-        {education.degree_undergrad?.map(degree => (
-
-          <input type="text"
-            onChange={((e) => setDegreeUndergrad(e.target.value))}
-            placeholder={degree}
-            value={degreeUndergrad}
-          />
-
-        ))}
+        {//education.degree_undergrad?.map(degree => (
+//
+        //  <input type="text"
+        //    onChange={((e) => setDegreeUndergrad(e.target.value))}
+        //    placeholder={degree}
+        //    value={degreeUndergrad}
+        //  />
+//
+        //))}
+        <input type="text"
+        onChange={((e) => setDegreeUndergrad(e.target.value))}
+        placeholder={degree}
+        value={degreeUndergrad}
+      />
 
 
         <button onClick={add}>Create</button>

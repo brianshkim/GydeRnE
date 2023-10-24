@@ -23,6 +23,19 @@ def user(id):
     user = User.query.get(id)
     return user.to_dict()
 
+@user_routes.route('/>', methods=['post'])
+@login_required
+def edit_user():
+    req = request.get_json()
+
+    user = User.query.filter_by(id=current_user.id)
+    user.firstname=req['firstname']
+    user.lastname=req['lastname']
+    user.publications=req['publications']
+    user.awards=req['awards']
+    db.session.commit()
+    return user.to_dict()
+
 #getting my/user friends
 
 @user_routes.route('/friends')
@@ -91,7 +104,7 @@ def reject_request():
     yeet_friend = User.query.get(id)
     current_reqs = current_user.friend_requests
 
-    to_delete = delete(friend_requests).where(
+    to_delete = db.delete(friend_requests).where(
         (friend_requests.userId == id) & (friend_requests.userId2 == current_user.id)
     )
 
@@ -158,6 +171,8 @@ def remove_friend():
     db.session.commit()
 
     return yeet_friend.to_dict()
+
+
 
 
 @user_routes.route('/<int:id>/upload', methods=['POST'])

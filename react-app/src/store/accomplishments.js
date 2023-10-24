@@ -1,55 +1,159 @@
-const LOAD_ALL_SERVERS = 'allservers/GET_ALL_SERVERS'
-const JOIN_SERVER = 'allservers/JOIN_SERVER'
-const UNLOAD_ALL_SERVERS = 'allservers/UNLOAD_ALL_SERVERS'
+const LOAD_ACCOMPLISHMENTS = 'ACCOMPLISHMENTS/GET_ACCOMPLISHMENTS'
+const CREATE_ACCOMPLISHMENTS = 'ACCOMPLISHMENTS/CREATE_ACCOMPLISHMENTS'
+const UPDATE_ACCOMPLISHMENTS = 'ACCOMPLISHMENTS/UPDATE_ACCOMPLISHMENTS'
+const DELETE_ACCOMPLISHMENTS = 'ACCOMPLISHMENTS/DELETE_ACCOMPLISHMENTS'
+const UNLOAD_ACCOMPLISHMENTS = 'ACCOMPLISHMENTS/UNLOAD_ACCOMPLISHMENTS'
 
 
-const loadservers = (servers) => ({
-    type: LOAD_ALL_SERVERS,
-    servers
+const getAccomplishments = (accomplishment) => ({
+    type: LOAD_ACCOMPLISHMENTS,
+    accomplishment
 });
 
-const unloadallservers = () => ({
-    type: UNLOAD_ALL_SERVERS
+const createAccomplishments = (accomplishment) => ({
+    type: CREATE_ACCOMPLISHMENTS,
+    accomplishment
 })
 
+const editAccomplishments = (accomplishment) => ({
+    type: UPDATE_ACCOMPLISHMENTS,
+    accomplishment
+})
 
-export const unload_allservers = () => async(dispatch)=>{
-    dispatch(unloadallservers())
+const deleteAccomplishments = (accomplishment ) => ({
+    type: DELETE_ACCOMPLISHMENTS,
+    accomplishment
+
+})
+
+const unloadAccomplishments = ()=>({
+    type: UNLOAD_ACCOMPLISHMENTS
+})
+
+export const unload_accomplishments = () => async(dispatch)=>{
+    dispatch(unloadAccomplishments())
 }
 
-export const load_servers = (id) => async (dispatch) => {
-    const response = await fetch(`/api/servers/servers`);
+export const get_accomplishments= (id) => async (dispatch) => {
+    const response = await fetch(`/api/accomplishments/${id}`);
     const data = await response.json()
 
-    dispatch(loadservers(data.allservers));
+    dispatch(getAccomplishments(data));
 
+}
+export const create_accomplishment = (
+    firstname="",
+    lastname="",
+    highest_degree="",
+    publications=[],
+    awards=[]
+       ) => async (dispatch) => {
+    const response = await fetch(`/api/accomplishments/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "firstname": firstname,
+            "lastname": lastname,
+            "highest_degree": highest_degree,
+            "publications": publications,
+            "awards": awards,
+
+
+        })
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data)
+        dispatch(createAccomplishments(data))
+        return data;
+    } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.errors) {
+            return data.errors;
+        }
+    } else {
+        return ['An error occurred. Please try again.']
+    }
 
 }
 
-let initialState = {list:[], userlist:{}};
+export const update_accomplishments = (
+    id,
+    firstname,
+    lastname,
+    highest_degree,
+    publications,
+    awards,
+
+    ) => async (dispatch) => {
+    const response = await fetch(`/api/accomplishments/${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "firstname": firstname,
+            "lastname": lastname,
+            "highest_degree": highest_degree,
+            "publications": publications,
+            "awards": awards,
+
+        })
+    });
+
+    const data = await response.json()
+
+
+    dispatch(editAccomplishments(data));
+
+
+};
+
+
+export const delete_accomplishments = (accomplishmentsId) => async (dispatch) => {
+
+    const response = await fetch(`/api/accomplishments/${accomplishmentsId}`, {
+        method: 'delete',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
+    });
+
+    const data = await response.json()
+
+    dispatch(deleteAccomplishments(Number(data)));
+}
+
+
+
+
+
+
+let initialState = {};
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case LOAD_ALL_SERVERS:
-            let serverlist = []
-            let userlists = {}
-            action.servers.forEach(server => {
-                serverlist.push(server)
-                let servers = {}
-                let users=[]
+        case LOAD_ACCOMPLISHMENTS:
 
-                server.users.forEach(user=>{
-                    users.push(user.id)
 
-            })
-                userlists[server.id]=users
+            return {...state, ...action.accomplishments}
+        case CREATE_ACCOMPLISHMENTS:
 
-            })
-            serverlist.sort((a, b)=>{
-                return a.id - b.id
-            })
-            return {...state, list: serverlist, userlist:userlists}
-        case UNLOAD_ALL_SERVERS:
-            return initialState = {list:[]};
+            state.list.push(action.accomplishments)
+            return {...state}
+        case UPDATE_ACCOMPLISHMENTS:
+            let newstate = action.accomplishments
+
+            return newstate
+        case DELETE_ACCOMPLISHMENTS:
+            return initialState
+
+        case UNLOAD_ACCOMPLISHMENTS:
+
+            return initialState
 
 
         default:

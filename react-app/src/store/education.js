@@ -5,40 +5,40 @@ const DELETE_EDUCATION = 'EDUCATION/DELETE_EDUCATION'
 const UNLOAD_EDUCATION = 'EDUCATION/UNLOAD_EDUCATION'
 
 
-const geteducation = (education) => ({
+const getEducation = (education) => ({
     type: LOAD_EDUCATION,
     education
 });
 
-const createeducation = (education) => ({
+const createEducation = (education) => ({
     type: CREATE_EDUCATION,
     education
 })
 
-const editeducation = (education) => ({
+const editEducation = (education) => ({
     type: UPDATE_EDUCATION,
     education
 })
 
-const deleteeducation = (education) => ({
+const deleteEducation = (education) => ({
     type: DELETE_EDUCATION,
     education
 
 })
 
-const unloadeducation = ()=>({
+const unloadEducation = ()=>({
     type: UNLOAD_EDUCATION
 })
 
-export const unload_EDUCATION = () => async(dispatch)=>{
-    dispatch(unloadeducation())
+export const unload_education = () => async(dispatch)=>{
+    dispatch(unloadEducation())
 }
 
 export const get_education= (id) => async (dispatch) => {
     const response = await fetch(`/api/education/${id}`);
     const data = await response.json()
     console.log(data)
-    dispatch(geteducation(data));
+    dispatch(getEducation(data));
 
 }
 
@@ -76,7 +76,7 @@ export const create_education = (
     if (response.ok) {
         const data = await response.json();
         console.log(data)
-        dispatch(createeducation(data))
+        dispatch(createEducation(data))
         return data;
     } else if (response.status < 500) {
         const data = await response.json();
@@ -124,7 +124,7 @@ export const update_education = (
     const data = await response.json()
 
 
-    dispatch(editeducation(data));
+    dispatch(editEducation(data));
 
 
 };
@@ -142,50 +142,11 @@ export const delete_education = (educationId) => async (dispatch) => {
 
     const data = await response.json()
 
-    dispatch(deleteeducation(Number(data)));
+    dispatch(deleteEducation(Number(data)));
 }
 
 
 
-//export const  = () => async (dispatch) => {
-//  const response = await fetch('/api/auth/logout', {
-//    headers: {
-//      'Content-Type': 'application/json',
-//    }
-//  });
-//
-//  if (response.ok) {
-//    dispatch(removeUser());
-//  }
-//};
-//
-//
-//export const signUp = (username, email, password) => async (dispatch) => {
-//  const response = await fetch('/api/auth/signup', {
-//    method: 'POST',
-//    headers: {
-//      'Content-Type': 'application/json',
-//    },
-//    body: JSON.stringify({
-//      username,
-//      email,
-//      password,
-//    }),
-//  });
-//
-//  if (response.ok) {
-//    const data = await response.json();
-//    dispatch(setUser(data))
-//    return null;
-//  } else if (response.status < 500) {
-//    const data = await response.json();
-//    if (data.errors) {
-//      return data.errors;
-//    }
-//  } else {
-//    return ['An error occurred. Please try again.']
-//  }
-//}
 
 
 let initialState = {};
@@ -210,7 +171,7 @@ export default function reducer(state = initialState, action) {
 
             ))
         case UNLOAD_EDUCATION:
-            initialState = {list:[]}
+
             return initialState
 
 
