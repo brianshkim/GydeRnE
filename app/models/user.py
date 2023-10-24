@@ -16,17 +16,14 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
     firstname = db.Column(db.String(255), nullable=False)
-    professor = db.Column(db.Boolean)
     lastname = db.Column(db.String(255), nullable=False)
+    professor = db.Column(db.Boolean)
     phone_number = db.Column(db.String(10))
     school_name = db.Column(db.String(255))
-    gpa = db.Column(db.String(255))
     degree_timeline = db.Column(db.String(255))
     company = db.Column(db.String(255))
     role_title=db.Column(db.String(255))
     start_date=db.Column(db.BigInteger)
-    end_Date=db.Column(db.Integer)
-    present_role = db.Column(db.Boolean)
     bio = db.Column(db.String(200))
     profile_image = db.Column(db.String())
 
@@ -49,10 +46,19 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'username': self.username,
             'email': self.email,
+            'bio': self.bio,
+            'firstname':self.firstname,
+            'lastname': self.lastname,
             'professor': self.professor,
-            'profileImage':self.profile_image,
+            'phone_number': self.phone_number,
             'school_name': self.school_name,
-            'bio': self.bio
+            'degree_timeline': self.degree_timeline,
+            'company':self.company,
+            'role_title':self.role_title,
+            'start_date':self.start_date,
+            'profile_image':self.profile_image,
+            'school_name': self.school_name,
+
         }
 
 
