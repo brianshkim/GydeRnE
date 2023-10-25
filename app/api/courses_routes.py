@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import Course, db
+from app.models import Course, db, course_users
 
 courses_routes = Blueprint('courses', __name__)
 
@@ -23,10 +23,11 @@ def delete_courses(courseid):
 
 @courses_routes.route('/', methods=['post'])
 @login_required
-def create_courses(courseid):
+def create_courses():
     req = request.get_json()
     courses = Course(
         user_id=current_user.id,
+        professor_id = req['professor_id'],
         title=req['title'],
         content=req['content'],
 
@@ -46,3 +47,14 @@ def edit_courses(courseid):
     courses.place=req['content']
     db.session.commit()
     return courses.to_dict()
+
+@courses_routes.route('/<int:courseid>', methods=['post'])
+@login_required
+def join_courses(courseid):
+    req = request.get_json(courseid)
+
+    course = Course.query.get(courseid)
+
+    ins = course_users.insert().values(user_id=current_user.id, course_id=courseid)
+    conn = db.engine.connect()
+    conn.execute(ins)

@@ -1,8 +1,8 @@
-const LOAD_POSTS = 'ACCOMPLISHMENTS/GET_POSTS'
-const CREATE_POSTS = 'POSTS/CREATE_POSTS'
-const UPDATE_POSTS = 'POSTS/UPDATE_POSTS'
-const DELETE_POSTS = 'POSTS/DELETE_POSTS'
-const UNLOAD_POSTS = 'ACCOMPLISHMENTS/UNLOAD_POSTS'
+const LOAD_POSTS = 'POSTS/GET_POSTS'
+const CREATE_POSTS = 'POSTS/CREATE_POST'
+const UPDATE_POST = 'POSTS/UPDATE_POST'
+const DELETE_POST = 'POSTS/DELETE_POST'
+const UNLOAD_POSTS = 'POSTS/UNLOAD_POSTS'
 
 
 const getPosts = (post) => ({
@@ -10,18 +10,18 @@ const getPosts = (post) => ({
     post
 });
 
-const createPosts = (post) => ({
-    type: CREATE_POSTS,
+const createPost = (post) => ({
+    type: CREATE_POST,
     post
 })
 
 const editPosts = (post) => ({
-    type: UPDATE_POSTS,
+    type: UPDATE_POST,
     post
 })
 
-const deletePosts = (post) => ({
-    type: DELETE_POSTS,
+const deletePost = (post) => ({
+    type: DELETE_POST,
     post
 
 })
@@ -42,7 +42,7 @@ export const get_posts= (id) => async (dispatch) => {
 
 }
 
-export const create_posts = (
+export const create_post = (
     user_id,
     content,
     comment,
@@ -69,7 +69,7 @@ export const create_posts = (
     if (response.ok) {
         const data = await response.json();
         console.log(data)
-        dispatch(createPosts(data))
+        dispatch(createPost(data))
         return data;
     } else if (response.status < 500) {
         const data = await response.json();
@@ -82,7 +82,7 @@ export const create_posts = (
 
 }
 
-export const update_posts = (
+export const update_post = (
     id,
     content,
     comment,
@@ -115,7 +115,7 @@ export const update_posts = (
 };
 
 
-export const delete_posts = (postsId) => async (dispatch) => {
+export const delete_post = (postsId) => async (dispatch) => {
 
     const response = await fetch(`/api/posts/${postsId}`, {
         method: 'delete',
@@ -127,7 +127,7 @@ export const delete_posts = (postsId) => async (dispatch) => {
 
     const data = await response.json()
 
-    dispatch(deletePosts(Number(data)));
+    dispatch(deletePost(Number(data)));
 }
 
 
