@@ -22,9 +22,9 @@ def delete_posts(postid):
 
 
 
-@posts_routes.route('/<int:postid>', methods=['post'])
+@posts_routes.route('/', methods=['post'])
 @login_required
-def create_posts(postid):
+def create_posts():
     req = request.get_json()
     post = Post(
         user_id=current_user.id,
@@ -57,9 +57,9 @@ def edit_posts(postid):
     return post.to_dict()
 
 
-@posts_routes.route('/<int:id>/upload', methods=['POST'])
+@posts_routes.route('/<int:postid>/upload', methods=['POST'])
 @login_required
-def upload_image(id):
+def upload_image(postid):
     if "image" not in request.files:
         return {"errors": "image required"}, 400
 
@@ -80,6 +80,6 @@ def upload_image(id):
 
     url = upload["url"]
     # flask_login allows us to get the current user from the request
-    post = Post.query.get(id)
+    post = Post.query.get(postid)
     post.research_paper = url
     db.session.commit()

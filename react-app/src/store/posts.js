@@ -1,5 +1,5 @@
 const LOAD_POSTS = 'POSTS/GET_POSTS'
-const CREATE_POSTS = 'POSTS/CREATE_POST'
+const CREATE_POST = 'POSTS/CREATE_POST'
 const UPDATE_POST = 'POSTS/UPDATE_POST'
 const DELETE_POST = 'POSTS/DELETE_POST'
 const UNLOAD_POSTS = 'POSTS/UNLOAD_POSTS'
@@ -115,9 +115,9 @@ export const update_post = (
 };
 
 
-export const delete_post = (postsId) => async (dispatch) => {
+export const delete_post = (id) => async (dispatch) => {
 
-    const response = await fetch(`/api/posts/${postsId}`, {
+    const response = await fetch(`/api/posts/${id}`, {
         method: 'delete',
         headers: {
             'Content-Type': 'application/json'
@@ -142,15 +142,15 @@ export default function reducer(state = initialState, action) {
 
 
             return {...state, ...action.posts}
-        case CREATE_POSTS:
+        case CREATE_POST:
 
             state.list.push(action.posts)
             return {...state}
-        case UPDATE_POSTS:
+        case UPDATE_POST:
             let newstate = action.posts
 
             return newstate
-        case DELETE_POSTS:
+        case DELETE_POST:
 
             return state.list.filter(post=>(
                 post.id !== action.post
