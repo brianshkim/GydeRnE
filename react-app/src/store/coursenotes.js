@@ -1,25 +1,25 @@
 const LOAD_COURSENOTES = 'COURSES/GET_COURSENOTES'
 const CREATE_COURSENOTE = 'COURSES/CREATE_COURSENOTE'
-const UPDATE_COURSESNOTE = 'COURSES/UPDATE_COURSENOTE'
-const DELETE_COURSENOTE = 'COURSES/DELETE_COURSE'
-const UNLOAD_COURSESNOTES = 'COURSES/UNLOAD_COURSES'
+const UPDATE_COURSENOTE = 'COURSES/UPDATE_COURSENOTE'
+const DELETE_COURSENOTE = 'COURSES/DELETE_COURSENOTE'
+const UNLOAD_COURSENOTES = 'COURSES/UNLOAD_COURSENOTES'
 
-const loadCourses = (coursenote) => ({
-    type: LOAD_COURSESNOTES,
+const loadCoursenotes = (coursenote) => ({
+    type: LOAD_COURSENOTES,
     coursenote
 });
 
-const createCourse = (coursenote) => ({
+const createCoursenote = (coursenote) => ({
     type: CREATE_COURSENOTE,
     coursenote
 })
 
-const updateCourses = (coursenote) => ({
-    type: UPDATE_COURSESNOTE,
+const updateCoursenote = (coursenote) => ({
+    type: UPDATE_COURSENOTE,
     coursenote
 })
 
-const deleteCourse = (coursenote) => ({
+const deleteCoursenote = (coursenote) => ({
     type: DELETE_COURSENOTE,
     coursenote
 
@@ -30,44 +30,50 @@ const unloadCourses = () => ({
 })
 
 
-export const unload_courses = () => async(dispatch)=>{
+export const unload_coursenotes = () => async(dispatch)=>{
     dispatch(unloadCourses())
 }
 
 export const load_coursenotes = () => async (dispatch) => {
-    const response = await fetch(`/api/courses`);
+    const response = await fetch(`/api/coursenotes`);
     const data = await response.json()
 
-    dispatch(loadCourses(data.allcourses));
+    dispatch(loadCoursenotes(data.allcourses));
 
 
 }
 
 
 
-export const get_course = (id) => async (dispatch) => {
-    const response = await fetch(`/api/course/${id}`);
+export const get_coursenotes = (id) => async (dispatch) => {
+    const response = await fetch(`/api/coursenotes/${id}`);
     const data = await response.json()
     console.log(data)
-    dispatch(loadCourses(data));
+    dispatch(loadCoursenotes(data));
 
 }
 
-export const create_course = (
-    professor_id,
-    title,
-    subject,
+export const create_coursenote = (
+    course_id,
+    content,
+    tex,
+    comment,
+    root,
+    resp_id
 
        ) => async (dispatch) => {
-    const response = await fetch(`/api/course/`, {
+    const response = await fetch(`/api/coursenotes/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            'professor_id':professor_id,
-            'title':title,
-            'subject':subject,
+            'course_id':course_id,
+            'content':content,
+            'tex':tex,
+            'comment':comment,
+            'root': root,
+            'resp_id':resp_id
 
         })
     });
@@ -75,7 +81,7 @@ export const create_course = (
     if (response.ok) {
         const data = await response.json();
         console.log(data)
-        dispatch(createCourse(data))
+        dispatch(createCoursenote(data))
         return data;
     } else if (response.status < 500) {
         const data = await response.json();
@@ -88,21 +94,27 @@ export const create_course = (
 
 }
 
-export const update_course = (
+export const update_coursenote = (
     id,
-    professor_id,
-    title,
-    subject,
+    course_id,
+    content,
+    tex,
+    comment,
+    root,
+    resp_id
 ) => async (dispatch) => {
-    const response = await fetch(`/api/courses/${id}`, {
+    const response = await fetch(`/api/coursenotes/${id}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            'professor_id':professor_id,
-            'title':title,
-            'subject':subject,
+            'course_id':course_id,
+            'content':content,
+            'tex':tex,
+            'comment':comment,
+            'root': root,
+            'resp_id':resp_id
 
         })
     });
@@ -110,14 +122,14 @@ export const update_course = (
     const data = await response.json()
 
 
-    dispatch(updateCourses(data));
+    dispatch(updateCoursenote(data));
 
 
 };
 
-export const delete_course = (id) => async (dispatch) => {
+export const delete_coursenote = (id) => async (dispatch) => {
 
-    const response = await fetch(`/api/courses/${id}`, {
+    const response = await fetch(`/api/coursenotes/${id}`, {
         method: 'delete',
         headers: {
             'Content-Type': 'application/json'
@@ -127,45 +139,45 @@ export const delete_course = (id) => async (dispatch) => {
 
     const data = await response.json()
 
-    dispatch(deleteCourse(Number(data)));
+    dispatch(deleteCoursenote(Number(data)));
 }
 
 let initialState = {list:[], studentlist:[]};
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case LOAD_COURSENOTES:
-            let courselist = []
+            let coursenotelist = []
             action.courses.forEach(course => {
-                courselist.push(course)
+                coursenotelist.push(course)
             })
-            courselist.sort((a, b)=>{
+            coursenotelist.sort((a, b)=>{
                 return a.title.localeCompare(b.name)
             })
-            return {...state, list: courselist}
-        case CREATE_COURSE:
+            return {...state, list: coursenotelist}
+        case CREATE_COURSENOTE:
 
-            state.list.push(action.course)
+            state.list.push(action.coursenote)
             state.list.sort((a, b)=>{
                 return a.title.localeCompare(b.name)
             })
             return {...state}
-        case UPDATE_COURSES:
-            let newstate = state.list.map((course)=>{
-                if( course.id === action.course.id){
-                    course.title = action.course.title
+        case UPDATE_COURSENOTE:
+            let newstate = state.list.map((coursenote)=>{
+                if( coursenote.id === action.coursenote.id){
+                    coursenote.title = action.coursenote.title
                 }
-                return course
+                return coursenote
 
             })
 
             return newstate
-        case DELETE_COURSE:
+        case DELETE_COURSENOTE:
 
-            return state.list.filter(course=>(
-                course.id !== action.course
+            return state.list.filter(coursenote=>(
+                coursenote.id !== action.coursenote
 
             ))
-        case UNLOAD_COURSES:
+        case UNLOAD_COURSENOTES:
 
             return initialState
 
