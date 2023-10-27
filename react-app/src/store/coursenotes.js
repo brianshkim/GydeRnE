@@ -1,32 +1,32 @@
-const LOAD_COURSES = 'COURSES/GET_COURSES'
-const CREATE_COURSE = 'COURSES/CREATE_COURSE'
-const UPDATE_COURSES = 'COURSES/UPDATE_COURSE'
-const DELETE_COURSE = 'COURSES/DELETE_COURSE'
-const UNLOAD_COURSES = 'COURSES/UNLOAD_COURSES'
+const LOAD_COURSENOTES = 'COURSES/GET_COURSENOTES'
+const CREATE_COURSENOTE = 'COURSES/CREATE_COURSENOTE'
+const UPDATE_COURSESNOTE = 'COURSES/UPDATE_COURSENOTE'
+const DELETE_COURSENOTE = 'COURSES/DELETE_COURSE'
+const UNLOAD_COURSESNOTES = 'COURSES/UNLOAD_COURSES'
 
-const loadCourses = (course) => ({
-    type: LOAD_COURSES,
-    course
+const loadCourses = (coursenote) => ({
+    type: LOAD_COURSESNOTES,
+    coursenote
 });
 
-const createCourse = (course) => ({
-    type: CREATE_COURSE,
-    course
+const createCourse = (coursenote) => ({
+    type: CREATE_COURSENOTE,
+    coursenote
 })
 
-const updateCourses = (course) => ({
-    type: UPDATE_COURSES,
-    course
+const updateCourses = (coursenote) => ({
+    type: UPDATE_COURSESNOTE,
+    coursenote
 })
 
-const deleteCourse = (course) => ({
-    type: DELETE_COURSE,
-    course
+const deleteCourse = (coursenote) => ({
+    type: DELETE_COURSENOTE,
+    coursenote
 
 })
 
 const unloadCourses = () => ({
-    type: UNLOAD_COURSES
+    type: UNLOAD_COURSENOTES
 })
 
 
@@ -34,7 +34,7 @@ export const unload_courses = () => async(dispatch)=>{
     dispatch(unloadCourses())
 }
 
-export const load_courses = (id) => async (dispatch) => {
+export const load_coursenotes = () => async (dispatch) => {
     const response = await fetch(`/api/courses`);
     const data = await response.json()
 
@@ -133,7 +133,7 @@ export const delete_course = (id) => async (dispatch) => {
 let initialState = {list:[], studentlist:[]};
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case LOAD_COURSES:
+        case LOAD_COURSENOTES:
             let courselist = []
             action.courses.forEach(course => {
                 courselist.push(course)
