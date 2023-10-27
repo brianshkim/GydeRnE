@@ -1,0 +1,176 @@
+const LOAD_COURSENOTES = 'COURSES/GET_COURSENOTES'
+const CREATE_COURSENOTE = 'COURSES/CREATE_COURSENOTE'
+const UPDATE_COURSESNOTE = 'COURSES/UPDATE_COURSENOTE'
+const DELETE_COURSENOTE = 'COURSES/DELETE_COURSE'
+const UNLOAD_COURSESNOTES = 'COURSES/UNLOAD_COURSES'
+
+const loadCourses = (coursenote) => ({
+    type: LOAD_COURSESNOTES,
+    coursenote
+});
+
+const createCourse = (coursenote) => ({
+    type: CREATE_COURSENOTE,
+    coursenote
+})
+
+const updateCourses = (coursenote) => ({
+    type: UPDATE_COURSESNOTE,
+    coursenote
+})
+
+const deleteCourse = (coursenote) => ({
+    type: DELETE_COURSENOTE,
+    coursenote
+
+})
+
+const unloadCourses = () => ({
+    type: UNLOAD_COURSENOTES
+})
+
+
+export const unload_courses = () => async(dispatch)=>{
+    dispatch(unloadCourses())
+}
+
+export const load_courses = (id) => async (dispatch) => {
+    const response = await fetch(`/api/courses`);
+    const data = await response.json()
+
+    dispatch(loadCourses(data.allcourses));
+
+
+}
+
+
+
+export const get_course = (id) => async (dispatch) => {
+    const response = await fetch(`/api/course/${id}`);
+    const data = await response.json()
+    console.log(data)
+    dispatch(loadCourses(data));
+
+}
+
+export const create_course = (
+    professor_id,
+    title,
+    subject,
+
+       ) => async (dispatch) => {
+    const response = await fetch(`/api/course/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'professor_id':professor_id,
+            'title':title,
+            'subject':subject,
+
+        })
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data)
+        dispatch(createCourse(data))
+        return data;
+    } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.errors) {
+            return data.errors;
+        }
+    } else {
+        return ['An error occurred. Please try again.']
+    }
+
+}
+
+export const update_course = (
+    id,
+    professor_id,
+    title,
+    subject,
+) => async (dispatch) => {
+    const response = await fetch(`/api/courses/${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'professor_id':professor_id,
+            'title':title,
+            'subject':subject,
+
+        })
+    });
+
+    const data = await response.json()
+
+
+    dispatch(updateCourses(data));
+
+
+};
+
+export const delete_course = (id) => async (dispatch) => {
+
+    const response = await fetch(`/api/courses/${id}`, {
+        method: 'delete',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
+    });
+
+    const data = await response.json()
+
+    dispatch(deleteCourse(Number(data)));
+}
+
+let initialState = {list:[], studentlist:[]};
+export default function reducer(state = initialState, action) {
+    switch (action.type) {
+        case LOAD_COURSES:
+            let courselist = []
+            action.courses.forEach(course => {
+                courselist.push(course)
+            })
+            courselist.sort((a, b)=>{
+                return a.title.localeCompare(b.name)
+            })
+            return {...state, list: courselist}
+        case CREATE_COURSE:
+
+            state.list.push(action.course)
+            state.list.sort((a, b)=>{
+                return a.title.localeCompare(b.name)
+            })
+            return {...state}
+        case UPDATE_COURSES:
+            let newstate = state.list.map((course)=>{
+                if( course.id === action.course.id){
+                    course.title = action.course.title
+                }
+                return course
+
+            })
+
+            return newstate
+        case DELETE_COURSE:
+
+            return state.list.filter(course=>(
+                course.id !== action.course
+
+            ))
+        case UNLOAD_COURSES:
+
+            return initialState
+
+
+        default:
+            return state;
+    }
+}

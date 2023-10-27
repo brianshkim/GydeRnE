@@ -12,6 +12,7 @@ class Post(db.Model):
      comment = db.Column(db.String(600), nullable=False)
      research = db.Column(db.Boolean)
      research_paper=db.Column(db.String)
+     tex = db.Column(ARRAY(db.String))
      root= db.Column(db.Boolean)
      resp_id = db.Column(db.Integer)
      created_at = db.Column(db.DateTime)

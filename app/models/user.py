@@ -67,7 +67,7 @@ class User(db.Model, UserMixin):
     education = db.relationship('Education', back_populates="users")
     accomplishments = db.relationship("Accomplishment", back_populates="users")
     courses = db.relationship("Course", secondary=courseusers, back_populates="users", cascade="all, delete")
-    users = db.relationship('Coursenotes', back_populates='users')
+    coursenotes = db.relationship('Coursenote', back_populates='users')
     publications = db.relationship("Publication", secondary=publicationusers, back_populates="users", cascade="all, delete")
     journals = db.relationship("Journal", secondary=journalscommittee, back_populates="users", cascade="all, delete")
     posts = db.relationship("Post", back_populates="users")

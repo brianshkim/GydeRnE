@@ -29,10 +29,12 @@ def create_posts():
     post = Post(
         user_id=current_user.id,
         content=req['content'],
+        tex=req['tex'],
         comment=req['comment'],
         root=req['root'],
         research=req['research'],
         resp_id=req['resp_id'],
+
         )
     db.session.add(post)
     db.session.commit()
@@ -48,8 +50,7 @@ def edit_posts(postid):
         post.content=req['content']
         post.root=req['root']
         post.comment=req['comment']
-        post.resesarch=req['resesarch']
-        post.created_at=req['created_at']
+        post.resesarch=req['research']
         post.updated_at=req['updated_at']
 
 

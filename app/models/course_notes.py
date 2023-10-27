@@ -9,6 +9,7 @@ class Coursenote(db.Model):
      user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
      course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
      content = db.Column(db.Text, nullable=False )
+     tex = db.Column(ARRAY(db.String))
      comment = db.Column(db.String(600), nullable=False)
      resp_id = db.Column(db.Integer)
      created_at = db.Column(db.DateTime)
