@@ -11,6 +11,8 @@ import User from './components/User';
 import Test from './components/test';
 import { authenticate } from './store/session';
 import Profile from './components/Profile';
+import {MathJaxContext} from 'better-react-mathjax'
+
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -28,6 +30,7 @@ function App() {
   }
 
   return (
+
     <BrowserRouter>
 
       <NavBar />
@@ -59,6 +62,7 @@ function App() {
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>
+
   );
 }
 

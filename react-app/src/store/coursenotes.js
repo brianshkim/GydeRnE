@@ -34,7 +34,7 @@ export const unload_courses = () => async(dispatch)=>{
     dispatch(unloadCourses())
 }
 
-export const load_courses = (id) => async (dispatch) => {
+export const load_coursenotes = () => async (dispatch) => {
     const response = await fetch(`/api/courses`);
     const data = await response.json()
 
@@ -133,7 +133,7 @@ export const delete_course = (id) => async (dispatch) => {
 let initialState = {list:[], studentlist:[]};
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case LOAD_COURSES:
+        case LOAD_COURSENOTES:
             let courselist = []
             action.courses.forEach(course => {
                 courselist.push(course)
