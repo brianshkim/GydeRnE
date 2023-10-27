@@ -11,7 +11,6 @@ function ProfilePageCard() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   // const userProfile = useSelector((state) => state.profileImages);
-  // const userImagesArr = Object.values(userImages);
 
 
   return (
@@ -19,7 +18,7 @@ function ProfilePageCard() {
     <div className="profile-head-default">
       <div className="frame">
         <div className="div">
-          <div className="text-wrapper">Taaral Contractor</div>
+          <div className="text-wrapper">{sessionUser?.username}</div>
           <div className="text-wrapper-2">Professor at Stanford University</div>
           <div className="text-wrapper-2">@taaralcontractor</div>
         </div>

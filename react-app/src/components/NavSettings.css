@@ -2,7 +2,7 @@
   position: relative;
   max-width: 100%;
   text-align: center;
-  z-index: 200;
+  z-index: 100;
 }
 [type="checkbox"]:checked,
 [type="checkbox"]:not(:checked){
@@ -79,7 +79,6 @@
 /* triangle added*/
 .section-dropdown {
   position: absolute;
-  display: flex;
   padding: 5px;
   background-color: #333333;
   top: 70px;
@@ -125,9 +124,36 @@
 }
 
 .settings-drop-item,
-.logout-button
+.logout-button,
+.login-button,
+.signup-button
 {
   color:white;
+  display: flex;
+  justify-content: left;
+  font-size: 14px;
+  font-style: normal;
+  font-family:'Open Sans', sans-serif; 
+  background-color: transparent;
+  border: none;
+
+  text-decoration: none;
+  list-style: none;
+  left:0;
+}
+
+.settings-drop-item
+{
+  padding: 8px;
+}
+
+.logout-button,
+.login-button,
+.signup-button
+{
+  color:white;
+  display: flex;
+  justify-content: left;
   font-size: 14px;
   font-style: normal;
   font-family:'Open Sans', sans-serif; 
@@ -135,8 +161,7 @@
   border: none;
   text-decoration: none;
   list-style: none;
-  width:100%;
-  padding: 8px 0px 8px 0px;
+  left:0;
 }
 
 .settings-drop-item:hover,

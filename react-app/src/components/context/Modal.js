@@ -22,18 +22,20 @@ export function ModalProvider({ children }) {
     );
 }
 
-export function Modal({ onClose, children }) {
-    const modalNode = useContext(ModalContext);
-    if (!modalNode) return null;
-
-    return ReactDOM.createPortal(
-        <div className='modal-container'>
-            <div className='modal-content'>
-            <button className="modal-x" onclick={onClose} aria-label="close">❌</button>
+    export function Modal({ onClose, children }) {
+        const modalNode = useContext(ModalContext);
+        if (!modalNode) return null;
+      
+        return ReactDOM.createPortal(
+            
+          <div className="modal">
+            <div className="modal-content">
                 {children}
-            </div>
-        </div>,
-        modalNode
-    );
-}
-
+                <a href="#" onClick={onClose} class="modal-close">&times;</a>
+            </div> 
+          </div>,
+          
+          modalNode
+        );
+      }
+      
