@@ -10,6 +10,21 @@ def user_exists(form, field):
     user = User.query.filter(User.email == email).first()
     if user:
         raise ValidationError('Email address is already in use.')
+    if not email_validation(email):
+        raise ValidationError("Not a Valid Email")
+
+def email_validation(email):
+    a=0
+    y=len(email)
+    dot=email.find(".")
+    at=email.find("@")
+    for i in range (0,at):
+        if((email[i]>='a' and email[i]<='z') or (email[i]>='A' and email[i]<='Z')):
+            a=a+1
+    if(a>0 and at>0 and (dot-at)>0 and (dot+1)<y and email[-3:]=="edu"):
+        return True
+    else:
+        return False
 
 
 def username_exists(form, field):

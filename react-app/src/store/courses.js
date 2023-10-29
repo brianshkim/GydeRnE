@@ -1,55 +1,173 @@
-const LOAD_ALL_COURSES = 'allCOURSES/GET_ALL_COURSES'
-const JOIN_SERVER = 'allCOURSES/JOIN_SERVER'
-const UNLOAD_ALL_COURSES = 'allCOURSES/UNLOAD_ALL_COURSES'
+const LOAD_COURSES = 'COURSES/GET_COURSES'
+const CREATE_COURSE = 'COURSES/CREATE_COURSE'
+const UPDATE_COURSES = 'COURSES/UPDATE_COURSE'
+const DELETE_COURSE = 'COURSES/DELETE_COURSE'
+const UNLOAD_COURSES = 'COURSES/UNLOAD_COURSES'
 
-
-const loadCOURSES = (COURSES) => ({
-    type: LOAD_ALL_COURSES,
-    COURSES
+const loadCourses = (course) => ({
+    type: LOAD_COURSES,
+    course
 });
 
-const unloadallCOURSES = () => ({
-    type: UNLOAD_ALL_COURSES
+const createCourse = (course) => ({
+    type: CREATE_COURSE,
+    course
+})
+
+const updateCourses = (course) => ({
+    type: UPDATE_COURSES,
+    course
+})
+
+const deleteCourse = (course) => ({
+    type: DELETE_COURSE,
+    course
+
+})
+
+const unloadCourses = () => ({
+    type: UNLOAD_COURSES
 })
 
 
-export const unload_allCOURSES = () => async(dispatch)=>{
-    dispatch(unloadallCOURSES())
+export const unload_courses = () => async(dispatch)=>{
+    dispatch(unloadCourses())
 }
 
-export const load_COURSES = (id) => async (dispatch) => {
-    const response = await fetch(`/api/COURSES/COURSES`);
+export const load_courses = (id) => async (dispatch) => {
+    const response = await fetch(`/api/courses`);
     const data = await response.json()
 
-    dispatch(loadCOURSES(data.allCOURSES));
+    dispatch(loadCourses(data.allcourses));
 
 
 }
 
-let initialState = {list:{}, userlist:{}};
+
+
+export const get_course = (id) => async (dispatch) => {
+    const response = await fetch(`/api/course/${id}`);
+    const data = await response.json()
+    console.log(data)
+    dispatch(loadCourses(data));
+
+}
+
+export const create_course = (
+    professor_id,
+    title,
+    subject,
+
+       ) => async (dispatch) => {
+    const response = await fetch(`/api/course/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'professor_id':professor_id,
+            'title':title,
+            'subject':subject,
+
+        })
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data)
+        dispatch(createCourse(data))
+        return data;
+    } else if (response.status < 500) {
+        const data = await response.json();
+        if (data.errors) {
+            return data.errors;
+        }
+    } else {
+        return ['An error occurred. Please try again.']
+    }
+
+}
+
+export const update_course = (
+    id,
+    professor_id,
+    title,
+    subject,
+) => async (dispatch) => {
+    const response = await fetch(`/api/courses/${id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'professor_id':professor_id,
+            'title':title,
+            'subject':subject,
+
+        })
+    });
+
+    const data = await response.json()
+
+
+    dispatch(updateCourses(data));
+
+
+};
+
+export const delete_course = (id) => async (dispatch) => {
+
+    const response = await fetch(`/api/courses/${id}`, {
+        method: 'delete',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
+    });
+
+    const data = await response.json()
+
+    dispatch(deleteCourse(Number(data)));
+}
+
+let initialState = {list:[], studentlist:[]};
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case LOAD_ALL_COURSES:
-            let serverlist = []
-            let userlists = {}
-            action.COURSES.forEach(server => {
-                serverlist.push(server)
-                let COURSES = {}
-                let users=[]
+        case LOAD_COURSES:
+            let courselist = []
+            action.courses.forEach(course => {
+                courselist.push(course)
+            })
+            courselist.sort((a, b)=>{
+                return a.title.localeCompare(b.name)
+            })
+            return {...state, list: courselist}
+        case CREATE_COURSE:
 
-                server.users.forEach(user=>{
-                    users.push(user.id)
+            state.list.push(action.course)
+            state.list.sort((a, b)=>{
+                return a.title.localeCompare(b.name)
+            })
+            return {...state}
+        case UPDATE_COURSES:
+            let newstate = state.list.map((course)=>{
+                if( course.id === action.course.id){
+                    course.title = action.course.title
+                }
+                return course
 
             })
-                userlists[server.id]=users
 
-            })
-            serverlist.sort((a, b)=>{
-                return a.id - b.id
-            })
-            return {...state, list: serverlist, userlist:userlists}
-        case UNLOAD_ALL_COURSES:
-            return initialState = {list:[]};
+            return newstate
+        case DELETE_COURSE:
+
+            return state.list.filter(course=>(
+                course.id !== action.course
+
+            ))
+        case UNLOAD_COURSES:
+
+            return initialState
 
 
         default:

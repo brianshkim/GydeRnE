@@ -1,55 +1,55 @@
-const LOAD_POSTS = 'ACCOMPLISHMENTS/GET_POSTS'
-const CREATE_POSTS = 'POSTS/CREATE_POSTS'
-const UPDATE_POSTS = 'POSTS/UPDATE_POSTS'
-const DELETE_POSTS = 'POSTS/DELETE_POSTS'
-const UNLOAD_POSTS = 'ACCOMPLISHMENTS/UNLOAD_POSTS'
+const LOAD_JOURNALS = 'JOURNALS/GET_JOURNALS'
+const CREATE_JOURNAL = 'JOURNALS/CREATE_JOURNAL'
+const UPDATE_JOURNAL = 'JOURNALS/UPDATE_JOURNAL'
+const DELETE_JOURNAL = 'JOURNALS/DELETE_JOURNAL'
+const UNLOAD_JOURNALS = 'ACCOMPLISHMENTS/UNLOAD_JOURNAL'
 
 
-const getPosts = (post) => ({
-    type: LOAD_POSTS,
-    post
+const getJournals = (journal) => ({
+    type: LOAD_JOURNALS,
+    journal
 });
 
-const createPosts = (post) => ({
-    type: CREATE_POSTS,
-    post
+const createJournal = (journal) => ({
+    type: CREATE_JOURNAL,
+    journal
 })
 
-const editPosts = (post) => ({
-    type: UPDATE_POSTS,
-    post
+const editJournal = (journal) => ({
+    type: UPDATE_JOURNAL,
+    journal
 })
 
-const deletePosts = (post) => ({
-    type: DELETE_POSTS,
-    post
+const deleteJournal = (journal) => ({
+    type: DELETE_JOURNAL,
+    journal
 
 })
 
-const unloadPosts = ()=>({
-    type: UNLOAD_POSTS
+const unloadJournals = ()=>({
+    type: UNLOAD_JOURNALS
 })
 
-export const unload_posts = () => async(dispatch)=>{
-    dispatch(unloadPosts())
+export const unload_journals = () => async(dispatch)=>{
+    dispatch(unloadJournals())
 }
 
-export const get_posts= (id) => async (dispatch) => {
-    const response = await fetch(`/api/posts/${id}`);
+export const get_journals= (id) => async (dispatch) => {
+    const response = await fetch(`/api/journals/${id}`);
     const data = await response.json()
     console.log(data)
-    dispatch(getPosts(data));
+    dispatch(getJournals(data));
 
 }
 
-export const create_posts = (
+export const create_journals = (
     firstname="",
     lastname="",
     highest_degree="",
     publications=[],
     awards=[]
        ) => async (dispatch) => {
-    const response = await fetch(`/api/posts/`, {
+    const response = await fetch(`/api/journals/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ export const create_posts = (
     if (response.ok) {
         const data = await response.json();
         console.log(data)
-        dispatch(createPosts(data))
+        dispatch(createJournal(data))
         return data;
     } else if (response.status < 500) {
         const data = await response.json();
@@ -81,7 +81,7 @@ export const create_posts = (
 
 }
 
-export const update_posts = (
+export const update_journals = (
     id,
     firstname,
     lastname,
@@ -90,7 +90,7 @@ export const update_posts = (
     awards,
 
     ) => async (dispatch) => {
-    const response = await fetch(`/api/posts/${id}`, {
+    const response = await fetch(`/api/journals/${id}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -108,15 +108,15 @@ export const update_posts = (
     const data = await response.json()
 
 
-    dispatch(editPosts(data));
+    dispatch(editJournal(data));
 
 
 };
 
 
-export const delete_posts = (postsId) => async (dispatch) => {
+export const delete_journal = (journalId) => async (dispatch) => {
 
-    const response = await fetch(`/api/posts/${postsId}`, {
+    const response = await fetch(`/api/journals/${journalId}`, {
         method: 'delete',
         headers: {
             'Content-Type': 'application/json'
@@ -126,7 +126,7 @@ export const delete_posts = (postsId) => async (dispatch) => {
 
     const data = await response.json()
 
-    dispatch(deletePosts(Number(data)));
+    dispatch(deleteJournal(Number(data)));
 }
 
 
@@ -137,25 +137,25 @@ export const delete_posts = (postsId) => async (dispatch) => {
 let initialState = {};
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case LOAD_POSTS:
+        case LOAD_JOURNALS:
 
 
-            return {...state, ...action.posts}
-        case CREATE_POSTS:
+            return {...state, ...action.journal}
+        case CREATE_JOURNAL:
 
-            state.list.push(action.posts)
+            state.list.push(action.journal)
             return {...state}
-        case UPDATE_POSTS:
-            let newstate = action.posts
+        case UPDATE_JOURNAL:
+            let newstate = action.journal
 
             return newstate
-        case DELETE_POSTS:
+        case DELETE_JOURNAL:
 
-            return state.list.filter(post=>(
-                post.id !== action.post
+            return state.list.filter(journal=>(
+                journal.id !== action.journal
 
             ))
-        case UNLOAD_POSTS:
+        case UNLOAD_JOURNALS:
 
             return initialState
 

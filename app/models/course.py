@@ -18,6 +18,9 @@ class Course(db.Model):
         }
 
      users = db.relationship("User", secondary=courseusers, back_populates="courses", cascade="all, delete")
-
+     coursenotes = db.relationship('Coursenote', back_populates='courses')
      def get_students(self):
-         return [user.to_dict() for user in self.users]
+        return [user.to_dict() for user in self.users]
+
+     def get_course(self):
+        return self.coursenotes.to_dict()
