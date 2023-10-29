@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { MathComponent } from 'mathjax-react'
 import { MathJax } from 'better-react-mathjax';
 
 
