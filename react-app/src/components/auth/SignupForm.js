@@ -10,6 +10,8 @@ const SignupForm = () => {
   const [username, setUsername] = useState('');
   const [firstname, setFirstName] = useState('');
   const [lastname, setLastName] = useState('');
+  const [professor, setProfessor] = useState('');
+  const [schoolName, setSchoolName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
@@ -36,6 +38,14 @@ const SignupForm = () => {
 
   const updateUsername = (e) => {
     setUsername(e.target.value);
+  };
+
+  const updateProfessor = (e) => {
+    setProfessor(e.target.value);
+  };
+
+  const updateSchoolName = (e) => {
+    setSchoolName(e.target.value);
   };
 
   const updateEmail = (e) => {
@@ -65,78 +75,110 @@ const SignupForm = () => {
         Sign Up with Gyde
       </h3>
 
-        <div className='form-item'>
-          <i class="favicon fa-solid fa-user-pen"></i>
-          <input
-            className='form-item-input'
-            type='text'
-            name='username'
-            placeholder='Username'
-            onChange={updateUsername}
-            value={username}
-          />
-
+      <div className='form-item'>
+        <i class="favicon fa-solid fa-user-pen"></i>
+        <input
+          className='form-item-input'
+          type='text'
+          name='username'
+          placeholder='Username'
+          onChange={updateUsername}
+          value={username}
+        />
       </div>
 
-        <div className='form-item'>
-          <i class="favicon fa-solid fa-user"></i>
-          <input
-            className='form-item-input'
-            type='text'
-            name='firstname'
-            placeholder='First Name'
-            onChange={updateFirstName}
-            value={firstname}
-          ></input>
-        </div>
+      <div className='form-item'>
+        <i class="favicon fa-solid fa-user"></i>
+        <input
+          className='form-item-input'
+          type='text'
+          name='firstname'
+          placeholder='First Name'
+          onChange={updateFirstName}
+          value={firstname}
+        ></input>
+      </div>
 
-        <div className='form-item'>
-          <i class="favicon fa-solid fa-user"></i>
-          <input
-            className='form-item-input'
-            type='text'
-            name='lastname'
-            placeholder='Last Name'
-            onChange={updateLastName}
-            value={lastname}
-          ></input>
-        </div>
+      <div className='form-item'>
+        <i class="favicon fa-solid fa-user"></i>
+        <input
+          className='form-item-input'
+          type='text'
+          name='lastname'
+          placeholder='Last Name'
+          onChange={updateLastName}
+          value={lastname}
+        ></input>
+      </div>
 
-        <div className='form-item'>
-          <i className="favicon fa-regular fa-envelope"></i>
-          <input
-            className='form-item-input'
-            type='text'
-            name='email'
-            placeholder='Email'
-            onChange={updateEmail}
-            value={email}
-          ></input>
-        </div>
+      <div className='form-item-bool'>
+        <i className="isProfLabel">I am a:</i>
 
-        <div className='form-item'>
-          <i class="favicon fa-solid fa-lock"></i>
-          <input
-            className='form-item-input'
-            type='password'
-            name='password'
-            placeholder='Password'
-            onChange={updatePassword}
-            value={password}
-          ></input>
-        </div>
+        <div className="isprof-selection">
+          <div>
+            <input type="radio" id="isStudent" name='isStudent'
+              onClick={updateProfessor} value={professor}
+              checked={setProfessor=== true? false : false} />
+            <label for="isStudent">Student</label>
 
-        <div className='form-item'>
-          <i class="favicon fa-solid fa-lock"></i>
-          <input
-            className='form-item-input'
-            type='password'
-            name='repeat_password'
-            placeholder='Repeat Password'
-            onChange={updateRepeatPassword}
-            value={repeatPassword}
-            required={true}
-          ></input>
+          </div>
+          <div>
+            <input type="radio" id="isProfessor" name='isProfessor'
+              onClick={updateProfessor} value={professor} 
+              checked={setProfessor=== false? true : true} />
+            <label for="isProfessor">Professor</label>
+          </div>
+        </div>
+      </div>
+
+
+      <div className='form-item'>
+        <i class="favicon fa-solid fa-graduation-cap"></i>
+        <input
+          className='form-item-input'
+          type='text'
+          name='schoolname'
+          placeholder='School Name'
+          onChange={updateSchoolName}
+          value={schoolName}
+        />
+      </div>
+
+      <div className='form-item'>
+        <i className="favicon fa-regular fa-envelope"></i>
+        <input
+          className='form-item-input'
+          type='text'
+          name='email'
+          placeholder='Email'
+          onChange={updateEmail}
+          value={email}
+        ></input>
+      </div>
+
+      <div className='form-item'>
+        <i class="favicon fa-solid fa-lock"></i>
+        <input
+          className='form-item-input'
+          type='password'
+          name='password'
+          placeholder='Password'
+          onChange={updatePassword}
+          value={password}
+        ></input>
+      </div>
+
+      <div className='form-item'>
+        <i class="favicon fa-solid fa-lock"></i>
+        <input
+          className='form-item-input'
+          type='password'
+          name='repeat_password'
+          placeholder='Repeat Password'
+          onChange={updateRepeatPassword}
+          value={repeatPassword}
+          required={true}
+        ></input>
 
       </div>
       <button className='modal-submit' type='submit'>Sign Up</button>

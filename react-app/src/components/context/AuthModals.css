@@ -64,6 +64,36 @@
     font-size: 16px;
 }
 
+.form-item-bool{
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:center;
+	background: none;
+	transition: .2s;
+    border-bottom: 1px solid #e6e6e6;
+
+    width: 90%;
+    height: 48px;
+    background: none;
+    padding: 0px;
+    color: #666;
+    font-size: 16px;
+}
+
+.isProfLabel{
+    width: 60px;
+    
+}
+
+.isprof-selection{
+
+    display: flex;
+    width: 50%;
+    flex-direction: row;
+}
+
 .form-item:active,
 .form-item:focus,
 .form-item:hover {
