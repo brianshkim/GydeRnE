@@ -14,3 +14,4 @@ from .folder import Folder
 from .post import Post
 from .friend import Friend
 from .friend_reqs import FriendReq
+from .course_notes import Coursenote
