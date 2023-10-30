@@ -117,15 +117,15 @@ const SignupForm = () => {
         <div className="isprof-selection">
           <div>
             <input type="radio" id="isStudent" name='isStudent'
-              onClick={updateProfessor} value={professor}
-              checked={setProfessor=== true? false : false} />
+              onClick={(e)=>updateProfessor(e)} value="student"
+              checked={professor=== "student"? true : false} />
             <label for="isStudent">Student</label>
 
           </div>
           <div>
             <input type="radio" id="isProfessor" name='isProfessor'
-              onClick={updateProfessor} value={professor} 
-              checked={setProfessor=== false? true : true} />
+              onClick={(e)=>updateProfessor(e)} value="professor"
+              checked={professor=== "professor"? true: false} />
             <label for="isProfessor">Professor</label>
           </div>
         </div>
