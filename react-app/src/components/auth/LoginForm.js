@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { login } from '../../store/session';
+import '../context/AuthModals.css';
 
 const LoginForm = () => {
   const [errors, setErrors] = useState([]);
@@ -31,15 +32,19 @@ const LoginForm = () => {
   }
 
   return (
-    <form onSubmit={onLogin}>
+    <form className='form-container' onSubmit={onLogin}>
       <div>
         {errors.map((error, ind) => (
           <div key={ind}>{error}</div>
         ))}
       </div>
-      <div>
-        <label htmlFor='email'>Email</label>
+      <h3 className='authmodal-header'>
+        Log In
+      </h3>
+      <div className='form-item'>
+        <i className="favicon fa-regular fa-envelope"></i>
         <input
+          className='form-item-input'
           name='email'
           type='text'
           placeholder='Email'
@@ -47,17 +52,18 @@ const LoginForm = () => {
           onChange={updateEmail}
         />
       </div>
-      <div>
-        <label htmlFor='password'>Password</label>
+      <div className='form-item'>
+        <i class="favicon fa-solid fa-lock"></i>
         <input
+          className='form-item-input'
           name='password'
           type='password'
           placeholder='Password'
           value={password}
           onChange={updatePassword}
         />
-        <button type='submit'>Login</button>
       </div>
+      <button className='modal-submit' type='submit'>Login</button>
     </form>
   );
 };
