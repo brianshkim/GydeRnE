@@ -18,9 +18,9 @@ function ProfilePageCard() {
     <div className="profile-head-default">
       <div className="frame">
         <div className="div">
-          <div className="text-wrapper">{sessionUser?.username}</div>
-          <div className="text-wrapper-2">Professor at Stanford University</div>
-          <div className="text-wrapper-2">@taaralcontractor</div>
+          <div className="text-wrapper">{sessionUser?.firstname} {sessionUser?.lastname}</div>
+          <div className="text-wrapper-2">{sessionUser?.role_title} at {sessionUser?.school_name}</div>
+          <div className="text-wrapper-2">@{sessionUser?.username}</div>
         </div>
       </div>
             {/* {userImagesArr[0] && (

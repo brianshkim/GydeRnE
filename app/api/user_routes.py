@@ -180,18 +180,27 @@ def remove_friend():
     return yeet_friend.to_dict()
 
 
-
-
-@user_routes.route('/<int:id>/upload', methods=['POST'])
+@user_routes.route('/<int:id>/images')
 @login_required
-def upload_image(id):
+def user_profile_images(id):
+    userProfileImages = ProfileImage.query.filter(ProfileImage.userId == id)
+
+    return jsonify({'images' :[image.to_dict() for image in userProfileImages]})
+
+
+@user_routes.route('/<int:id>/images', methods=['POST'])
+@login_required
+def add_profile_image(id):
+
     if "image" not in request.files:
-        return {"errors": "image required"}, 400
+
+        return {"errors": "Image Required."}, 400
 
     image = request.files["image"]
 
     if not allowed_file(image.filename):
-        return {"errors": "file type not permitted"}, 400
+
+        return {"errors": "Could not upload - file type must be JPG or PNG."}, 400
 
     image.filename = get_unique_filename(image.filename)
 
@@ -205,7 +214,9 @@ def upload_image(id):
 
     url = upload["url"]
     # flask_login allows us to get the current user from the request
-    user = User.query.get(id)
-    user.profile_image = url
+
+    new_image = ProfileImage(userId=current_user.id, imgUrl=url)
+    db.session.add(new_image)
     db.session.commit()
-    return {"url": url}
+
+    return {"image": new_image.to_dict()}
