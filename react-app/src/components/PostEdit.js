@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { create_post} from '../store/posts'
-const PostCreate = ({ resp_id }) => {
+import { edit_post} from '../store/posts'
+const PostEdit = ({ postid }) => {
     let user = useSelector(state => state.session.user)
     let dispatch = useDispatch()
     const [title, setTitle] = useState('')
@@ -25,7 +25,7 @@ const PostCreate = ({ resp_id }) => {
 
         e.stopPropagation()
         e.preventDefault()
-        dispatch(create_post(user.id, content,  "", true))
+        dispatch(edit_post(user.id, content,  "", true))
 
 
     }
@@ -35,7 +35,7 @@ const PostCreate = ({ resp_id }) => {
             onSubmit={handleSubmit}
             >
             <div>
-            <label>Create Post</label>
+            <label>Edit Post</label>
 
             <input
                 type="text"
@@ -68,4 +68,4 @@ const PostCreate = ({ resp_id }) => {
     )
 }
 
-export default PostCreate
+export default PostEdit

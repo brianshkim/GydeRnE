@@ -28,12 +28,11 @@ def create_posts():
     req = request.get_json()
     post = Post(
         user_id=current_user.id,
+        title=req['title'],
         content=req['content'],
-        tex=req['tex'],
-        comment=req['comment'],
         root=req['root'],
         research=req['research'],
-        resp_id=req['resp_id'],
+
 
         )
     db.session.add(post)

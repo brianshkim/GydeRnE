@@ -9,6 +9,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
 import Test from './components/test';
+import PostCreate from './components/PostCreate';
 import { authenticate } from './store/session';
 import Profile from './components/Profile';
 import {MathJaxContext} from 'better-react-mathjax'
@@ -35,6 +36,10 @@ function App() {
 
       {/* <NavBar /> */}
       <Switch>
+      <Route path='/postcreate'>
+        <NavHeader />
+          <PostCreate />
+        </Route>
         <Route path='/test'>
         <NavHeader />
           <Test />

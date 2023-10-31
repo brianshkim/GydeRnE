@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { create_post} from '../store/posts'
 const PostCreate = ({ resp_id }) => {
     let user = useSelector(state => state.session.user)
+    let posts = useSelector(state => state.posts.list)
     let dispatch = useDispatch()
     const [title, setTitle] = useState('')
     let [content, setContent] = useState('')
@@ -22,10 +23,9 @@ const PostCreate = ({ resp_id }) => {
 
 
     const handleSubmit = (e) => {
-
         e.stopPropagation()
         e.preventDefault()
-        dispatch(create_post(user.id, content,  "", true))
+        dispatch(create_post(user.id, title,content,research, null, "", true))
 
 
     }
@@ -55,9 +55,8 @@ const PostCreate = ({ resp_id }) => {
                     checked={research === true ? true : false} />
                 <label for="isResearch">Consider for research</label>
             </div>
-            <button type="submit" >Create Post</button>
             </form>
-
+            <button type="Submit" >Create Post</button>
 
 
 

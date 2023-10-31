@@ -44,12 +44,13 @@ export const get_posts= (id) => async (dispatch) => {
 
 export const create_post = (
     user_id,
+    title,
     content,
-    comment,
     research,
+    research_paper,
     root,
-    resp_id
        ) => async (dispatch) => {
+        console.log(title)
     const response = await fetch(`/api/posts/`, {
         method: 'POST',
         headers: {
@@ -57,11 +58,11 @@ export const create_post = (
         },
         body: JSON.stringify({
             "user_id": user_id,
+            "title": title,
             "content": content,
-            "comment": comment,
             "research": research,
+            "research_paper":research_paper,
             "root": root,
-            "resp_id": resp_id
 
         })
     });
@@ -85,10 +86,13 @@ export const create_post = (
 export const update_post = (
     id,
     content,
+    title,
     comment,
     research,
+    research_paper,
+    tex,
     root,
-    resp_id
+    resp_id,
 
     ) => async (dispatch) => {
     const response = await fetch(`/api/posts/${id}`, {
@@ -98,8 +102,11 @@ export const update_post = (
         },
         body: JSON.stringify({
             "content": content,
+            "title": title,
             "comment": comment,
             "research": research,
+            "research_paper":research_paper,
+            'tex': tex,
             "root": root,
             "resp_id": resp_id
 
