@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import {
-//   uploadImage,
-//   deleteImage,
-// } from "../store/profileImages";
+import {
+  getUserImage,
+  uploadImage,
+  deleteImage,
+} from "../store/profileImages";
 import usertempimage from "../components/images/usertempimage.jpg"
 import "./Profile.css";
 
 function ProfilePageCard() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-  // const userProfile = useSelector((state) => state.profileImages);
+  const userProfile = useSelector((state) => state.profileImages);
 
 
   return (
