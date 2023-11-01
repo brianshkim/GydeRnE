@@ -1,12 +1,13 @@
-const LOAD_POSTS = 'POSTS/GET_POSTS'
+const LOAD_POST = 'POSTS/GET_POST'
 const CREATE_POST = 'POSTS/CREATE_POST'
 const UPDATE_POST = 'POSTS/UPDATE_POST'
 const DELETE_POST = 'POSTS/DELETE_POST'
-const UNLOAD_POSTS = 'POSTS/UNLOAD_POSTS'
+const UNLOAD_POST = 'POSTS/UNLOAD_POST'
 
 
-const getPosts = (post) => ({
-    type: LOAD_POSTS,
+
+const getPost = (post) => ({
+    type: LOAD_POST,
     post
 });
 
@@ -26,19 +27,20 @@ const deletePost = (post) => ({
 
 })
 
+
 const unloadPosts = ()=>({
-    type: UNLOAD_POSTS
+    type: UNLOAD_POST
 })
 
 export const unload_posts = () => async(dispatch)=>{
     dispatch(unloadPosts())
 }
 
-export const get_posts= (id) => async (dispatch) => {
+export const get_post= (id) => async (dispatch) => {
     const response = await fetch(`/api/posts/${id}`);
     const data = await response.json()
     console.log(data)
-    dispatch(getPosts(data));
+    dispatch(getPost(data));
 
 }
 
@@ -137,33 +139,51 @@ export const delete_post = (id) => async (dispatch) => {
     dispatch(deletePost(Number(data)));
 }
 
+export const create_comments = (id, userid, content ) => async(dispatch)=>{
+    const response = await fetch(`/api/posts/${id}/comments`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "user_id": userid,
+            "content": content,
+
+        })
+    });
+
+    const data = await response.json()
+
+
+    dispatch(editPosts(data));
+
+}
 
 
 
 
 
-let initialState = {list:[]};
+
+let initialState = {};
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case LOAD_POSTS:
+        case LOAD_POST:
 
 
-            return {...state, ...action.posts}
+            return {...state, ...action.post}
         case CREATE_POST:
 
-            state.list.push(action.posts)
-            return {...state}
+
+            return action.post
         case UPDATE_POST:
-            let newstate = action.posts
-
-            return newstate
+            if(action.post.comment){
+            return {...state, ...state.comments.push(action.post)}
+            }
+            return {}
         case DELETE_POST:
+            return initialState
 
-            return state.list.filter(post=>(
-                post.id !== action.post
-
-            ))
-        case UNLOAD_POSTS:
+        case UNLOAD_POST:
 
             return initialState
 

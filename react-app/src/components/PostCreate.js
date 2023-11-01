@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { create_post} from '../store/posts'
+import { create_post} from '../store/singlepost'
 const PostCreate = ({ resp_id }) => {
     let user = useSelector(state => state.session.user)
     let dispatch = useDispatch()
@@ -11,7 +11,7 @@ const PostCreate = ({ resp_id }) => {
 
 
     useEffect(() => {
-        console.log(typeof window?.MathJax)
+
         if (typeof window?.MathJax !== "undefined") {
             window.MathJax.typesetClear()
             window.MathJax.typeset()

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { edit_post} from '../store/posts'
+import { edit_post, delete_post} from '../store/singlepost'
 const PostEdit = ({ postid }) => {
     let user = useSelector(state => state.session.user)
     let dispatch = useDispatch()
@@ -26,6 +26,7 @@ const PostEdit = ({ postid }) => {
         e.stopPropagation()
         e.preventDefault()
         dispatch(edit_post(user.id, content,  "", true))
+
 
 
     }
@@ -58,11 +59,10 @@ const PostEdit = ({ postid }) => {
             <button type="submit" >Create Post</button>
             </form>
 
-
-
-
+            <button onClick={handleDelete} ></button>
 
         </div>
+
 
 
     )

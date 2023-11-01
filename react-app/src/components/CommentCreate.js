@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { create_post} from '../store/posts'
-const PostCreate = ({ resp_id }) => {
+import { create_comments} from '../store/singlepost'
+const CommentCreate = ({postid}) => {
     let user = useSelector(state => state.session.user)
-    let posts = useSelector(state => state.posts.list)
+
     let dispatch = useDispatch()
-    const [title, setTitle] = useState('')
+
     let [content, setContent] = useState('')
-    let [research, setResearch] = useState(false)
 
 
 
@@ -18,45 +17,35 @@ const PostCreate = ({ resp_id }) => {
             window.MathJax.typeset()
         }
 
-    }, [title, content])
+    }, [])
 
 
 
     const handleSubmit = (e) => {
         e.stopPropagation()
         e.preventDefault()
-        dispatch(create_post(user.id, title,content,research, null, "", true))
+        dispatch(create_comments(postid,user.id,  content))
 
 
     }
     return (
         <div>
+            <label>Create Comment</label>
             <form
             onSubmit={handleSubmit}
             >
-            <div>
-            <label>Create Post</label>
 
-            <input
-                type="text"
-                onChange={(e) => setTitle(e.target.value)}
-                value={title} />
-            </div>
-            <div>
             <textarea
                 onChange={(e) => setContent(e.target.value)}
                 value={content} />
             <p>{content}</p>
-            </div>
+
 
             <div>
-                <input type="radio" id="isResearch" name='isResearch'
-                    onClick={(e) => setResearch(!research)} value="research"
-                    checked={research === true ? true : false} />
-                <label for="isResearch">Consider for research</label>
             </div>
+            <button type="submit" >Create Post</button>
             </form>
-            <button type="Submit" >Create Post</button>
+
 
 
 
@@ -67,4 +56,4 @@ const PostCreate = ({ resp_id }) => {
     )
 }
 
-export default PostCreate
+export default CommentCreate
