@@ -29,8 +29,6 @@ const Post = () => {
     const nestedComments = (comments)=>{
         if(comments.length===0) return
 
-
-
         return (
             <div>{
                 comments.map((comment)=>(
