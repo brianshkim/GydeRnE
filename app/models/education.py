@@ -5,7 +5,7 @@ class Education(db.Model):
      __tablename__ = 'education'
 
      id = db.Column(db.Integer, primary_key=True, nullable=False)
-     degree_undergrad = db.Column(ARRAY(db.String))
+     degree_undergrad = db.Column(ARRAY(db.JSON))
      ###years_attended_undergrad = db.Column(ARRAY(db.Integer))
      university_undergrad = db.Column(ARRAY(db.String))
      degree_masters = db.Column(ARRAY(db.String))

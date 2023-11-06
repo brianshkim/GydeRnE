@@ -43,13 +43,13 @@ export const get_education= (id) => async (dispatch) => {
 }
 
 export const create_education = (
-    degree_undergrad=[],
-    university_undergrad=[],
-    degree_masters=[],
-    university_masters=[],
-    degree_postdoc=[],
-    university_postdoc=[],
-    doctoral_advisor="",
+    degree_undergrad,
+    university_undergrad,
+    degree_masters,
+    university_masters,
+    degree_postdoc,
+    university_postdoc,
+    doctoral_advisor,
     subject="",
     date="",
     thesis="",
@@ -158,8 +158,8 @@ export default function reducer(state = initialState, action) {
             return {...state, ...action.education}
         case CREATE_EDUCATION:
 
-            state.list.push(action.education)
-            return {...state}
+
+            return action.education
         case UPDATE_EDUCATION:
             let newstate = action.education
 

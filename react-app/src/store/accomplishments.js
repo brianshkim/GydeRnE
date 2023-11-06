@@ -35,7 +35,7 @@ export const unload_accomplishments = () => async(dispatch)=>{
 }
 
 export const get_accomplishments= (id) => async (dispatch) => {
-    const response = await fetch(`/api/accomplishments/${id}`);
+    const response = await fetch(`/api/accomplishments`);
     const data = await response.json()
 
     dispatch(getAccomplishments(data));

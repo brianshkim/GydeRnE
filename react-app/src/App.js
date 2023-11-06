@@ -10,10 +10,11 @@ import UsersList from './components/UsersList';
 import User from './components/User';
 import Test from './components/test';
 import Post from './components/Post';
+import CV from './components/Education';
 
 import { authenticate } from './store/session';
 import Profile from './components/Profile';
-import {MathJaxContext} from 'better-react-mathjax'
+import { MathJaxContext } from 'better-react-mathjax'
 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    (async() => {
+    (async () => {
       await dispatch(authenticate());
       setLoaded(true);
     })();
@@ -37,28 +38,32 @@ function App() {
 
       {/* <NavBar /> */}
       <Switch>
-      <Route path='/post'>
+        <Route path='/CV'>
         <NavHeader />
+          <CV />
+        </Route>
+        <Route path='/post'>
+          <NavHeader />
           <Post />
         </Route>
         <Route path='/test'>
-        <NavHeader />
+          <NavHeader />
           <Test />
         </Route>
         <Route path='/login' exact={true}>
-        <NavHeader />
+          <NavHeader />
           <LoginForm />
         </Route>
         <Route path='/profile' exact={true}>
-        <NavHeader />
+          <NavHeader />
           <Profile />
         </Route>
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
         <ProtectedRoute path='/users' exact={true} >
-        <NavHeader />
-          <UsersList/>
+          <NavHeader />
+          <UsersList />
         </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />
