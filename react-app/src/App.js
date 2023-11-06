@@ -13,7 +13,6 @@ import Post from './components/Post';
 
 import { authenticate } from './store/session';
 import Profile from './components/Profile';
-import {MathJaxContext} from 'better-react-mathjax'
 
 
 function App() {

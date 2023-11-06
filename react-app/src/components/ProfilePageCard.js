@@ -4,7 +4,7 @@ import {
   getUserImage,
   uploadImage,
   deleteImage,
-} from "../store/profileImages";
+} from "../store/profilepic";
 import usertempimage from "../components/images/usertempimage.jpg"
 import "./Profile.css";
 
