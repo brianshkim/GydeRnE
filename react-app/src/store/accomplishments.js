@@ -42,11 +42,9 @@ export const get_accomplishments= (id) => async (dispatch) => {
 
 }
 export const create_accomplishment = (
-    firstname="",
-    lastname="",
-    highest_degree="",
-    publications=[],
-    awards=[]
+    bio,
+    publications,
+    awards
        ) => async (dispatch) => {
     const response = await fetch(`/api/accomplishments/`, {
         method: 'POST',
@@ -54,12 +52,9 @@ export const create_accomplishment = (
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            "firstname": firstname,
-            "lastname": lastname,
-            "highest_degree": highest_degree,
+            "bio": bio,
             "publications": publications,
             "awards": awards,
-
 
         })
     });
@@ -82,9 +77,7 @@ export const create_accomplishment = (
 
 export const update_accomplishments = (
     id,
-    firstname,
-    lastname,
-    highest_degree,
+    bio,
     publications,
     awards,
 
@@ -95,9 +88,7 @@ export const update_accomplishments = (
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            "firstname": firstname,
-            "lastname": lastname,
-            "highest_degree": highest_degree,
+            "bio": bio,
             "publications": publications,
             "awards": awards,
 
