@@ -104,22 +104,15 @@ def create_comments(postid):
     ins = comments_replies.insert().values(commentId=postid, replyId=newpost['id'])
     conn = db.engine.connect()
     conn.execute(ins)
-    return post.to_dict()
+    originalpost = Post.query.get(req["originalid"])
+    return originalpost.to_dict()
 
-@posts_routes.route('/<int:postid>/comments', methods=['post'])
+@posts_routes.route('/<int:postid>/comments/delete', methods=['post'])
 @login_required
-def load_comments(postid):
+def delete_comments(postid):
     req = request.get_json()
-
-
-    post = Post(
-        user_id=req['user_id'],
-        comment=True,
-        root=False,
-        content= req['content'],
-
-    )
-
-    db.session.add(post)
+    post = Post.query.filter_by(id=postid)
+    post.delete()
     db.session.commit()
-    return post.to_dict()
+    originalpost = Post.query.get(req['originalid'])
+    return originalpost.to_dict()

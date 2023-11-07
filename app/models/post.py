@@ -26,7 +26,8 @@ class Post(db.Model):
         secondary = comments_replies,
         primaryjoin = (comments_replies.c.commentId == id),
         secondaryjoin = (comments_replies.c.replyId == id),
-        backref = db.backref('commentsreplies', lazy = 'dynamic'),
+        backref = db.backref('commentsreplies', lazy = 'dynamic', cascade="all"),
+        passive_deletes=True,
         lazy = 'dynamic')
 
 

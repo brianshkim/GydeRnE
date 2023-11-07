@@ -62,15 +62,47 @@ const Accomplishments = () => {
 
     const addFields = (e, property) => {
         if (property === "publications") {
-            let newfield = { title: '', authors: [''], url: "", year:"" }
+            let newfield = { title: '', authors: [''], url: "", year: "" }
             setPublications([...publications, newfield])
         }
         if (property === "awards") {
-            let newfield = { year:"", title:"", association:"" }
+            let newfield = { year: "", title: "", association: "" }
             setAwards([...awards, newfield])
         }
 
 
+    }
+
+    const deleteField = (e, i, property, secondindex) => {
+        e.preventDefault()
+        if (property === "publications") {
+            publications.splice(i, 1)
+            let newpublications = [...publications]
+            setPublications(newpublications)
+
+        }
+
+        if (property === "awards") {
+            awards.splice(i, 1)
+            let newawards = [...awards]
+            setAwards(newawards)
+
+
+
+        }
+
+        if (property === "author") {
+            publications[i].authors.splice(secondindex, 1)
+            let newauthors = [...publications[i].authors]
+            let newpublication = {
+                title: publications[i].title,
+                authors: newauthors,
+                association: publications[i].association
+            }
+            let newpublications = [...publications]
+            newpublications[i] = newpublication
+            setPublications(newpublications)
+        }
     }
 
     const addAuthor = (e, i, authorindex) => {
@@ -120,6 +152,8 @@ const Accomplishments = () => {
                                                 value={publications[index].authors[authorindex]}
                                                 onChange={(e) => handleFormChange(index, e, "author", authorindex)}
                                             />
+                                            {authorindex !== 0 ? <button onClick={e => deleteField(e, index, "author", authorindex)}>delete</button> : null}
+
                                             {authorindex === publication.authors.length - 1 ? <button onClick={(e) => addAuthor(e, index, authorindex)} >Add Author</button> : null}
                                         </>
                                     )
@@ -131,10 +165,14 @@ const Accomplishments = () => {
                                     value={publication.url}
                                     onChange={(e) => handleFormChange(index, e, "publications")}
                                 />
+                                {index !== 0 ? <button onClick={(e) => deleteField(e, index, "publications")}>delete row</button> : null}
 
                             </div>
+
                         )
+
                     })}
+
                     </div>
 
                 </form>
@@ -162,6 +200,7 @@ const Accomplishments = () => {
                                     value={input.association}
                                     onChange={(e) => handleFormChange(index, e, "awards")}
                                 />
+                                {index !== 0 ? <button onClick={(e) => deleteField(e, index, "awards")}>delete row</button> : null}
                             </div>
 
                         )
