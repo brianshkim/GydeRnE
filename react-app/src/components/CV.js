@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { get_accomplishments } from '../store/accomplishments'
 import { get_education } from '../store/education'
@@ -7,17 +7,18 @@ import Education from './Education'
 
 const CV = () =>{
     const user = useSelector(state=>state.session.user)
-    const dispatch  = useDispatch
+    const dispatch  = useDispatch()
     useEffect(()=>{
-        dispatch(get_accomplishments(user.id))
-        dispatch(get_education(user.id))
+        dispatch(get_accomplishments())
+        dispatch(get_education())
 
-    })
+    }, [dispatch, user])
 
     return (
         <div>
-            <Accomplishments />
-            <Education />
+
+           <div><Education /></div>
+           <div> <Accomplishments /></div>
 
         </div>
     )

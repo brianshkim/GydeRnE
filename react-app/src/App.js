@@ -10,7 +10,7 @@ import UsersList from './components/UsersList';
 import User from './components/User';
 import Test from './components/test';
 import Post from './components/Post';
-import CV from './components/Education';
+import CV from './components/CV';
 
 import { authenticate } from './store/session';
 import Profile from './components/Profile';

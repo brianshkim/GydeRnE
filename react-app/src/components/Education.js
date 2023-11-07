@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { get_education, update_education, create_education } from '../store/education'
 
@@ -40,11 +40,6 @@ const Education = () => {
     ])
 
 
-    useEffect(() => {
-        dispatch(get_education(user.id))
-
-
-    }, [dispatch, user])
 
     const onSubmit = async (e) => {
 
@@ -56,13 +51,23 @@ const Education = () => {
     const handleFormChange = (i, e, school) => {
 
 
-        if(school==="undergrad"){
+        if (school === "undergrad") {
+            let data = [...undergrad]
+            data[i][e.target.name] = e.target.value
+            setUndergrad(data)
+        }
 
-        let data = [...undergrad]
-        console.log(data[i])
-        data[i][e.target.name] = e.target.value
-        setUndergrad(data)
-        console.log(undergrad)
+        if (school === "masters") {
+            let data = [...masters]
+            data[i][e.target.name] = e.target.value
+            setUndergrad(data)
+        }
+
+        if (school === "postdoc") {
+            let data = [...postdoc]
+            data[i][e.target.name] = e.target.value
+            setUndergrad(data)
+
         }
 
     }
@@ -87,9 +92,10 @@ const Education = () => {
         <div>
             <div>
                 <form>
+                    <h3>Undergraduate</h3>
                     {undergrad.map((undergrad, index) => {
                         return (
-                            <div key={"u" - index}>
+                            <div key={`u${index}`}>
                                 <input
                                     name="degree"
                                     placeholder="Degree"
@@ -125,9 +131,10 @@ const Education = () => {
             </div>
             <div>
                 <form>
+                    <h3>Masters</h3>
                     {masters.map((input, index) => {
                         return (
-                            <div key={"u" - index}>
+                            <div key={`m${index}`}>
                                 <input
                                     name="degree"
                                     placeholder="Degree"
@@ -162,10 +169,11 @@ const Education = () => {
                 <button onClick={e => addFields(e, "masters")}>Add more</button>
             </div>
             <div>
+                <h3>Postdoctoral</h3>
                 <form>
                     {postdoc.map((input, index) => {
                         return (
-                            <div key={"u" - index}>
+                            <div key={`p${index}`}>
                                 <input
                                     name="degree"
                                     placeholder="Degree"
@@ -223,6 +231,7 @@ const Education = () => {
                 </form>
                 <button onClick={e => addFields(e, "postdoc")}>Add more</button>
             </div>
+            <button onClick={onSubmit}>Submit</button>
         </div>
     )
 

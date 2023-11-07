@@ -5,7 +5,7 @@ from app.models import Accomplishment, db
 accomplishments_routes = Blueprint('accomplishments', __name__)
 
 @accomplishments_routes.route('/')
-def user(id):
+def user():
     accomplishments = Accomplishment.query.filter_by(user_id=current_user.id)
     return accomplishments.to_dict()
 
