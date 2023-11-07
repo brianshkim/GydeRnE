@@ -9,7 +9,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
 import Test from './components/test';
-import Post from './components/Post';
+import Post from './components/Posts/Post';
 
 import { authenticate } from './store/session';
 import Profile from './components/Profile';

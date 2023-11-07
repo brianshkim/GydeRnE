@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PostCreate from "./PostCreate";
-import CommentCreate from './CommentCreate'
-import { get_post } from '../store/singlepost'
+import CommentCreate from '../CommentCreate'
+import { get_post } from '../../store/singlepost'
 import { checkPropTypes } from "prop-types";
+
+
 const Post = () => {
     let user = useSelector(state => state.session.user)
     let post = useSelector(state => state.posts)
-
-
 
     let dispatch = useDispatch()
 
@@ -29,8 +29,6 @@ const Post = () => {
     const nestedComments = (comments)=>{
         if(comments.length===0) return
 
-
-
         return (
             <div>{
                 comments.map((comment)=>(
@@ -43,10 +41,7 @@ const Post = () => {
                 ))
             }</div>
         )
-
-
     }
-
 
     return (
         <div>
