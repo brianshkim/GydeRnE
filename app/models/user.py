@@ -70,7 +70,7 @@ class User(db.Model, UserMixin):
     coursenotes = db.relationship('Coursenote', back_populates='users')
     publications = db.relationship("Publication", secondary=publicationusers, back_populates="users", cascade="all, delete")
     journals = db.relationship("Journal", secondary=journalscommittee, back_populates="users", cascade="all, delete")
-    posts = db.relationship("Post", back_populates="users")
+    posts = db.relationship("Post", back_populates="users", cascade='all,delete')
     folders = db.relationship("Folder", back_populates="users")
     friendedFirst = db.relationship('Friend', back_populates='user', foreign_keys='[Friend.userId]')
     friendedSecond = db.relationship('Friend', back_populates='user2', foreign_keys='[Friend.userId2]')
