@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: a519b7c751d9
+Revision ID: 971aaf8c3fbd
 Revises: 
-Create Date: 2023-10-26 17:16:22.495161
+Create Date: 2023-10-30 14:34:47.926408
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = 'a519b7c751d9'
+revision = '971aaf8c3fbd'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -127,10 +127,12 @@ def upgrade():
     op.create_table('posts',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('title', sa.String(), nullable=True),
     sa.Column('content', sa.Text(), nullable=False),
     sa.Column('comment', sa.String(length=600), nullable=False),
     sa.Column('research', sa.Boolean(), nullable=True),
     sa.Column('research_paper', sa.String(), nullable=True),
+    sa.Column('tex', postgresql.ARRAY(sa.String()), nullable=True),
     sa.Column('root', sa.Boolean(), nullable=True),
     sa.Column('resp_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
@@ -143,6 +145,20 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('title', sa.String(length=600), nullable=False),
     sa.Column('content', sa.Text(), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('coursenotes',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('course_id', sa.Integer(), nullable=True),
+    sa.Column('content', sa.Text(), nullable=False),
+    sa.Column('tex', postgresql.ARRAY(sa.String()), nullable=True),
+    sa.Column('comment', sa.String(length=600), nullable=False),
+    sa.Column('resp_id', sa.Integer(), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -172,6 +188,7 @@ def downgrade():
     op.drop_table('publicationusers')
     op.drop_table('publicationcitations')
     op.drop_table('courseusers')
+    op.drop_table('coursenotes')
     op.drop_table('publications')
     op.drop_table('posts')
     op.drop_table('journalscommittee')

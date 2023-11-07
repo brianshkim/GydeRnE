@@ -29,19 +29,9 @@ def create_education():
     req = request.get_json()
     print(req)
     education = Education(
-
-        degree_undergrad=req['degree_undergrad'],
-        university_undergrad =req['university_undergrad'],
-        degree_masters = req['degree_masters'],
-        university_masters = req['university_masters'],
-        degree_postdoc = req['degree_postdoc'],
-        university_postdoc = req['university_postdoc'],
-        doctoral_advisor = req['doctoral_advisor'],
-        subject = req['subject'],
-        date =req['date'],
-        thesis = req['thesis'],
-        user_id=current_user.id,
-
+        undergrad = req['undergrad'],
+        masters=req['masters'],
+        postdoc=req['postdoc']
     )
     db.session.add(education)
     db.session.commit()
@@ -54,15 +44,9 @@ def edit_education(educationid):
     req = request.get_json()
 
     education = Education.query.get(educationid)
-    education.degree_undergrad=req['degree_undergrad']
-    education.university_undergrad = req['university_undergrad']
-    education.degree_masters=req['degree_masters']
-    education.university_masters = req['university_masters']
-    education.degree_postdoc = req['degree_postdoc']
-    education.university_postdoc = req['university_postdoc']
-    education.doctoral_advisor = req['doctoral_advisor']
-    education.subject = req['subject']
-    education.date =req['date']
-    education.thesis = req['thesis']
+    education.undergrad = req['undergrad']
+    education.masters=req['masters']
+    education.postdoc=req['postdoc']
+
     db.session.commit()
     return education.to_dict()

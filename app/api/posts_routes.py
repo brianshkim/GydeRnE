@@ -1,14 +1,14 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import Post, db
+from app.models import Post, db, comments_replies
 from app.awsS3 import (upload_file_to_s3, allowed_file, get_unique_filename)
 
 posts_routes = Blueprint('posts', __name__)
 
-@posts_routes.route('/')
-def user():
-    posts = Post.query.filter_by(user_id=id)
-    return [post.to_dict() for post in posts.to_dict()]
+@posts_routes.route('/<int:id>')
+def single_post(id):
+    post = Post.query.get(id)
+    return post.to_dict()
 
 
 @posts_routes.route('/<int:postid>', methods=['delete'])
@@ -21,19 +21,17 @@ def delete_posts(postid):
      return jsonify(id)
 
 
-
 @posts_routes.route('/', methods=['post'])
 @login_required
 def create_posts():
     req = request.get_json()
     post = Post(
         user_id=current_user.id,
+        title=req['title'],
         content=req['content'],
-        tex=req['tex'],
-        comment=req['comment'],
-        root=req['root'],
+        root=True,
         research=req['research'],
-        resp_id=req['resp_id'],
+
 
         )
     db.session.add(post)
@@ -84,3 +82,44 @@ def upload_image(postid):
     post = Post.query.get(postid)
     post.research_paper = url
     db.session.commit()
+
+##comments route
+@posts_routes.route('/<int:postid>/comments', methods=['post'])
+@login_required
+def create_comments(postid):
+    req = request.get_json()
+
+
+
+    post = Post(
+        comment= True,
+        root= False,
+        content=  req['content'],
+        user_id =req['user_id']
+    )
+
+    db.session.add(post)
+    db.session.commit()
+    newpost = post.to_dict()
+    ins = comments_replies.insert().values(commentId=postid, replyId=newpost['id'])
+    conn = db.engine.connect()
+    conn.execute(ins)
+    return post.to_dict()
+
+@posts_routes.route('/<int:postid>/comments', methods=['post'])
+@login_required
+def load_comments(postid):
+    req = request.get_json()
+
+
+    post = Post(
+        user_id=req['user_id'],
+        comment=True,
+        root=False,
+        content= req['content'],
+
+    )
+
+    db.session.add(post)
+    db.session.commit()
+    return post.to_dict()
