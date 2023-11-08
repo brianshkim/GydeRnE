@@ -10,11 +10,13 @@ import UsersList from './components/UsersList';
 import User from './components/User';
 import Test from './components/test';
 import Post from './components/Post';
+import PostCreate from './components/PostCreate';
 import CV from './components/CV';
 
 import { authenticate } from './store/session';
 import Profile from './components/Profile';
 import { MathJaxContext } from 'better-react-mathjax'
+
 
 
 function App() {
@@ -44,7 +46,7 @@ function App() {
         </Route>
         <Route path='/post'>
           <NavHeader />
-          <Post />
+          <PostCreate />
         </Route>
         <Route path='/test'>
           <NavHeader />

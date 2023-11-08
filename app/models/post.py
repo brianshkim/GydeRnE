@@ -15,7 +15,6 @@ class Post(db.Model):
      comment = db.Column(db.Boolean)
      research = db.Column(db.Boolean)
      research_paper=db.Column(db.String)
-     tex = db.Column(ARRAY(db.String))
      root= db.Column(db.Boolean)
      resp_id = db.Column(db.Integer)
      created_at = db.Column(db.DateTime)
@@ -39,11 +38,11 @@ class Post(db.Model):
             'poster': self.user_id,
             'poster details': self.users.to_dict(),
             'content': self.content,
+            'abstract': self.abstract,
             'comment': self.comment,
             'root': self.root,
             'research': self.research,
             'research_paper': self.research_paper,
-            'tex' :self.tex,
             'created_at' :self.created_at,
             'updated_at':self.updated_at,
             'comments': [comment.to_dict() for comment in self.comments]

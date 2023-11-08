@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import PostCreate from "./PostCreate";
-import CommentCreate from './CommentCreate'
-import { get_post, delete_comments } from '../store/singlepost'
+
+import CommentCreate from '../CommentCreate'
+import { get_post, delete_comments } from '../../store/posts'
 
 const Post = () => {
     let user = useSelector(state => state.session.user)
