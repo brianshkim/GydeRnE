@@ -61,6 +61,7 @@ class User(db.Model, UserMixin):
             'start_date':self.start_date,
             'profile_image':self.profile_image,
             'school_name': self.school_name,
+            'is_confirmed': self.is_confirmed
 
         }
 

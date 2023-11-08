@@ -79,7 +79,7 @@ def sign_up():
         confirm_url = url_for("auth.confirm_email", token=token, _external=True)
         html = render_template("confirm_email.html", confirm_url=confirm_url)
         subject = "Please confirm your email"
-        print(send_email(user.email, subject, html), "ASDJKFJDKLFSJKLFJDSKLFSJFKLDSJFLKSDJFKLDSJFAKLSFSJKJFSLDKFSDKLJFSDK")
+        send_email(user.email, subject, html)
         login_user(user)
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
@@ -97,7 +97,7 @@ def confirm_email(token):
         user.confirmed_on = datetime.now()
         db.session.add(user)
         db.session.commit()
-        return user.to_dict()
+        return "Confirmed"
 
     else:
         return {"error": "The confirmation link is invalid or has expired."}
