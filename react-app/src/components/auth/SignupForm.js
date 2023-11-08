@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../store/session';
 import '../context/AuthModals.css';
-
+//reset
 const SignupForm = () => {
 
   const [errors, setErrors] = useState([]);
@@ -21,7 +21,7 @@ const SignupForm = () => {
   const onSignUp = async (e) => {
     e.preventDefault();
     if (password === repeatPassword) {
-      const data = await dispatch(signUp(username, firstname, lastname, email, password, "", professor, "", schoolName));
+      const data = await dispatch(signUp(username, firstname, lastname, email, password, "", professor==="professor"?true:false, "", schoolName));
       if (data) {
         setErrors(data)
       }
