@@ -9,8 +9,8 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
 import Test from './components/test';
-import Post from './components/Post';
-import PostCreate from './components/PostCreate';
+import Post from './components/posts/Post';
+import PostCreate from './components/posts/PostCreate';
 import CV from './components/CV';
 
 import { authenticate } from './store/session';
