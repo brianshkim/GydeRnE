@@ -26,6 +26,9 @@ class User(db.Model, UserMixin):
     start_date=db.Column(db.BigInteger)
     bio = db.Column(db.String(200))
     profile_image = db.Column(db.String())
+    is_confirmed = db.Column(db.Boolean, nullable=False, default=False)
+    confirmed_on = db.Column(db.DateTime, nullable=True)
+
 
 
 

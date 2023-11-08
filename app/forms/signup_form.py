@@ -21,7 +21,7 @@ def email_validation(email):
     for i in range (0,at):
         if((email[i]>='a' and email[i]<='z') or (email[i]>='A' and email[i]<='Z')):
             a=a+1
-    if(a>0 and at>0 and (dot-at)>0 and (dot+1)<y and email[-3:]=="edu"):
+    if(a>0 and at>0 and (dot-at)>0 and (dot+1)<y and email[-3:]=="com"):
         return True
     else:
         return False

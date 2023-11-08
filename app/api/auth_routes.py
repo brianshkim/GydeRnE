@@ -1,8 +1,11 @@
-from flask import Blueprint, jsonify, session, request
+from flask import Blueprint, jsonify, session, request, render_template, url_for
 from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
+from ..utils.token import confirm_token, generate_token
+from ..utils.email import send_email
+from datetime import datetime
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -71,9 +74,34 @@ def sign_up():
         )
         db.session.add(user)
         db.session.commit()
+
+        token = generate_token(user.email)
+        confirm_url = url_for("auth.confirm_email", token=token, _external=True)
+        html = render_template("confirm_email.html", confirm_url=confirm_url)
+        subject = "Please confirm your email"
+        print(send_email(user.email, subject, html), "ASDJKFJDKLFSJKLFJDSKLFSJFKLDSJFLKSDJFKLDSJFAKLSFSJKJFSLDKFSDKLJFSDK")
         login_user(user)
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+
+@auth_routes.route("/confirm/<token>")
+@login_required
+def confirm_email(token):
+    if current_user.is_confirmed:
+        return {'errors: "Account already confirmed.'}
+
+    email = confirm_token(token)
+    user = User.query.filter_by(email=current_user.email).first_or_404()
+    if user.email == email:
+        user.is_confirmed = True
+        user.confirmed_on = datetime.now()
+        db.session.add(user)
+        db.session.commit()
+        return user.to_dict()
+
+    else:
+        return {"error": "The confirmation link is invalid or has expired."}
+
 
 
 @auth_routes.route('/unauthorized')

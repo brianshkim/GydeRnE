@@ -59,7 +59,7 @@ const PostEdit = ({ postid }) => {
             <button type="submit" >Create Post</button>
             </form>
 
-            <button onClick={handleDelete} ></button>
+
 
         </div>
 
