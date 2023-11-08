@@ -14,6 +14,10 @@ const loadAllUsers = (users) => ({
     users
 })
 
+const unloadAllUsers=() =>({
+    type:UNLOAD_ALL_USERS
+})
+
 
 export const load_user = (id) => async (dispatch) => {
     const response = await fetch(`/api/users/${id}`, {
@@ -31,36 +35,27 @@ export const load_user = (id) => async (dispatch) => {
     }
 }
 
-export const load_all_users = () => async (dispatch) => {
-    const response = await fetch(`/api/users/${id}`, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-    if (response.ok) {
-        const data = await response.json();
-        if (data.errors) {
-            return;
-        }
 
-        dispatch(loadAllUsers(data));
-    }
+export const unload_user = () => async(dispatch) =>{
+    dispatch(loadAllUsers)
 }
+//export const load_all_users = () => async (dispatch) => {
+//    const response = await fetch(`/api/users/${id}`, {
+//        headers: {
+//            'Content-Type': 'application/json'
+//        }
+//    });
+//    if (response.ok) {
+//        const data = await response.json();
+//        if (data.errors) {
+//            return;
+//        }
+//
+//        dispatch(loadAllUsers(data));
+//    }
+//}
+//
 
-if (response.ok) {
-    const data = await response.json();
-    dispatch(setUser(data))
-    return null;
-} else if (response.status < 500) {
-    const data = await response.json();
-    if (data.errors) {
-        return data.errors;
-    }
-} else {
-    return ['An error occurred. Please try again.']
-}
-
-}
 
 
 
@@ -72,7 +67,7 @@ export default function reducer(state = initialState, action) {
             return { user: action.user }
         case LOAD_ALL_USERS:
             return { users: action.users }
-        case UNLOAD_USERS:
+        case UNLOAD_ALL_USERS:
             return initialState
         default:
             return state;
