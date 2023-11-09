@@ -17,7 +17,6 @@ from .api.publications_routes import publications_routes
 from .api.posts_routes import posts_routes
 from .api.courses_routes import courses_routes
 from .api.education_routes import education_routes
-from .api.coursenotes_routes import coursenotes_routes
 
 
 
@@ -58,7 +57,7 @@ app.register_blueprint(publications_routes, url_prefix='/api/publications')
 app.register_blueprint(posts_routes, url_prefix='/api/posts')
 app.register_blueprint(courses_routes, url_prefix='/api/courses')
 app.register_blueprint(education_routes,url_prefix='/api/education' )
-app.register_blueprint(coursenotes_routes, url_prefix='/api/courses')
+
 
 db.init_app(app)
 Migrate(app, db)
