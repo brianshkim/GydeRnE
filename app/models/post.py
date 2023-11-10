@@ -37,7 +37,8 @@ class Post(db.Model):
             'id': self.id,
             'title': self.title,
             'poster': self.user_id,
-            'poster_details': self.users.to_dict(),
+            'poster_details': {"username": self.users.to_dict()['username'],"firstname": self.users.to_dict()['firstname'],
+                               "lastname": self.users.to_dict()['lastname'], "profile_image": self.users.to_dict()['profile_image']},
             'content': self.content,
             'abstract': self.abstract,
             'comment': self.comment,
@@ -46,5 +47,6 @@ class Post(db.Model):
             'research_paper': self.research_paper,
             'created_at' :self.created_at,
             'updated_at':self.updated_at,
-            'comments': [comment.to_dict() for comment in self.comments]
+            'comments': [comment.to_dict() for comment in self.comments],
+
         }

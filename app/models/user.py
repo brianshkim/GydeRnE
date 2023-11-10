@@ -66,10 +66,6 @@ class User(db.Model, UserMixin):
     def get_courses(self):
         return [course.to_dict() for course in self.courses]
 
-    def get_posts(self):
-        return [post.to_dict() for post in self.posts]
-
-
     def to_dict(self):
         return {
             'id': self.id,
