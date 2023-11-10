@@ -9,8 +9,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
 import Test from './components/test';
-import Post from './components/posts/Post';
-import PostCreate from './components/posts/PostCreate';
+import AllPosts from './components/posts/AllPosts';
 import CV from './components/CV';
 import SearchBar from './components/search/SearchBar';
 import { authenticate } from './store/session';
@@ -48,9 +47,10 @@ function App() {
           <SearchBar />
 
         </Route>
+
         <Route path='/test'>
           <NavHeader />
-          <Test />
+          <AllPosts />
         </Route>
         <Route path='/login' exact={true}>
           <NavHeader />

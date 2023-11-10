@@ -50,10 +50,10 @@ export const unload_posts = () => async (dispatch) => {
 }
 
 export const get_post = (id) => async (dispatch) => {
-    const response = await fetch(`/api/posts/${id}`);
+    const response = await fetch(`/api/posts/${id}/`);
     const data = await response.json()
     console.log(data)
-    dispatch(getPost(data));
+    dispatch(getPost(data.userposts));
 
 }
 
@@ -212,11 +212,13 @@ let initialState = {userposts:[]};
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case LOAD_POST:
-            return { ...state, ...action.post }
+            return action.post
         case LOAD_USER_POSTS:
-            let newstate = {...state}
-            newstate.userposts = action.posts
-            return newstate
+            let posts = []
+            action.posts.userposts.forEach((post)=>{
+                posts.push(post)
+            })
+           return{...state, userposts:posts}
         case CREATE_POST:
             return action.post
         case UPDATE_POST:

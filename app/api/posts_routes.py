@@ -10,21 +10,12 @@ def single_post(id):
     post = Post.query.get(id)
     return post.to_dict()
 
-
 @posts_routes.route('/user/<int:userid>')
 def user_posts(userid):
     req = request.get_json()
-    posts = Post.query.filter_by(user_id=userid)
-    return [post.to_dict() for post in posts]
+    posts = Post.query.filter_by(user_id=userid, root=True).all()
+    return {"userposts":[post.to_dict() for post in posts]}
 
-@posts_routes.route('/<int:postid>', methods=['delete'])
-@login_required
-def delete_posts(postid):
-    post = Post.query.get(postid)
-    if (post.user_id==current_user.id):
-     post.delete()
-     db.session.commit()
-     return jsonify(id)
 
 
 @posts_routes.route('/', methods=['post'])
@@ -61,6 +52,16 @@ def edit_posts(postid):
 
     db.session.commit()
     return post.to_dict()
+
+@posts_routes.route('/<int:postid>', methods=['delete'])
+@login_required
+def delete_posts(postid):
+    post = Post.query.get(postid)
+    if (post.user_id==current_user.id):
+     post.delete()
+     db.session.commit()
+     return jsonify(id)
+
 
 
 
