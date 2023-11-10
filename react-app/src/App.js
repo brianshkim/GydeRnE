@@ -12,7 +12,7 @@ import Test from './components/test';
 import Post from './components/posts/Post';
 import PostCreate from './components/posts/PostCreate';
 import CV from './components/CV';
-
+import SearchBar from './components/search/SearchBar';
 import { authenticate } from './store/session';
 import Profile from './components/Profile';
 import { MathJaxContext } from 'better-react-mathjax'
@@ -44,9 +44,9 @@ function App() {
         <NavHeader />
           <CV />
         </Route>
-        <Route path='/post'>
-          <NavHeader />
-          <PostCreate />
+        <Route path='/search'>
+          <SearchBar />
+
         </Route>
         <Route path='/test'>
           <NavHeader />

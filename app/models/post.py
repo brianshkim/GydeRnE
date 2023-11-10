@@ -28,6 +28,7 @@ class Post(db.Model):
         backref = db.backref('commentsreplies', lazy = 'dynamic', cascade="all"),
         passive_deletes=True,
         lazy = 'dynamic')
+     courses=db.relationship("Course", back_populates="posts")
 
 
 
