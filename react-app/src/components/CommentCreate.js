@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { create_comments} from '../store/singlepost'
-const CommentCreate = ({postid}) => {
+import { create_comments} from '../store/posts'
+const CommentCreate = ({originalpost, postid}) => {
+    console.log(originalpost)
     let user = useSelector(state => state.session.user)
 
     let dispatch = useDispatch()
@@ -24,7 +25,7 @@ const CommentCreate = ({postid}) => {
     const handleSubmit = (e) => {
         e.stopPropagation()
         e.preventDefault()
-        dispatch(create_comments(postid,user.id,  content))
+        dispatch(create_comments(postid,user.id,  content, originalpost))
 
 
     }

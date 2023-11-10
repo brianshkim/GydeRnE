@@ -10,15 +10,12 @@ def single_post(id):
     post = Post.query.get(id)
     return post.to_dict()
 
+@posts_routes.route('/user/<int:userid>')
+def user_posts(userid):
+    req = request.get_json()
+    posts = Post.query.filter_by(user_id=userid, root=True).all()
+    return {"userposts":[post.to_dict() for post in posts]}
 
-@posts_routes.route('/<int:postid>', methods=['delete'])
-@login_required
-def delete_posts(postid):
-    post = Post.query.get(postid)
-    if (post.user_id==current_user.id):
-     post.delete()
-     db.session.commit()
-     return jsonify(id)
 
 
 @posts_routes.route('/', methods=['post'])
@@ -31,6 +28,7 @@ def create_posts():
         content=req['content'],
         root=True,
         research=req['research'],
+        research_paper=req['research_paper']
 
 
         )
@@ -55,33 +53,17 @@ def edit_posts(postid):
     db.session.commit()
     return post.to_dict()
 
-
-@posts_routes.route('/<int:postid>/upload', methods=['POST'])
+@posts_routes.route('/<int:postid>', methods=['delete'])
 @login_required
-def upload_image(postid):
-    if "image" not in request.files:
-        return {"errors": "image required"}, 400
-
-    image = request.files["image"]
-
-    if not allowed_file(image.filename):
-        return {"errors": "file type not permitted"}, 400
-
-    image.filename = get_unique_filename(image.filename)
-
-    upload = upload_file_to_s3(image)
-
-    if "url" not in upload:
-        # if the dictionary doesn't have a url key
-        # it means that there was an error when we tried to upload
-        # so we send back that error message
-        return upload, 400
-
-    url = upload["url"]
-    # flask_login allows us to get the current user from the request
+def delete_posts(postid):
     post = Post.query.get(postid)
-    post.research_paper = url
-    db.session.commit()
+    if (post.user_id==current_user.id):
+     post.delete()
+     db.session.commit()
+     return jsonify(id)
+
+
+
 
 ##comments route
 @posts_routes.route('/<int:postid>/comments', methods=['post'])
@@ -104,22 +86,41 @@ def create_comments(postid):
     ins = comments_replies.insert().values(commentId=postid, replyId=newpost['id'])
     conn = db.engine.connect()
     conn.execute(ins)
-    return post.to_dict()
+    originalpost = Post.query.get(req["originalid"])
+    return originalpost.to_dict()
 
-@posts_routes.route('/<int:postid>/comments', methods=['post'])
+@posts_routes.route('/<int:postid>/comments/delete', methods=['post'])
 @login_required
-def load_comments(postid):
+def delete_comments(postid):
     req = request.get_json()
-
-
-    post = Post(
-        user_id=req['user_id'],
-        comment=True,
-        root=False,
-        content= req['content'],
-
-    )
-
-    db.session.add(post)
+    post = Post.query.filter_by(id=postid)
+    post.delete()
     db.session.commit()
-    return post.to_dict()
+    originalpost = Post.query.get(req['originalid'])
+    return originalpost.to_dict()
+
+
+@posts_routes.route('/upload', methods=['post'])
+@login_required
+def upload_image():
+    if "pdf" not in request.files:
+        return {"errors": "pdf required"}, 400
+
+    pdf = request.files["pdf"]
+
+    if not allowed_file(pdf.filename):
+        return {"errors": "file type not permitted"}, 400
+
+    pdf.filename = get_unique_filename(pdf.filename)
+
+    upload = upload_file_to_s3(pdf)
+
+    if "url" not in upload:
+        # if the dictionary doesn't have a url key
+        # it means that there was an error when we tried to upload
+        # so we send back that error message
+        return upload, 400
+
+    url = upload["url"]
+    # flask_login allows us to get the current user from the request
+    return {"url": url}

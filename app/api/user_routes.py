@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.awsS3 import (upload_file_to_s3, allowed_file, get_unique_filename)
 
+
 from app.models import User, db, Friend, FriendReq
 #add models for all profile nonsense ree
 from app.forms import Bio
@@ -11,7 +12,6 @@ user_routes = Blueprint('users', __name__)
 
 
 @user_routes.route('/')
-
 def users():
     users = User.query.all()
     return {'users': [user.to_dict() for user in users]}

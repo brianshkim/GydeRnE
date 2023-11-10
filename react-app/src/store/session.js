@@ -144,6 +144,7 @@ export const update_user = (
 
   ) => async (dispatch) => {
   const response = await fetch(`/api/users/${id}`, {
+
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'

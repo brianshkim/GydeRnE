@@ -26,8 +26,20 @@ class User(db.Model, UserMixin):
     start_date=db.Column(db.BigInteger)
     bio = db.Column(db.String(200))
     profile_image = db.Column(db.String())
+    is_confirmed = db.Column(db.Boolean, nullable=False, default=False)
+    confirmed_on = db.Column(db.DateTime, nullable=True)
 
 
+    education = db.relationship('Education', back_populates="users")
+    accomplishments = db.relationship("Accomplishment", back_populates="users")
+    courses = db.relationship("Course", secondary=courseusers, back_populates="users", cascade="all, delete")
+    publications = db.relationship("Publication", secondary=publicationusers, back_populates="users", cascade="all, delete")
+    journals = db.relationship("Journal", secondary=journalscommittee, back_populates="users", cascade="all, delete")
+    posts = db.relationship("Post", back_populates="users", cascade='all,delete')
+    folders = db.relationship("Folder", back_populates="users")
+    friendedFirst = db.relationship('Friend', back_populates='user', foreign_keys='[Friend.userId]')
+    friendedSecond = db.relationship('Friend', back_populates='user2', foreign_keys='[Friend.userId2]')
+    friend_requests = db.relationship('FriendReq', back_populates='users')
 
 
     @property
@@ -40,6 +52,19 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+
+    def get_publications(self):
+        return [publication.to_dict() for publication in self.publications]
+
+    def get_accomplishments(self):
+        return [accomplishment.to_dict() for accomplishment in self.accomplishments]
+
+    def get_folders(self):
+        return [folder.to_dict() for folder in self.folders]
+
+    def get_courses(self):
+        return [course.to_dict() for course in self.courses]
 
     def to_dict(self):
         return {
@@ -58,29 +83,11 @@ class User(db.Model, UserMixin):
             'start_date':self.start_date,
             'profile_image':self.profile_image,
             'school_name': self.school_name,
+            'is_confirmed': self.is_confirmed,
+            'publications': self.get_publications(),
+            'accomplishments': self.get_accomplishments(),
+            'folders': self.get_folders(),
+            'courses': self.get_courses(),
+
 
         }
-
-
-
-
-    education = db.relationship('Education', back_populates="users")
-    accomplishments = db.relationship("Accomplishment", back_populates="users")
-    courses = db.relationship("Course", secondary=courseusers, back_populates="users", cascade="all, delete")
-    coursenotes = db.relationship('Coursenote', back_populates='users')
-    publications = db.relationship("Publication", secondary=publicationusers, back_populates="users", cascade="all, delete")
-    journals = db.relationship("Journal", secondary=journalscommittee, back_populates="users", cascade="all, delete")
-    posts = db.relationship("Post", back_populates="users")
-    folders = db.relationship("Folder", back_populates="users")
-    friendedFirst = db.relationship('Friend', back_populates='user', foreign_keys='[Friend.userId]')
-    friendedSecond = db.relationship('Friend', back_populates='user2', foreign_keys='[Friend.userId2]')
-    friend_requests = db.relationship('FriendReq', back_populates='users')
-
-    def get_publications(self):
-        return [publication.to_dict() for publication in self.publications]
-
-    def get_accomplishments(self):
-        return [accomplishment.to_dict() for accomplishment in self.accomplishments]
-
-    def get_folders(self):
-        return [folder.to_dict() for folder in self.folders]

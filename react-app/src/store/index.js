@@ -2,12 +2,14 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import session from './session'
 import education from './education'
-import posts from './singlepost'
+import posts from './posts'
+import users from './user'
 
 const rootReducer = combineReducers({
   session,
   education,
   posts,
+  users
 });
 
 

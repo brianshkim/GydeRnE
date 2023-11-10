@@ -9,11 +9,13 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
 import Test from './components/test';
-import Post from './components/Posts/Post';
+import AllPosts from './components/posts/AllPosts';
+import CV from './components/CVs/Post';
 import { Splash } from './components/Splash';
-
+import SearchBar from './components/search/SearchBar';
 import { authenticate } from './store/session';
 import Profile from './components/Profile';
+import {MathJaxContext} from 'better-react-mathjax'
 
 
 function App() {
@@ -37,15 +39,12 @@ function App() {
 
       {/* <NavBar /> */}
       <Switch>
-        <Route path='/post'>
-          <NavHeader />
+      <Route path='/post'>
+        <NavHeader />
           <Post />
         </Route>
-        <Route path='/home'>
-          <Splash />
-        </Route>
         <Route path='/test'>
-          <NavHeader />
+        <NavHeader />
           <Test />
         </Route>
         <Route path='/login' exact={true}>

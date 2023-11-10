@@ -43,16 +43,9 @@ export const get_education= (id) => async (dispatch) => {
 }
 
 export const create_education = (
-    degree_undergrad=[],
-    university_undergrad=[],
-    degree_masters=[],
-    university_masters=[],
-    degree_postdoc=[],
-    university_postdoc=[],
-    doctoral_advisor="",
-    subject="",
-    date="",
-    thesis="",
+    undergrad,
+    masters,
+    postdoc
        ) => async (dispatch) => {
     const response = await fetch(`/api/education/`, {
         method: 'POST',
@@ -60,16 +53,9 @@ export const create_education = (
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            "degree_undergrad": degree_undergrad,
-            "university_undergrad": university_undergrad,
-            "degree_masters": degree_masters,
-            "university_masters": university_masters,
-            "degree_postdoc": degree_postdoc,
-            "university_postdoc": university_postdoc,
-            "doctoral_advisor": doctoral_advisor,
-            "subject": subject,
-            "date": date,
-            "thesis": thesis,
+            "undergrad":undergrad,
+            "masters": masters,
+            "postdoc": postdoc
         })
     });
 
@@ -91,16 +77,9 @@ export const create_education = (
 
 export const update_education = (
     id,
-    degree_undergrad=[],
-    university_undergrad=[],
-    degree_masters=[],
-    university_masters=[],
-    degree_postdoc=[],
-    university_postdoc=[],
-    doctoral_advisor="",
-    subject="",
-    date="",
-    thesis=""
+    undergrad,
+    masters,
+    postdoc
     ) => async (dispatch) => {
     const response = await fetch(`/api/education/${id}`, {
         method: 'POST',
@@ -108,16 +87,9 @@ export const update_education = (
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            "degree_undergrad": degree_undergrad,
-            "university_undergrad": university_undergrad,
-            "degree_masters": degree_masters,
-            "university_masters": university_masters,
-            "degree_postdoc": degree_postdoc,
-            "university_postdoc": university_postdoc,
-            "doctoral_advisor": doctoral_advisor,
-            "subject": subject,
-            "date": date,
-            "thesis": thesis,
+            "undergrad":undergrad,
+            "masters": masters,
+            "postdoc": postdoc
         })
     });
 
@@ -158,8 +130,8 @@ export default function reducer(state = initialState, action) {
             return {...state, ...action.education}
         case CREATE_EDUCATION:
 
-            state.list.push(action.education)
-            return {...state}
+
+            return action.education
         case UPDATE_EDUCATION:
             let newstate = action.education
 

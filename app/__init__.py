@@ -4,7 +4,8 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
-# from .websocket import socketio
+from .websocket import socketio
+from flask_mail import Mail
 
 from .models import db, User
 from .api.user_routes import user_routes
@@ -16,7 +17,7 @@ from .api.publications_routes import publications_routes
 from .api.posts_routes import posts_routes
 from .api.courses_routes import courses_routes
 from .api.education_routes import education_routes
-from .api.coursenotes_routes import coursenotes_routes
+from .api.search_routes import search_routes
 
 
 
@@ -26,9 +27,13 @@ from .config import Config
 
 app = Flask(__name__)
 
+
+
+
 # Setup login manager
 login = LoginManager(app)
 login.login_view = 'auth.unauthorized'
+
 
 
 @login.user_loader
@@ -40,6 +45,10 @@ def load_user(id):
 app.cli.add_command(seed_commands)
 
 app.config.from_object(Config)
+
+mail = Mail(app)
+
+
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(accomplishments_routes, url_prefix='/api/accomplishments')
@@ -49,7 +58,7 @@ app.register_blueprint(publications_routes, url_prefix='/api/publications')
 app.register_blueprint(posts_routes, url_prefix='/api/posts')
 app.register_blueprint(courses_routes, url_prefix='/api/courses')
 app.register_blueprint(education_routes,url_prefix='/api/education' )
-app.register_blueprint(coursenotes_routes, url_prefix='/api/courses')
+app.register_blueprint(search_routes,url_prefix='/api/search' )
 
 
 db.init_app(app)
@@ -57,6 +66,7 @@ Migrate(app, db)
 
 # Application Security
 CORS(app)
+
 
 
 # Since we are deploying with Docker and Flask,
@@ -92,5 +102,5 @@ def react_root(path):
         return app.send_static_file('favicon.ico')
     return app.send_static_file('index.html')
 
-# if __name__ == '__main__':
-#     websocket.run(app)
+if __name__ == '__main__':
+    websocket.run(app)
