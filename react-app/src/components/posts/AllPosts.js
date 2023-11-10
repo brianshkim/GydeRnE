@@ -13,7 +13,7 @@ const Post = () => {
 
     useEffect(() => {
 
-        dispatch(get_user_posts(user.id))
+        dispatch(get_user_posts(user.id)) // might have to feed in user id from props or params
     }, [dispatch, user])
 
     useEffect(() => {
