@@ -37,7 +37,7 @@ class Post(db.Model):
             'id': self.id,
             'title': self.title,
             'poster': self.user_id,
-            'poster details': self.users.to_dict(),
+            'poster_details': self.users.to_dict(),
             'content': self.content,
             'abstract': self.abstract,
             'comment': self.comment,
