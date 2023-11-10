@@ -1,5 +1,6 @@
 from .db import db
 from .course_users import courseusers
+from sqlalchemy.dialects.postgresql import ARRAY
 
 class Course(db.Model):
      __tablename__ = 'courses'
@@ -9,6 +10,11 @@ class Course(db.Model):
      title = db.Column(db.String(400))
      subject = db.Column(db.String(400))
      post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+     grades = db.Column(ARRAY(db.JSON))
+     announcements = db.Column(ARRAY(db.JSON))
+     syllabus = db.Column(ARRAY(db.JSON))
+
+
 
      def to_dict(self):
         return {

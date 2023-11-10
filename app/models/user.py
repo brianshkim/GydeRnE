@@ -92,7 +92,6 @@ class User(db.Model, UserMixin):
             'accomplishments': self.get_accomplishments(),
             'folders': self.get_folders(),
             'courses': self.get_courses(),
-            'posts': self.get_posts(),
-            'coursenotes': self.get_coursenotes(),
+
 
         }

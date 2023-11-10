@@ -37,7 +37,7 @@ export const load_user = (id) => async (dispatch) => {
 
 
 export const unload_user = () => async(dispatch) =>{
-    dispatch(loadAllUsers)
+    dispatch(unloadAllUsers)
 }
 //export const load_all_users = () => async (dispatch) => {
 //    const response = await fetch(`/api/users/${id}`, {
