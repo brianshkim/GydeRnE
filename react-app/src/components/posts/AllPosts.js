@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
-import CommentCreate from '../CommentCreate'
-import { get_user_posts, delete_comments } from '../../store/posts'
+import { get_user_posts } from "../../store/posts";
 
 const Post = () => {
     let user = useSelector(state => state.session.user)
     let posts = useSelector(state => state.posts.userposts)
-    console.log(posts)
 
     let dispatch = useDispatch()
 
@@ -30,7 +27,7 @@ const Post = () => {
     return (
         <div>
             {posts?.map(post => (
-                <div>
+                <div key={post.id} className={`post${post.id}`}>
                     <div>{post?.title}</div>
                     <div>{post?.poster_details.firstname}</div>
                     <div>{post?.poster_details.lastname}</div>

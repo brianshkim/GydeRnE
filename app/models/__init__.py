@@ -11,7 +11,6 @@ from .publications_citations import publicationcitations
 from .publications_users import publicationusers
 from .publication import Publication
 from .folder import Folder
-from .post import Post
 from .friend import Friend
 from .friend_reqs import FriendReq
 from .comments import comments_replies
