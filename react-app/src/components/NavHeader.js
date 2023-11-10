@@ -12,9 +12,9 @@ const NavHeader = () => {
 
   const sessionUser = useSelector((state) => state.session.user);
 
-useEffect(() => {
-  window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
-}, []);
+  useEffect(() => {
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+  }, []);
 
   return (
     <main className="nav-header">
@@ -35,21 +35,25 @@ useEffect(() => {
             
         </div>
 
-
         <div className="nav-items-right">
         {sessionUser && (
             <>
-              <p className="nav-name">Welcome back, {sessionUser.name}!</p>
               <i class=" fa-regular fa-bell"></i>
               <div className="nav-create-post">
             <CreatePostButton/>
           </div>
+          <SettingsDropdown />
+          <i class=" fa-solid fa-circle-user"></i>
             </>
           )}
-
+        {!sessionUser && (
+            <>
           <SettingsDropdown />
-        <i class=" fa-solid fa-circle-user"></i>
+          <i class=" fa-solid fa-circle-user"></i>
+            </>
+          )}  
         </div>
+        
       </nav>
     </main>
   );
