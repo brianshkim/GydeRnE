@@ -140,7 +140,8 @@ export const update_user = (
   degree_timeline,
   company,
   role_title,
-  start_date
+  start_date,
+  profile_image
 
   ) => async (dispatch) => {
   const response = await fetch(`/api/users/${id}`, {
@@ -163,6 +164,7 @@ export const update_user = (
         'company':company,
         'role_title':role_title,
         'start_date':start_date,
+        'profile_image': profile_image,
 
       })
   });
