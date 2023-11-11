@@ -10,19 +10,14 @@ function ProfilePageCard() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const profilePicture = useSelector((state) => state.session.user.profile_image);
-  
+  const [showModal, setShowModal] = useState(false);
+
   const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
-    dispatch(getUserImage(sessionUser?.id)).then((res) => {
-      setTimeout(() => {
-        setLoaded(true);
-      }, 1000);
-    });
-  }, [dispatch, sessionUser]);
+
 
   const ProfileEditButton = () => {
-    const [showModal, setShowModal] = useState(false);
+
 
     return (
         <>
@@ -42,8 +37,9 @@ function ProfilePageCard() {
   return (
     <>
     <div className="profile-card-wrapper">
+
       <div className="frame">
-        <ProfileEditButton/>
+        <ProfileEditButton />
           <div className="fullname">{sessionUser?.firstname} {sessionUser?.lastname}</div>
           <div className="role-title">
             {sessionUser?.role_title ? 'Professor' : 'Student'} at {sessionUser?.school_name}</div>

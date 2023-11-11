@@ -188,7 +188,7 @@ def user_profile_images(id):
     return jsonify({'images' :[image.to_dict() for image in userProfileImages]})
 
 
-@user_routes.route('/<int:id>/image', methods=['POST'])
+@user_routes.route('/<int:id>/upload', methods=['POST'])
 @login_required
 def add_profile_image(id):
 
@@ -218,4 +218,4 @@ def add_profile_image(id):
     user.profile_image = url
     db.session.commit()
 
-    return {"image": new_image.to_dict()}
+    return {user.to_dict()}

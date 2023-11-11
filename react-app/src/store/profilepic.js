@@ -26,7 +26,7 @@ const changeImage = (image) => ({
 const initialState = { profileImages: null };
 
 export const getUserImage = (userId) => async (dispatch) => {
-  const response = await fetch(`/api/users/${userId}/image`);
+  const response = await fetch(`/api/users/${userId}/upload`);
 
   if (response.ok) {
     const data = await response.json();

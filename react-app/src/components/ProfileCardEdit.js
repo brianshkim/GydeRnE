@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { update_user } from "../store/session";
 import { getUserImage, uploadImage, deleteImage, editImage } from "../store/profilepic";
 
-function ProfileCardEdit() {
+const  ProfileCardEdit=()=> {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
 
@@ -22,7 +22,7 @@ function ProfileCardEdit() {
 
     setImageLoading(true);
 
-    const res = await fetch(`/api/profileimages/${sessionUser.id}`, {
+    const res = await fetch(`/api/users/${sessionUser.id}/upload`, {
       method: "POST",
       body: formData,
     });
@@ -73,7 +73,9 @@ function ProfileCardEdit() {
           setProfilePic(sessionUser.profile_image);
           setErrors(data.errors);
         }
-      });
+  }) }
+
+
 
 
     return (
@@ -132,10 +134,10 @@ function ProfileCardEdit() {
               </div>
             )}
           </form>
-          
+
         </form>
       </>
     );
   }
-}
+
 export default ProfileCardEdit
