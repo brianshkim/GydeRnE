@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom"
 import { getUserImage } from "../store/profilepic";
 import usertempimage from "../components/images/usertempimage.jpg"
 import { Modal } from "./context/Modal";
@@ -9,10 +10,12 @@ import "./Profile.css";
 function ProfilePageCard() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-  const profilePicture = useSelector((state) => state.session.user.profile_image);
+  const profilePicture = useSelector((state) => state.session.user?.profile_image);
   const [showModal, setShowModal] = useState(false);
 
   const [loaded, setLoaded] = useState(false);
+
+
 
 
 
@@ -66,7 +69,7 @@ function ProfilePageCard() {
       </div>
       <div className="profile-bio-wrapper">
         <p className="bio-text">
-            Bio: {sessionUser.bio}
+            Bio: {sessionUser?.bio}
         </p>
       </div>
     </div>

@@ -10,21 +10,27 @@ const SignupForm = () => {
   const [username, setUsername] = useState('');
   const [firstname, setFirstName] = useState('');
   const [lastname, setLastName] = useState('');
-  const [professor, setProfessor] = useState('');
+  const [professor, setProfessor] = useState('student');
   const [schoolName, setSchoolName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
+  const [Loading, setLoading] = useState(false)
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
   const onSignUp = async (e) => {
+
     e.preventDefault();
+    setLoading(true)
+
+
     if (password === repeatPassword) {
-      const data = await dispatch(signUp(username, firstname, lastname, email, password, "", professor==="professor"?true:false, "", schoolName));
+      const data = await dispatch(signUp(username, firstname, lastname, email, password, "", professor, "", schoolName));
       if (data) {
         setErrors(data)
       }
+      setLoading(false)
     }
   };
 
@@ -41,7 +47,9 @@ const SignupForm = () => {
   };
 
   const updateProfessor = (e) => {
+
     setProfessor(e.target.value);
+    console.log(professor)
   };
 
   const updateSchoolName = (e) => {
@@ -61,7 +69,7 @@ const SignupForm = () => {
   };
 
   if (user) {
-    return <Redirect to='/' />;
+    return <Redirect to='/profile' />;
   }
 
   return (
@@ -116,16 +124,18 @@ const SignupForm = () => {
 
         <div className="isprof-selection">
           <div>
-            <input type="radio" id="isStudent" name='isStudent'
-              onClick={(e)=>updateProfessor(e)} value="student"
-              checked={professor=== "student"? true : false} />
-            <label for="isStudent">Student</label>
+            <input type="radio" id="isStudent" name='student'
+              onChange={(e)=>updateProfessor(e)} value="student"
+              checked={professor==="student"}
 
-          </div>
-          <div>
-            <input type="radio" id="isProfessor" name='isProfessor'
-              onClick={(e)=>updateProfessor(e)} value="professor"
-              checked={professor=== "professor"? true: false} />
+
+              />
+            <label for="isStudent">Student</label>
+            <input type="radio" id="isProfessor" name='student'
+              onChange={(e)=>updateProfessor(e)} value="professor"
+              checked={professor==="professor"}
+
+               />
             <label for="isProfessor">Professor</label>
           </div>
         </div>
@@ -181,7 +191,7 @@ const SignupForm = () => {
         ></input>
 
       </div>
-      <button className='modal-submit' type='submit'>Sign Up</button>
+      <button className='modal-submit' type='submit' disabled={Loading}>{Loading ? "Loading" : "Sign Up"}</button>
     </form>
   );
 };
