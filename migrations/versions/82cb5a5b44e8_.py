@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 971aaf8c3fbd
+Revision ID: 82cb5a5b44e8
 Revises: 
-Create Date: 2023-10-30 14:34:47.926408
+Create Date: 2023-11-10 17:34:10.570424
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '971aaf8c3fbd'
+revision = '82cb5a5b44e8'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -42,17 +42,17 @@ def upgrade():
     sa.Column('start_date', sa.BigInteger(), nullable=True),
     sa.Column('bio', sa.String(length=200), nullable=True),
     sa.Column('profile_image', sa.String(), nullable=True),
+    sa.Column('is_confirmed', sa.Boolean(), nullable=False),
+    sa.Column('confirmed_on', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
     op.create_table('accomplishments',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('firstname', sa.String(length=600), nullable=True),
-    sa.Column('lastname', sa.String(length=600), nullable=True),
-    sa.Column('highest_degree', sa.String(length=255), nullable=True),
-    sa.Column('publications', postgresql.ARRAY(sa.String()), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('bio', sa.Text(), nullable=True),
+    sa.Column('publications', postgresql.ARRAY(sa.String()), nullable=True),
     sa.Column('awards', postgresql.ARRAY(sa.String()), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -65,26 +65,11 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('courses',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('professor_id', sa.Integer(), nullable=True),
-    sa.Column('title', sa.String(length=400), nullable=True),
-    sa.Column('subject', sa.String(length=400), nullable=True),
-    sa.ForeignKeyConstraint(['professor_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('id')
-    )
     op.create_table('education',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('degree_undergrad', postgresql.ARRAY(sa.String()), nullable=True),
-    sa.Column('university_undergrad', postgresql.ARRAY(sa.String()), nullable=True),
-    sa.Column('degree_masters', postgresql.ARRAY(sa.String()), nullable=True),
-    sa.Column('university_masters', postgresql.ARRAY(sa.String()), nullable=True),
-    sa.Column('degree_postdoc', postgresql.ARRAY(sa.String()), nullable=True),
-    sa.Column('university_postdoc', postgresql.ARRAY(sa.String()), nullable=True),
-    sa.Column('doctoral_advisor', sa.String(length=600), nullable=True),
-    sa.Column('subject', sa.String(length=600), nullable=True),
-    sa.Column('date', sa.String(length=255), nullable=True),
-    sa.Column('thesis', sa.Text(), nullable=True),
+    sa.Column('undergrad', postgresql.ARRAY(sa.JSON()), nullable=True),
+    sa.Column('masters', postgresql.ARRAY(sa.JSON()), nullable=True),
+    sa.Column('postdoc', postgresql.ARRAY(sa.JSON()), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -128,11 +113,11 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('title', sa.String(), nullable=True),
+    sa.Column('abstract', sa.String(), nullable=True),
     sa.Column('content', sa.Text(), nullable=False),
-    sa.Column('comment', sa.String(length=600), nullable=False),
+    sa.Column('comment', sa.Boolean(), nullable=True),
     sa.Column('research', sa.Boolean(), nullable=True),
     sa.Column('research_paper', sa.String(), nullable=True),
-    sa.Column('tex', postgresql.ARRAY(sa.String()), nullable=True),
     sa.Column('root', sa.Boolean(), nullable=True),
     sa.Column('resp_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
@@ -148,25 +133,25 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('coursenotes',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('user_id', sa.Integer(), nullable=True),
-    sa.Column('course_id', sa.Integer(), nullable=True),
-    sa.Column('content', sa.Text(), nullable=False),
-    sa.Column('tex', postgresql.ARRAY(sa.String()), nullable=True),
-    sa.Column('comment', sa.String(length=600), nullable=False),
-    sa.Column('resp_id', sa.Integer(), nullable=True),
-    sa.Column('created_at', sa.DateTime(), nullable=True),
-    sa.Column('updated_at', sa.DateTime(), nullable=True),
-    sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    op.create_table('commentsreplies',
+    sa.Column('commentId', sa.Integer(), nullable=False),
+    sa.Column('replyId', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['commentId'], ['posts.id'], ondelete='CASCADE'),
+    sa.ForeignKeyConstraint(['replyId'], ['posts.id'], ondelete='CASCADE'),
+    sa.PrimaryKeyConstraint('commentId', 'replyId')
     )
-    op.create_table('courseusers',
-    sa.Column('user_id', sa.Integer(), nullable=True),
-    sa.Column('course_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], )
+    op.create_table('courses',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('professor_id', sa.Integer(), nullable=True),
+    sa.Column('title', sa.String(length=400), nullable=True),
+    sa.Column('subject', sa.String(length=400), nullable=True),
+    sa.Column('post_id', sa.Integer(), nullable=True),
+    sa.Column('grades', postgresql.ARRAY(sa.JSON()), nullable=True),
+    sa.Column('announcements', postgresql.ARRAY(sa.JSON()), nullable=True),
+    sa.Column('syllabus', postgresql.ARRAY(sa.JSON()), nullable=True),
+    sa.ForeignKeyConstraint(['post_id'], ['posts.id'], ),
+    sa.ForeignKeyConstraint(['professor_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('publicationcitations',
     sa.Column('publication_id', sa.Integer(), nullable=True),
@@ -180,15 +165,22 @@ def upgrade():
     sa.ForeignKeyConstraint(['publication_id'], ['publications.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], )
     )
+    op.create_table('courseusers',
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('course_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], )
+    )
     # ### end Alembic commands ###
 
 
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
+    op.drop_table('courseusers')
     op.drop_table('publicationusers')
     op.drop_table('publicationcitations')
-    op.drop_table('courseusers')
-    op.drop_table('coursenotes')
+    op.drop_table('courses')
+    op.drop_table('commentsreplies')
     op.drop_table('publications')
     op.drop_table('posts')
     op.drop_table('journalscommittee')
@@ -196,7 +188,6 @@ def downgrade():
     op.drop_table('friend_requests')
     op.drop_table('folders')
     op.drop_table('education')
-    op.drop_table('courses')
     op.drop_table('citations')
     op.drop_table('accomplishments')
     op.drop_table('users')

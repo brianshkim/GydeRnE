@@ -10,8 +10,16 @@ const Profile = () => {
   
   return (
     <>
-    <ProfilePageCard></ProfilePageCard>
-    {/* <sessionUser.name/> */}
+    <div className='profile-page-wrapper'>
+<div className="profile-page-left">
+      <ProfilePageCard/>
+    </div>
+    <div className="profile-page-right">
+      {/* <ProfilePageCard/> */}
+    </div>
+    </div>
+    
+    
     </>
   );
 };

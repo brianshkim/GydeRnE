@@ -1,63 +1,80 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getUserImage,
-  uploadImage,
-  deleteImage,
-} from "../store/profilepic";
+import { getUserImage } from "../store/profilepic";
 import usertempimage from "../components/images/usertempimage.jpg"
+import { Modal } from "./context/Modal";
+import ProfileCardEdit from "./ProfileCardEdit";
 import "./Profile.css";
 
 function ProfilePageCard() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-  const userProfile = useSelector((state) => state.profileImages);
+  const profilePicture = useSelector((state) => state.session.user.profile_image);
+  
+  const [loaded, setLoaded] = useState(false);
 
+  useEffect(() => {
+    dispatch(getUserImage(sessionUser?.id)).then((res) => {
+      setTimeout(() => {
+        setLoaded(true);
+      }, 1000);
+    });
+  }, [dispatch, sessionUser]);
+
+  const ProfileEditButton = () => {
+    const [showModal, setShowModal] = useState(false);
+
+    return (
+        <>
+        <button onClick={() => setShowModal(true)}
+          className = 'profile-edit-button'>
+          <i class="fa-solid fa-pen"></i>
+        </button>
+            {showModal && (
+              <Modal onClose={() => setShowModal(false)}>
+                <ProfileCardEdit />
+              </Modal>
+            )}
+      </>
+    );
+  };
 
   return (
     <>
-    <div className="profile-head-default">
+    <div className="profile-card-wrapper">
       <div className="frame">
-        <div className="div">
-          <div className="text-wrapper">{sessionUser?.firstname} {sessionUser?.lastname}</div>
-          <div className="text-wrapper-2">{sessionUser?.role_title} at {sessionUser?.school_name}</div>
-          <div className="text-wrapper-2">@{sessionUser?.username}</div>
-        </div>
-      </div>
-            {/* {userImagesArr[0] && (
+        <ProfileEditButton/>
+          <div className="fullname">{sessionUser?.firstname} {sessionUser?.lastname}</div>
+          <div className="role-title">
+            {sessionUser?.role_title ? 'Professor' : 'Student'} at {sessionUser?.school_name}</div>
+          <div className="username">@{sessionUser?.username}</div>
+
+          <div className='profile-picture'>
+            {profilePicture && (
               <img
                 alt="profile"
                 className="profile-picture"
-                src={userImagesArr[0].imgUrl}
+                src={profilePicture.imgUrl}
               ></img>
 
               )}
-              {userImagesArr.length === 0 && (
+              {!profilePicture && (
               <img
                 alt="unknown"
                 className="profile-picture"
                 src={usertempimage}
               ></img>
-              )} */}
 
-      <div className="user-info">
-        <p className="lorem-ipsum-dolor">
-          <span className="span">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sapien metus, ultrices at nulla quis, porta
-            dapibus arcu. Aenean feugiat tincidunt nulla consectetur pretium. Nam suscipit, libero nec porttitor
-            volutpat{" "}
-          </span>
-          <span className="text-wrapper-3">Read more</span>
+              )}
+            </div>
+      </div>
+      <div className="profile-bio-wrapper">
+        <p className="bio-text">
+            Bio: {sessionUser.bio}
         </p>
       </div>
     </div>
 
-
-    <div className="profile-card">
-      <div className="profile-card-top">
-        Testing
-      </div>
-    </div>
     </>
   );
 }

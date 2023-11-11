@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { create_post} from '../../store/posts'
+import { edit_post, delete_post} from '../../store/posts';
 
-const PostCreate = ({ resp_id }) => {
+const PostEdit = ({ postid }) => {
     let user = useSelector(state => state.session.user)
     let dispatch = useDispatch()
     const [title, setTitle] = useState('')
@@ -10,7 +10,7 @@ const PostCreate = ({ resp_id }) => {
     let [research, setResearch] = useState(false)
 
     useEffect(() => {
-
+        console.log(typeof window?.MathJax)
         if (typeof window?.MathJax !== "undefined") {
             window.MathJax.typesetClear()
             window.MathJax.typeset()
@@ -18,14 +18,11 @@ const PostCreate = ({ resp_id }) => {
 
     }, [title, content])
 
-
-
     const handleSubmit = (e) => {
 
         e.stopPropagation()
         e.preventDefault()
-        dispatch(create_post(user.id, content,  "", true))
-
+        dispatch(edit_post(user.id, content,  "", true))
 
     }
     return (
@@ -34,7 +31,7 @@ const PostCreate = ({ resp_id }) => {
             onSubmit={handleSubmit}
             >
             <div>
-            <label>Create Post</label>
+            <label>Edit Post</label>
 
             <input
                 type="text"
@@ -59,12 +56,11 @@ const PostCreate = ({ resp_id }) => {
 
 
 
-
-
         </div>
+
 
 
     )
 }
 
-export default PostCreate
+export default PostEdit

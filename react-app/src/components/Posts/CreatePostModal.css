@@ -1,3 +1,9 @@
+.nav-create-post-button{
+    background: none;
+    border: none;
+    color: white;
+}
+
 .post-create-wrapper{
   background: #fff;
   min-width: 600px;

@@ -6,9 +6,6 @@ const DELETE_COMMENTS = 'POSTS/DELETE_COMMENTS'
 const UNLOAD_POST = 'POSTS/UNLOAD_POST'
 const LOAD_USER_POSTS = 'POSTS/LOAD_USER_POSTS'
 
-
-
-
 const getPost = (post) => ({
     type: LOAD_POST,
     post

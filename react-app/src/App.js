@@ -10,12 +10,13 @@ import UsersList from './components/UsersList';
 import User from './components/User';
 import Test from './components/test';
 import AllPosts from './components/posts/AllPosts';
-import CV from './components/CVs/Post';
+import CV from './components/CV';
 import { Splash } from './components/Splash';
 import SearchBar from './components/search/SearchBar';
 import { authenticate } from './store/session';
 import Profile from './components/Profile';
-import {MathJaxContext} from 'better-react-mathjax'
+import Post from './components/posts/AllPosts';
+//import {MathJaxContext} from 'better-react-mathjax'
 
 
 function App() {

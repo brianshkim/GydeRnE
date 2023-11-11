@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { create_post } from '../../store/singlepost';
+import { create_post } from '../../store/posts';
 import './CreatePostModal.css'
 
 const CreatePostForm = ({ resp_id }) => {
@@ -11,8 +11,9 @@ const CreatePostForm = ({ resp_id }) => {
     let [title, setTitle] = useState('')
     let [content, setContent] = useState('');
     let [research, setResearch] = useState(false)
-
-
+    let [abstract, setAbstract] = useState('')
+    let [researchPaper, setResearchPaper] = useState(null);
+    let [fileLoading, setFileLoading] = useState(false)
 
     // const contentHandler = (e) => setContent(e.target.value);
 
@@ -33,30 +34,46 @@ const CreatePostForm = ({ resp_id }) => {
 
     const reset = () => setContent('');
 
-
-    // const handleSubmit = (e) => {
-
-    //     e.stopPropagation()
-    //     e.preventDefault()
-    //     dispatch(create_post(user.id, content,  "", true))
-    // }
-
     const handleSubmit = async (e) => {
         e.stopPropagation()
-        e.preventDefault();
-        const newPost = {
-            user_id: user.id,
-            title,
-            content,
-            research: true
-            // image_url: image
+        e.preventDefault();    
+        
+        const formData = new FormData();
+        formData.append("pdf", researchPaper);
+        setFileLoading(true)
+        const res = await fetch(`/api/posts/upload`, {
+            method: "POST",
+            body: formData,
+        });
+        if (res.ok && fileLoading) {
+            let data = await res.json();
+            setFileLoading(false);
+            dispatch(create_post(title, abstract, content, research, data.url))
         }
-        const post = await dispatch(create_post(newPost))
+        else {
+            setFileLoading(false);
+            console.log("error");
+        }
+    }
+        // const newPost = {
+        //     user_id: user.id,
+        //     title,
+        //     content,
+        //     research: true
+        //     image_url: image
+        // }
+        // const post = await dispatch(create_post(newPost))
 
-        if (post) {
-            reset();
-            // removeImage();
-        }
+        // if (post) {
+        //     reset();
+        //     removeImage();
+        // }
+    //}
+
+    const updateResearchPaper = (e) => {
+        const file = e.target.files[0]
+        setResearchPaper(file);
+
     }
 
     return (
@@ -72,6 +89,14 @@ const CreatePostForm = ({ resp_id }) => {
                         className="post-title"
                         onChange={(e) => setTitle(e.target.value)}
                         value={title} />
+                </div>
+                <div className='post-input-box'>
+                    <textarea
+                        placeholder='Abstract'
+                        type="text"
+                        className="post-abstract"
+                        onChange={(e) => setAbstract(e.target.value)}
+                        value={abstract} />
                 </div>
                 <div className='post-input-box'>
                     <textarea
@@ -93,6 +118,12 @@ const CreatePostForm = ({ resp_id }) => {
                                 checked={research === true ? true : false} />
                             <label for="isResearch" className='isResearch-label' >Consider for research</label>
                         </div>
+                        <form>
+                            <div className="file-input">
+                                <input id="file" type="file" accept="application/pdf" onChange={(e) => updateResearchPaper(e)} /> 
+                                <label htmlFor="file">Upload file</label>
+                            </div>
+                        </form>
                     </div>
                     <div class="bottom-right">
                         <div className="post-char-count">

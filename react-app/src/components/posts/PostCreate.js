@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { create_post } from '../../store/posts'
+
+
 const PostCreate = ({ resp_id }) => {
     let user = useSelector(state => state.session.user)
     let dispatch = useDispatch()
