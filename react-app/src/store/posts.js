@@ -127,8 +127,6 @@ export const update_post = (
             "abstract": abstract,
             "research": research,
             "research_paper": research_paper,
-            "root": root,
-            "resp_id": resp_id
 
         })
     });
