@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import StringField, BooleanField
 from wtforms.validators import DataRequired, Email, ValidationError
 from app.models import User
 
@@ -21,10 +21,12 @@ def email_validation(email):
     for i in range (0,at):
         if((email[i]>='a' and email[i]<='z') or (email[i]>='A' and email[i]<='Z')):
             a=a+1
-    if(a>0 and at>0 and (dot-at)>0 and (dot+1)<y and email[-3:]=="com"):
+    if(a>0 and at>0 and (dot-at)>0 and (dot+1)<y ):
         return True
     else:
         return False
+
+    #and email[-3:]=="com"
 
 
 def username_exists(form, field):
