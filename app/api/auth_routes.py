@@ -67,7 +67,7 @@ def sign_up():
 
     if form.validate_on_submit():
         professor = False
-        if form.data['professor']:
+        if form.data['professor']=="professor":
             professor = True
         user = User(
             firstname=form.data['firstname'],
