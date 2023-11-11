@@ -1,0 +1,147 @@
+.nav-create-post-button{
+    background: none;
+    border: none;
+    color: white;
+}
+
+.post-create-wrapper{
+  background: #fff;
+  min-width: 600px;
+  width: 90%;
+  display: flex;
+  border-radius: 15px;
+  padding: 5px 5px 5px 5px;
+  /* box-shadow: 0px 10px 15px rgba(0,0,0,0.1); */
+}
+
+.post-form{
+    width:100%;
+}
+
+.post-input-box{
+  width: 100%;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.post-modal-header{
+    color: #a0a0a0;
+    position: absolute;
+    font-size: 24px;
+    top: 5px;
+    left: 20px;
+    font-family: "Darker Grotesque", Helvetica;
+}
+
+.post-preview-header{
+    color: #a0a0a0;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-family: "Darker Grotesque", Helvetica;
+}
+
+.post-input-box .post-title{
+    top: 10px;
+    position: relative;
+    width: 100%;
+    min-height: 40px;
+    overflow-y: auto;
+    resize: none;
+    border: none;
+    outline: none;
+    font-size: 24px;
+}
+
+.post-input-box .post-area,
+.post-input-box .post-area-preview{
+  position: relative;
+  width: 100%;
+  min-height: 130px;
+  overflow-y: auto;
+  resize: none;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+.post-area::-webkit-scrollbar{
+  width: 0px;
+}
+
+.post-area:focus{
+  outline: none;
+}
+
+.post-area .placeholder{
+  position: absolute;
+  margin-top: -3px;
+  font-size: 22px;
+  color: #98A5B1;
+  pointer-events: none;
+}
+
+.post-area .input{
+  outline: none;
+  font-size: 17px;
+  min-height: inherit;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.isResearch-label{
+    margin: 2px 0px 4px 4px;
+    font-size: 20px;
+    color: gray;
+    font-family: "Darker Grotesque", Helvetica;
+}
+
+.post-modal-bottom{
+  display: flex;
+  margin-top: 13px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bottom-right{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-width: 100px;
+}
+
+.post-char-count{
+  min-width: 50px;
+  font-weight: 500;
+  margin-right: 15px;
+  padding-right: 15px;
+  border-right: 1px solid #aab8c2;
+  font-family: "Darker Grotesque", Helvetica;
+}
+
+.post-char-count .char-over{
+    color: red;
+}
+
+.post-char-count .char-over{
+    color: #333;
+}
+
+.post-modal-bottom button{
+  padding: 9px 18px;
+  border: none;
+  outline: none;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 700;
+  background: #1da1f2;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0.5;
+  pointer-events: none;
+  transition: background 0.2s ease;
+}
+.post-modal-bottom button.active{
+  opacity: 1;
+  pointer-events: auto;
+}
+.post-modal-bottom button:hover{
+  background: #0d8bd9;
+}

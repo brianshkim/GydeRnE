@@ -11,11 +11,12 @@ import User from './components/User';
 import Test from './components/test';
 import AllPosts from './components/posts/AllPosts';
 import CV from './components/CV';
+import { Splash } from './components/Splash';
 import SearchBar from './components/search/SearchBar';
 import { authenticate } from './store/session';
 import Profile from './components/Profile';
-import { MathJaxContext } from 'better-react-mathjax'
-
+import Post from './components/posts/AllPosts';
+//import {MathJaxContext} from 'better-react-mathjax'
 
 
 function App() {
@@ -39,18 +40,13 @@ function App() {
 
       {/* <NavBar /> */}
       <Switch>
-        <Route path='/CV'>
+      <Route path='/post'>
         <NavHeader />
-          <CV />
+          <Post />
         </Route>
-        <Route path='/search'>
-          <SearchBar />
-
-        </Route>
-
         <Route path='/test'>
-          <NavHeader />
-          <AllPosts />
+        <NavHeader />
+          <Test />
         </Route>
         <Route path='/login' exact={true}>
           <NavHeader />

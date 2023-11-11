@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-<<<<<<<< HEAD:react-app/src/components/Posts/PostEdit.js
-import { edit_post, delete_post} from '../../store/posts'
-========
-import { edit_post, delete_post} from '../../store/posts'
->>>>>>>> origin:react-app/src/components/posts/PostEdit.js
+import { edit_post, delete_post} from '../../store/posts';
+
 const PostEdit = ({ postid }) => {
     let user = useSelector(state => state.session.user)
     let dispatch = useDispatch()
     const [title, setTitle] = useState('')
     let [content, setContent] = useState('')
     let [research, setResearch] = useState(false)
-
-
 
     useEffect(() => {
         console.log(typeof window?.MathJax)
@@ -23,15 +18,11 @@ const PostEdit = ({ postid }) => {
 
     }, [title, content])
 
-
-
     const handleSubmit = (e) => {
 
         e.stopPropagation()
         e.preventDefault()
         dispatch(edit_post(user.id, content,  "", true))
-
-
 
     }
     return (

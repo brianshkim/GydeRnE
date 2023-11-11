@@ -188,7 +188,7 @@ def user_profile_images(id):
     return jsonify({'images' :[image.to_dict() for image in userProfileImages]})
 
 
-@user_routes.route('/<int:id>/images', methods=['POST'])
+@user_routes.route('/<int:id>/image', methods=['POST'])
 @login_required
 def add_profile_image(id):
 
@@ -214,9 +214,8 @@ def add_profile_image(id):
 
     url = upload["url"]
     # flask_login allows us to get the current user from the request
-
-    new_image = ProfileImage(userId=current_user.id, imgUrl=url)
-    db.session.add(new_image)
+    user = User.query.get(id)
+    user.profile_image = url
     db.session.commit()
 
     return {"image": new_image.to_dict()}

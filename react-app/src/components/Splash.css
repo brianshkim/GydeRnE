@@ -1,0 +1,300 @@
+html {
+    scroll-behavior: smooth;
+   }
+
+.desktop {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .desktop .div {
+    background-color: #ffffff;
+    height: 3756px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .desktop .splash-top {
+    background-color: #000000;
+    height: 938px;
+    position: absolute;
+    top: 2140px;
+    width: 100%;
+  }
+  
+  .desktop .rectangle {
+    border: 3px solid green;
+    background-color: #d9d9d9;
+    height: 340px;
+    left: 76px;
+    position: absolute;
+    top: 90px;
+    width: 462px;
+  }
+  
+  .desktop .rectangle-2 {
+    background-color: #d9d9d9;
+    height: 340px;
+    left: 902px;
+    position: absolute;
+    top: 524px;
+    width: 462px;
+  }
+  
+  .desktop .text-wrapper {
+    color: #ffffff;
+    font-family: 'Darker Grotesque', sans-serif;
+    font-size: 40px;
+    font-weight: 500;
+    left: 575px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 75px;
+  }
+  
+  .desktop .p {
+    color: #ffffff;
+    font-family: 'Darker Grotesque', sans-serif;
+    font-size: 40px;
+    font-weight: 500;
+    left: 105px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 523px;
+  }
+  
+  .desktop .we-aim-to-create-a {
+    color: #ffffff;
+    font-family: "Darker Grotesque", sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+    left: 575px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 154px;
+    width: 799px;
+  }
+  
+  .desktop .GYDE-is-built-not {
+    color: #ffffff;
+    font-family: "Darker Grotesque", Helvetica;
+    font-size: 32px;
+    font-weight: 500;
+    left: 85px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 588px;
+    width: 799px;
+  }
+  
+  .desktop .overlap-group {
+    top: -3px;
+    position: relative;
+    justify-content: center;
+    display: flex;
+    height: 1292px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
+  
+  .desktop .splash-black-polygon {
+    background-color: #000000;
+    height: 846px;
+    left: 0;
+    position: absolute;
+    top: 446px;
+    width: 100%;
+    clip-path: polygon(50% 25%, 100% 0, 100% 100%, 0 100%, 0 0);
+  }
+  
+  .desktop .landing-splash {
+    height: 668px;
+    left: 0;
+    object-fit: cover;
+    position: absolute;
+    width: 100%;
+    opacity: 10%;
+    z-index: 2;
+    clip-path: polygon(100% 0, 100% 66%, 50% 100%, 0 66%, 0 0);
+  }
+  
+  .desktop .splash-header{
+    color: #000000;
+    font-family: 'Darker Grotesque', sans-serif;
+    font-size: 96px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 107px;
+  }
+  
+  .desktop .splash-subheader {
+    color: #000000;
+    font-family: 'Darker Grotesque', sans-serif;
+    font-size: 36px;
+    font-weight: 300;
+    letter-spacing: 0.5;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 257px;
+  }
+  
+  .desktop .splash-buttons {
+    align-items: center;
+    z-index: 3;
+    background-color: #68ffec;
+    border-radius: 8px;
+    display: flex;
+    top: 400px;
+    gap: 10px;
+    height: 50px;
+    justify-content: center;
+    padding: 10px;
+    position: absolute;
+    width: 400px;
+    border: 1px solid purple;
+  }
+
+   a {
+    text-decoration: none;
+    color: black;
+   } 
+  
+  .desktop .text-wrapper-3 {
+    color: #000000;
+    font-family: "Darker Grotesque", sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    width: fit-content;
+  }
+  
+  .desktop .div-wrapper {
+    align-items: center;
+    background-color: #68ffec;
+    border-radius: 8px;
+    display: flex;
+    gap: 10px;
+    height: 67px;
+    justify-content: center;
+    left: 739px;
+    padding: 10px;
+    position: absolute;
+    top: 385px;
+    width: 233px;
+  }
+  
+  .desktop .splash-video {
+    background-color: #d9d9d9;
+    height: 436px;
+    position: absolute;
+    top: 760px;
+    width: 804px;
+  }
+  
+  /* .desktop .rectangle-5 {
+    background-color: #68ffec;
+    height: 68px;
+    left: 15px;
+    position: relative;
+    top: 10px;
+    width: 244px;
+  }
+   */
+  .desktop .we-believe-that-STEM {
+    color: #000000;
+    font-family: "Darker Grotesque", Helvetica;
+    font-size: 42px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 1420px;
+    margin:auto;
+  }
+
+  .desktop .splash-goals-wrapper{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+  }
+
+  .desktop .splash-goals-item{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .desktop .splash-icon-wrapper{
+    background-color: #68ffec;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    height: 60px;
+    position: absolute;
+    top: 1753px;
+    width: 60px;
+  }
+
+  .desktop .fa-solid{
+    font-size: 24px;
+  }
+  
+  .desktop .splash-goal-text {
+    color: #000000;
+    font-family: "Darker Grotesque", Helvetica;
+    font-size: 24px;
+    font-weight: 500;
+
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 1836px;
+    width: 330px;
+  }
+  
+  .desktop .gyde-can-create-a {
+    color: #000000;
+    font-family: "Darker Grotesque", Helvetica;
+    font-size: 24px;
+    font-weight: 500;
+    left: 940px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 1836px;
+    width: 330px;
+  }
+  
+  .desktop .text-wrapper-5 {
+    color: #000000;
+    font-family: "Darker Grotesque", Helvetica;
+    font-size: 24px;
+    font-weight: 500;
+    left: 560px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 1837px;
+    width: 330px;
+  }
+  

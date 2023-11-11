@@ -13,7 +13,7 @@ const removeImage = (imageId) => ({
   payload: imageId,
 });
 
-const setImages = (images) => ({
+const setImage = (images) => ({
   type: SET_IMAGES,
   payload: images,
 });
@@ -25,13 +25,13 @@ const changeImage = (image) => ({
 
 const initialState = { profileImages: null };
 
-export const getUserImages = (userId) => async (dispatch) => {
-  const response = await fetch(`/api/users/${userId}/images`);
+export const getUserImage = (userId) => async (dispatch) => {
+  const response = await fetch(`/api/users/${userId}/image`);
 
   if (response.ok) {
     const data = await response.json();
 
-    dispatch(setImages(data.images));
+    dispatch(setImage(data.images));
     return null;
   } else if (response.status < 500) {
     const data = await response.json();
@@ -47,7 +47,7 @@ export const uploadImage = (image) => async (dispatch) => {
 };
 
 export const deleteImage = (imageId) => async (dispatch) => {
-  const response = await fetch(`/api/images/${imageId}`, {
+  const response = await fetch(`/api/profileimages/${imageId}`, {
     method: "DELETE",
   });
   if (response.ok) {

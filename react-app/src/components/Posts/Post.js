@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-<<<<<<<< HEAD:react-app/src/components/Posts/Post.js
 import PostCreate from "./PostCreate";
 import CommentCreate from '../CommentCreate'
 import { get_post } from '../../store/posts'
 import { checkPropTypes } from "prop-types";
-
-========
-
-import CommentCreate from '../CommentCreate'
-import { get_post, delete_comments } from '../../store/posts'
->>>>>>>> origin:react-app/src/components/posts/Post.js
 
 const Post = () => {
     let user = useSelector(state => state.session.user)
@@ -32,11 +25,6 @@ const Post = () => {
 
     }, [post?.content])
 
-    const deleteComment = (e, commentid) =>{
-        e.preventDefault()
-        dispatch(delete_comments(commentid, post.id))
-    }
-
     const nestedComments = (comments)=>{
         if(comments.length===0) return
 
@@ -45,8 +33,7 @@ const Post = () => {
                 comments.map((comment)=>(
                     <div>
                     <div>{comment.content}</div>
-                    <button onClick={e=>deleteComment(e,comment.id)}>Delete</button>
-                    <div><CommentCreate originalpost={post.id} postid={comment.id} /></div>
+                    <div><CommentCreate postid={comment.id} /></div>
                     <div>{comment.comments.length>0 ? nestedComments(comment.comments): null}</div>
                     </div>
 
@@ -64,17 +51,17 @@ const Post = () => {
                 {post?.comments?.map(comment =>
                 <div>
                     <div>{comment.content}</div>
-                    <button onClick={e=>deleteComment(e,comment.id)}>Delete</button>
-                    <CommentCreate originalpost={post.id} postid={comment.id}/>
+                    <CommentCreate postid={comment.id}/>
                     <div>{comment.comments.length>0 ? nestedComments(comment.comments): null}</div>
-
 
                 </div>
                 )}</div>
-
+            <div>
+                <PostCreate />
+            </div>
             <div>
 
-                <CommentCreate originalpost={post.id} postid={post.id}/>
+                <CommentCreate />
             </div>
         </div>
     )
