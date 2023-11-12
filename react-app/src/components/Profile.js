@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Redirect } from "react-router-dom";
+import {  Redirect, useParams } from "react-router-dom";
 import ProfilePageCard from "./ProfilePageCard";
 import { load_user } from "../store/user";
 import ProfilePosts from "./ProfilePageContent";
+import { get_user_posts } from "../store/posts";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
+
 
 
 

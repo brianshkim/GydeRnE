@@ -7,18 +7,20 @@ const ProfilePosts = () => {
     const users = useSelector(state => state.users);
     const usersArray = (Object.values(users))[0].users;
     const { userId } = useParams();
-    const user = usersArray[userId];
+    const user = usersArray.filter(user=>user===Number(userId))[0];
 
     const posts = useSelector(state => state.posts);
-    const postsArr = Object.values(posts);
-    const userposts = postsArr.filter(post => post.user_id === Number(userId))
+    const postsArr = Object.values(posts)[0]
+    const userposts = postsArr.filter(post => post.poster_details.id === Number(userId))
     const latestUserposts = [];
 
     userposts.forEach(post => {
         latestUserposts.unshift(post);
     });
     console.log(posts)
-    
+
+
+
     return (
         <div className="profile-posts-wrap">
             {latestUserposts?.map(post => {
