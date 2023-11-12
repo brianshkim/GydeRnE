@@ -35,7 +35,7 @@ export const load_user = (id) => async (dispatch) => {
     }
 }
 
-export const profile_image = (data)=>async(dispatch)=>{
+export const set_profile_image = (data)=>async(dispatch)=>{
     dispatch(loadUser(data))
 }
 

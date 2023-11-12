@@ -9,6 +9,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
 import Test from './components/test';
+import PostCreate from './components/posts/PostCreate';
 import AllPosts from './components/posts/AllPosts';
 import CV from './components/CV';
 import { Splash } from './components/Splash';
@@ -42,7 +43,7 @@ function App() {
       <Switch>
       <Route path='/post'>
         <NavHeader />
-          <Post />
+          <PostCreate />
         </Route>
         <Route path='/test'>
         <NavHeader />

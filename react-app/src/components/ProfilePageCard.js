@@ -53,7 +53,7 @@ function ProfilePageCard() {
               <img
                 alt="profile"
                 className="profile-picture"
-                src={profilePicture.imgUrl}
+                src={profilePicture}
               ></img>
 
               )}
