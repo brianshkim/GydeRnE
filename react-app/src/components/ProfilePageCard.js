@@ -12,13 +12,12 @@ const ProfilePageCard = () => {
   const users = useSelector(state => state.users);
   const usersArray = (Object.values(users))[0].users;
   const { userId } = useParams();
-  const user = usersArray[userId];
-
+  const user = usersArray.filter(user=>user.id===Number(userId))[0];
   const dispatch = useDispatch(); //for dispatching friend requests later
   const sessionUser = useSelector((state) => state.session.user);
   const profilePicture = user?.profile_image;
   const [showModal, setShowModal] = useState(false);
-  
+
   //const [loaded, setLoaded] = useState(false);
 
   const ProfileEditButton = () => {
@@ -54,7 +53,6 @@ const ProfilePageCard = () => {
                 className="profile-picture"
                 src={profilePicture}
               ></img>
-
               )}
               {!profilePicture && (
               <img
@@ -62,7 +60,6 @@ const ProfilePageCard = () => {
                 className="profile-picture"
                 src={usertempimage}
               ></img>
-
               )}
             </div>
       </div>

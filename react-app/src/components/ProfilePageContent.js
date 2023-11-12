@@ -7,18 +7,21 @@ const ProfilePosts = () => {
     const users = useSelector(state => state.users);
     const usersArray = (Object.values(users))[0].users;
     const { userId } = useParams();
-    const user = usersArray[userId];
+    const user = usersArray.filter(user=>user===Number(userId))[0];
 
-    const posts = useSelector(state => state.posts);
-    const postsArr = Object.values(posts);
-    const userposts = postsArr.filter(post => post.user_id === Number(userId))
+    const posts = useSelector(state => state.posts.allposts);
+
+    const postsArr = Object.values(posts)[0]
+    const userposts = postsArr.filter(post => post.poster_details.id === Number(userId))
     const latestUserposts = [];
 
     userposts.forEach(post => {
         latestUserposts.unshift(post);
     });
     console.log(posts)
-    
+
+
+
     return (
         <div className="profile-posts-wrap">
             {latestUserposts?.map(post => {
@@ -29,8 +32,8 @@ const ProfilePosts = () => {
                             <div className="profile-feed-post-username-and-edit-btn">
                                 <NavLink className="profile-post-link" to={`/posts/${post.id}`}>
                                     <div className="profile-feed-post-names">
-                                        <div className="feed-post-display-name">{user?.name}</div>
-                                        <div className="feed-post-username">@{user?.username}<p className="dot">·</p></div>
+                                        <div className="feed-post-display-name">{`${post.poster_details.firstname} ${post.poster_details.firstname}`}</div>
+                                        <div className="feed-post-username">@{post.poster_details.username}<p className="dot">·</p></div>
 
                                     </div>
                                 </NavLink>

@@ -234,7 +234,7 @@ export const delete_comments = (id, originalid) => async (dispatch) => {
 
 
 
-let initialState = {userposts:[]};
+let initialState = {userposts:[], allposts:[]};
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case LOAD_POST:
@@ -246,9 +246,12 @@ export default function reducer(state = initialState, action) {
             })
            return{...state, userposts:posts}
         case GET_ALL_POSTS:
-			return action.posts;
+			return {...state, allposts:action.posts};
         case CREATE_POST:
-            return action.post
+
+            state.allposts.posts.push(action.post)
+            let newarr = {posts:state.allposts.posts}
+            return {...state, allposts:newarr}
         case UPDATE_POST:
             return action.post
         case DELETE_POST:
