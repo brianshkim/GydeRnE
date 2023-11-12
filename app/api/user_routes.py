@@ -23,7 +23,7 @@ def user(id):
     user = User.query.get(id)
     return user.to_dict()
 
-@user_routes.route('/', methods=['post'])
+@user_routes.route('/<int:id>', methods=['post'])
 @login_required
 def edit_user():
     req = request.get_json()
