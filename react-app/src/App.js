@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignupForm';
 import NavHeader from './components/NavHeader';
@@ -12,7 +13,7 @@ import CV from './components/CV';
 import { Splash } from './components/Splash';
 import SearchBar from './components/search/SearchBar';
 import { authenticate } from './store/session';
-import Profile from './components/Profile';
+import Profile from './components/profile/Profile';
 import Post from './components/posts/AllPosts';
 
 import { get_all_users } from './store/user';
@@ -21,6 +22,7 @@ import { get_all_posts } from './store/posts';
 
 
 function App() {
+  const user = useSelector(state=>state.session.user)
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
 
@@ -70,9 +72,12 @@ function App() {
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
-        <ProtectedRoute path='/' exact={true} >
+        {/*<ProtectedRoute path='/' exact={true} >
           <h1>My Home Page</h1>
-        </ProtectedRoute>
+      </ProtectedRoute>*/}
+        <Route path = '*'>
+            <Redirect to={`/users/${user.id}`} />
+          </Route>
       </Switch>
     </BrowserRouter>
 
