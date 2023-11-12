@@ -9,7 +9,7 @@ import { get_user_posts } from "../store/posts";
 const Profile = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-
+  const {userId} = useParams()
 
 
 
