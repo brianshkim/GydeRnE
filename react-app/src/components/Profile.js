@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory, Redirect } from "react-router-dom";
 import ProfilePageCard from "./ProfilePageCard";
 import { load_user } from "../store/user";
+import ProfilePosts from "./ProfilePageContent";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const Profile = () => {
       <ProfilePageCard/>
     </div>
     <div className="profile-page-right">
-      {/* <ProfilePageCard/> */}
+      <ProfilePosts/>
     </div>
     </div>
 

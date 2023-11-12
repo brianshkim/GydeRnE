@@ -67,7 +67,12 @@ const  ProfileCardEdit=()=> {
     e.preventDefault();
     setErrors([]);
 
-    dispatch(update_user)
+    dispatch(update_user(
+      sessionUser.id, 
+      sessionUser.firstname,
+      sessionUser.lastname,
+      sessionUser.bio,
+      sessionUser.profile_image))
       .then((res) => {
         // setEditContent(false);
       })
@@ -80,8 +85,11 @@ const  ProfileCardEdit=()=> {
           setBio(sessionUser.bio);
           setProfilePic(sessionUser.profile_image);
           setErrors(data.errors);
+          // setEditContent(false);
         }
-  }) }
+    }
+  ) 
+}
 
 
 
@@ -142,7 +150,7 @@ const  ProfileCardEdit=()=> {
               </div>
             )}
           </form>
-
+          <button type="submit" >Edit</button>
         </form>
       </>
     );
