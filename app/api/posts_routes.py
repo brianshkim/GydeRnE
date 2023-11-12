@@ -5,10 +5,14 @@ from app.awsS3 import (upload_file_to_s3, allowed_file, get_unique_filename)
 
 posts_routes = Blueprint('posts', __name__)
 
+#get 1 post
+
 @posts_routes.route('/<int:id>')
 def single_post(id):
     post = Post.query.get(id)
     return post.to_dict()
+
+#get user posts
 
 @posts_routes.route('/user/<int:userid>')
 def user_posts(userid):
@@ -16,9 +20,41 @@ def user_posts(userid):
     posts = Post.query.filter_by(user_id=userid, root=True).all()
     return {"userposts":[post.to_dict() for post in posts]}
 
+#get all posts
 
+@posts_routes.route('/')
+def posts():
+    posts = Post.query.all()
+    return {'posts': [post.to_dict() for post in posts]}
 
-@posts_routes.route('/', methods=['post'])
+#upload pdf
+
+@posts_routes.route('/uploadpdf', methods=['post'])
+@login_required
+def upload_image():
+    if "pdf" not in request.files:
+        return {"errors": "pdf required"}, 400
+
+    pdf = request.files["pdf"]
+
+    if not allowed_file(pdf.filename):
+        return {"errors": "file type not permitted"}, 400
+
+    pdf.filename = get_unique_filename(pdf.filename)
+
+    upload = upload_file_to_s3(pdf)
+
+    if "url" not in upload:
+        # if the dictionary doesn't have a url key
+        # it means that there was an error when we tried to upload
+        # so we send back that error message
+        return upload, 400
+
+    url = upload["url"]
+    # flask_login allows us to get the current user from the request
+    return {"url": url}
+
+@posts_routes.route('/upload', methods=['post'])
 @login_required
 def create_posts():
     req = request.get_json()
@@ -29,12 +65,11 @@ def create_posts():
         root=True,
         research=req['research'],
         research_paper=req['research_paper']
-
-
         )
     db.session.add(post)
     db.session.commit()
     return post.to_dict()
+
 
 @posts_routes.route('/<int:postid>', methods=['post'])
 @login_required
@@ -65,7 +100,7 @@ def delete_posts(postid):
 
 
 
-##comments route
+##comments routes
 @posts_routes.route('/<int:postid>/comments', methods=['post'])
 @login_required
 def create_comments(postid):
@@ -100,29 +135,6 @@ def delete_comments(postid):
     return originalpost.to_dict()
 
 
-@posts_routes.route('/upload', methods=['post'])
-@login_required
-def upload_image():
-    if "pdf" not in request.files:
-        return {"errors": "pdf required"}, 400
 
-    pdf = request.files["pdf"]
-
-    if not allowed_file(pdf.filename):
-        return {"errors": "file type not permitted"}, 400
-
-    pdf.filename = get_unique_filename(pdf.filename)
-
-    upload = upload_file_to_s3(pdf)
-
-    if "url" not in upload:
-        # if the dictionary doesn't have a url key
-        # it means that there was an error when we tried to upload
-        # so we send back that error message
-        return upload, 400
-
-    url = upload["url"]
-    # flask_login allows us to get the current user from the request
-    return {"url": url}
 
 ##reset

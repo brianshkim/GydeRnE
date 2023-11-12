@@ -23,7 +23,7 @@ def user(id):
     user = User.query.get(id)
     return user.to_dict()
 
-@user_routes.route('/', methods=['post'])
+@user_routes.route('/<int:id>', methods=['post'])
 @login_required
 def edit_user():
     req = request.get_json()
@@ -218,4 +218,4 @@ def add_profile_image(id):
     user.profile_image = url
     db.session.commit()
 
-    return {user.to_dict()}
+    return {"user":user.to_dict()}

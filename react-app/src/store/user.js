@@ -18,6 +18,14 @@ const unloadAllUsers=() =>({
     type:UNLOAD_ALL_USERS
 })
 
+export const get_all_users = () => async (dispatch) => {
+    const response = await fetch("/api/users/");
+    if (response.ok) {
+        const allUsers = await response.json();
+        dispatch(loadAllUsers(allUsers));
+        return allUsers;
+    }
+};
 
 export const load_user = (id) => async (dispatch) => {
     const response = await fetch(`/api/users/${id}`, {
@@ -35,7 +43,7 @@ export const load_user = (id) => async (dispatch) => {
     }
 }
 
-export const profile_image = (data)=>async(dispatch)=>{
+export const set_profile_image = (data)=>async(dispatch)=>{
     dispatch(loadUser(data))
 }
 

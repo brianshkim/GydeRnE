@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom"
 import { update_user } from "../store/session";
 import { getUserImage, uploadImage, deleteImage, editImage } from "../store/profilepic";
-
+import { set_profile_image } from "../store/user";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 const  ProfileCardEdit=()=> {
   const dispatch = useDispatch();
+  const history=useHistory()
   const sessionUser = useSelector((state) => state.session.user);
 
   const [firstName, editFirstName] = useState(sessionUser.firstname);
@@ -15,10 +18,11 @@ const  ProfileCardEdit=()=> {
   const [imageLoading, setImageLoading] = useState(false);
 
   const newProfilePic = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
+    e.stopPropagation()
     setErrors([])
     const formData = new FormData();
-    formData.append("profilePic", profilePic);
+    formData.append("image", profilePic);
 
     setImageLoading(true);
 
@@ -26,18 +30,22 @@ const  ProfileCardEdit=()=> {
       method: "POST",
       body: formData,
     });
+    console.log(res)
     if (res.ok) {
       const data = await res.json();
+      console.log(data)
       setImageLoading(false);
 
       document.getElementById('uploadProfPic').value = ""
 
-      await dispatch(uploadImage(data.image));
+      dispatch(set_profile_image(data));
     } else if (!res.ok) {
       setImageLoading(false);
       const data = await res.json();
       setErrors([data.errors]);
     }
+    history.push('/profile')
+
   };
 
   const updateImage = (e) => {
@@ -59,7 +67,12 @@ const  ProfileCardEdit=()=> {
     e.preventDefault();
     setErrors([]);
 
-    dispatch(update_user)
+    dispatch(update_user(
+      sessionUser.id, 
+      sessionUser.firstname,
+      sessionUser.lastname,
+      sessionUser.bio,
+      sessionUser.profile_image))
       .then((res) => {
         // setEditContent(false);
       })
@@ -72,15 +85,18 @@ const  ProfileCardEdit=()=> {
           setBio(sessionUser.bio);
           setProfilePic(sessionUser.profile_image);
           setErrors(data.errors);
+          // setEditContent(false);
         }
-  }) }
+    }
+  ) 
+}
 
 
 
 
     return (
       <>
-        <form onSubmit={editUser}>
+        <form>
           <textarea
             className="edit-firstname"
             onChange={(e) => {
@@ -123,8 +139,8 @@ const  ProfileCardEdit=()=> {
                 accept="image/*"
                 onChange={updateImage}
 
-              ></input>
-              <button id="upload-button" type="submit">
+              />
+              <button id="upload-button" onClick={newProfilePic}>
                 <i class="fas fa-file-upload"></i>
               </button>
             </div>
@@ -134,7 +150,7 @@ const  ProfileCardEdit=()=> {
               </div>
             )}
           </form>
-
+          <button type="submit" >Edit</button>
         </form>
       </>
     );

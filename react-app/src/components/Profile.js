@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, Redirect } from "react-router-dom";
-
 import ProfilePageCard from "./ProfilePageCard";
+import { load_user } from "../store/user";
+import ProfilePosts from "./ProfilePageContent";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
+
+
 
   if (!sessionUser) {
     return <Redirect to='/login' />
@@ -20,7 +23,7 @@ const Profile = () => {
       <ProfilePageCard/>
     </div>
     <div className="profile-page-right">
-      {/* <ProfilePageCard/> */}
+      <ProfilePosts/>
     </div>
     </div>
 

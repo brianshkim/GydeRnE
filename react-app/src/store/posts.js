@@ -2,8 +2,10 @@ const LOAD_POST = 'POSTS/GET_POST'
 const CREATE_POST = 'POSTS/CREATE_POST'
 const UPDATE_POST = 'POSTS/UPDATE_POST'
 const DELETE_POST = 'POSTS/DELETE_POST'
+// const GET_ALL_COMMENTS = 'POSTS/GET_ALL_COMMENTS'
 const DELETE_COMMENTS = 'POSTS/DELETE_COMMENTS'
 const UNLOAD_POST = 'POSTS/UNLOAD_POST'
+const GET_ALL_POSTS = 'POSTS/GET_ALL_POSTS'
 const LOAD_USER_POSTS = 'POSTS/LOAD_USER_POSTS'
 
 const getPost = (post) => ({
@@ -11,8 +13,13 @@ const getPost = (post) => ({
     post
 });
 
-const getAllPosts = (posts)=>({
+const getUserPosts = (posts)=>({
     type: LOAD_USER_POSTS,
+    posts
+})
+
+const getAllPosts = (posts)=>({
+    type: GET_ALL_POSTS,
     posts
 })
 
@@ -32,6 +39,11 @@ const deletePost = (post) => ({
 
 })
 
+// const loadComments = (comments) => ({
+// 	type: GET_ALL_COMMENTS,
+// 	comments,
+// });
+
 const deleteComments = (post) => ({
     type: DELETE_COMMENTS,
     post
@@ -46,6 +58,16 @@ export const unload_posts = () => async (dispatch) => {
     dispatch(unloadPosts())
 }
 
+export const get_all_posts = () => async (dispatch) => {
+	const response = await fetch("/api/posts/");
+
+	if (response.ok) {
+		const postList = await response.json();
+		dispatch(getAllPosts(postList));
+		return postList;
+	}
+};
+
 export const get_post = (id) => async (dispatch) => {
     const response = await fetch(`/api/posts/${id}/`);
     const data = await response.json()
@@ -57,8 +79,7 @@ export const get_post = (id) => async (dispatch) => {
 export const get_user_posts = (userid) => async (dispatch) => {
     const response = await fetch(`/api/posts/user/${userid}`)
     const data = await response.json()
-    dispatch(getAllPosts(data));
-
+    dispatch(getUserPosts(data));
 }
 
 export const create_post = (
@@ -69,7 +90,7 @@ export const create_post = (
     research_paper,
 ) => async (dispatch) => {
     console.log(title)
-    const response = await fetch(`/api/posts/`, {
+    const response = await fetch(`/api/posts/upload`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -152,6 +173,16 @@ export const delete_post = (id) => async (dispatch) => {
     dispatch(deletePost(Number(data)));
 }
 
+// export const get_comments = () => async (dispatch) => {
+// 	const response = await fetch("/api/comments");
+
+// 	if (response.ok) {
+// 		const commentList = await response.json();
+// 		dispatch(loadComments(commentList));
+// 		return commentList;
+// 	}
+// };
+
 export const create_comments = (id, userid, content, originalid) => async (dispatch) => {
     console.log(originalid)
     const response = await fetch(`/api/posts/${id}/comments`, {
@@ -214,6 +245,8 @@ export default function reducer(state = initialState, action) {
                 posts.push(post)
             })
            return{...state, userposts:posts}
+        case GET_ALL_POSTS:
+			return action.posts;
         case CREATE_POST:
             return action.post
         case UPDATE_POST:
