@@ -32,42 +32,49 @@ const CreatePostForm = ({ resp_id }) => {
 
     // const removeImage = (e) => setImage(null);
 
-    const reset = () => setContent('');
+    // const reset = () => setContent('');
 
     const handleSubmit = async (e) => {
         e.stopPropagation()
-        e.preventDefault();    
-        
+        e.preventDefault();
+
+
         const formData = new FormData();
-        formData.append("pdf", researchPaper);
-        setFileLoading(true)
-        const res = await fetch(`/api/posts/upload`, {
-            method: "POST",
-            body: formData,
-        });
-        if (res.ok && fileLoading) {
-            let data = await res.json();
-            setFileLoading(false);
-            dispatch(create_post(title, abstract, content, research, data.url))
+        if (researchPaper) {
+            formData.append("pdf", researchPaper);
+            setFileLoading(true)
+            const res = await fetch(`/api/posts/uploadpdf`, {
+                method: "POST",
+                body: formData,
+            });
+            if (res.ok && fileLoading) {
+                let data = await res.json();
+                setFileLoading(false);
+                console.log(title, abstract, content, research)
+                dispatch(create_post(title, abstract, content, research, data.url))
+            }
+            else {
+                setFileLoading(false);
+                console.log("error");
+            }
         }
-        else {
-            setFileLoading(false);
-            console.log("error");
+        else{
+            dispatch(create_post(title, abstract, content, research, null))
         }
     }
-        // const newPost = {
-        //     user_id: user.id,
-        //     title,
-        //     content,
-        //     research: true
-        //     image_url: image
-        // }
-        // const post = await dispatch(create_post(newPost))
+    // const newPost = {
+    //     user_id: user.id,
+    //     title,
+    //     content,
+    //     research: true
+    //     image_url: image
+    // }
+    // const post = await dispatch(create_post(newPost))
 
-        // if (post) {
-        //     reset();
-        //     removeImage();
-        // }
+    // if (post) {
+    //     reset();
+    //     removeImage();
+    // }
     //}
 
     const updateResearchPaper = (e) => {
@@ -120,7 +127,7 @@ const CreatePostForm = ({ resp_id }) => {
                         </div>
                         <form>
                             <div className="file-input">
-                                <input id="file" type="file" accept="application/pdf" onChange={(e) => updateResearchPaper(e)} /> 
+                                <input id="file" type="file" accept="application/pdf" onChange={(e) => updateResearchPaper(e)} />
                                 <label htmlFor="file">Upload file</label>
                             </div>
                         </form>
@@ -129,9 +136,9 @@ const CreatePostForm = ({ resp_id }) => {
                         <div className="post-char-count">
                             <span className={(content.length > 2000 || (content.length === 0)) ? "char-over" : "char-under"}>{content.length} /2000</span>
                         </div>
-                        <button type="submit" >Create Post</button>
                     </div>
                 </div>
+                <button className='submit-post' type="submit" >Create Post</button>
             </form>
         </div>
     )

@@ -7,7 +7,6 @@ import NavHeader from './components/NavHeader';
 import NavBar from './components/NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
-import User from './components/User';
 import Test from './components/test';
 import AllPosts from './components/posts/AllPosts';
 import CV from './components/CV';
@@ -16,6 +15,9 @@ import SearchBar from './components/search/SearchBar';
 import { authenticate } from './store/session';
 import Profile from './components/Profile';
 import Post from './components/posts/AllPosts';
+
+import { get_all_users } from './store/user';
+import { get_all_posts } from './store/posts';
 //import {MathJaxContext} from 'better-react-mathjax'
 
 
@@ -26,6 +28,8 @@ function App() {
   useEffect(() => {
     (async () => {
       await dispatch(authenticate());
+      await dispatch(get_all_users());
+      await dispatch(get_all_posts());
       setLoaded(true);
     })();
   }, [dispatch]);
@@ -40,22 +44,30 @@ function App() {
 
       {/* <NavBar /> */}
       <Switch>
-      <Route path='/post'>
-        <NavHeader />
+        <Route path='/post'>
+          <NavHeader />
           <Post />
         </Route>
         <Route path='/test'>
-        <NavHeader />
+          <NavHeader />
           <Test />
         </Route>
+        <ProtectedRoute path='/users/:userId' exact={true} >
+          <NavHeader />
+          <Profile />
+        </ProtectedRoute>
+        <ProtectedRoute path='/users' exact={true} >
+          <NavHeader />
+          <UsersList />
+        </ProtectedRoute>
         <Route path='/login' exact={true}>
           <NavHeader />
           <LoginForm />
         </Route>
-        <Route path='/profile' exact={true}>
+        {/* <Route path='/profile' exact={true}>
           <NavHeader />
           <Profile />
-        </Route>
+        </Route> */}
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
