@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-<<<<<<<< HEAD:react-app/src/components/Posts/PostEdit.js
-import { edit_post, delete_post} from '../../store/posts'
-========
-import { edit_post, delete_post} from '../../store/posts'
->>>>>>>> origin:react-app/src/components/posts/PostEdit.js
+import { edit_post, delete_post} from '../../store/posts';
+import { edit_post, delete_post} from '../../store/posts';
 const PostEdit = ({ postid }) => {
     let user = useSelector(state => state.session.user)
     let dispatch = useDispatch()
