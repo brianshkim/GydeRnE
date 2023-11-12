@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom'
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignupForm';
-import NavHeader from './components/NavHeader';
+import NavHeader from './components/NavBars/NavHeader';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import Test from './components/test';

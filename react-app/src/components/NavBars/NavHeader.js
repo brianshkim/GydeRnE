@@ -2,11 +2,11 @@
 import React, {useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import LogoutButton from './auth/LogoutButton';
+import LogoutButton from '../auth/LogoutButton';
 import "./NavBar.css";
-import logo from "../components/images/digitalgeometriclogo.svg";
+import logo from '../images/digitalgeometriclogo.svg';
 import SettingsDropdown from './NavSettings';
-import CreatePostButton from './Posts/CreatePostButton';
+import CreatePostButton from '../Posts/CreatePostButton';
 
 const NavHeader = () => {
 
