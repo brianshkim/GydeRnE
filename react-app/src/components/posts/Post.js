@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import PostCreate from "./PostCreate";
 import CommentCreate from '../CommentCreate'
 import { get_post } from '../../store/posts'
+import { checkPropTypes } from "prop-types";
 
 import { get_post, delete_comments } from '../../store/posts'
 
