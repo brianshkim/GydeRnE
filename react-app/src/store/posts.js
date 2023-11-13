@@ -88,6 +88,7 @@ export const create_post = (
     content,
     research,
     research_paper,
+    created_at
 ) => async (dispatch) => {
     console.log(title)
     const response = await fetch(`/api/posts/upload`, {
@@ -101,6 +102,7 @@ export const create_post = (
             "content": content,
             "research": research,
             "research_paper": research_paper,
+            'created_at': created_at
 
         })
     });

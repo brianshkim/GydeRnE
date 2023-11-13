@@ -76,7 +76,7 @@ function App() {
           <h1>My Home Page</h1>
       </ProtectedRoute>*/}
         <Route path = '*'>
-            <Redirect to={`/users/${user.id}`} />
+            <Redirect to={`/`} />
           </Route>
       </Switch>
     </BrowserRouter>
