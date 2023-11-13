@@ -9,8 +9,8 @@ import NavBar from './components/NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import Test from './components/test';
-import PostCreate from './components/posts/PostCreate';
-import AllPosts from './components/posts/AllPosts';
+
+
 import CV from './components/CV';
 import { Splash } from './components/Splash';
 import SearchBar from './components/search/SearchBar';
