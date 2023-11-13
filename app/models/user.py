@@ -30,6 +30,7 @@ class User(db.Model, UserMixin):
     confirmed_on = db.Column(db.DateTime, nullable=True)
 
 
+    madecourses = db.relationship('Course', back_populates="users")
     education = db.relationship('Education', back_populates="users")
     accomplishments = db.relationship("Accomplishment", back_populates="users")
     courses = db.relationship("Course", secondary=courseusers, back_populates="users", cascade="all, delete")
@@ -88,6 +89,7 @@ class User(db.Model, UserMixin):
             'accomplishments': self.get_accomplishments(),
             'folders': self.get_folders(),
             'courses': self.get_courses(),
+            'madecourses': [course.to_dict() for course in self.madecourses if self.professor==True]
 
 
         }

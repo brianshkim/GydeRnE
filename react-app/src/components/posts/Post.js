@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-<<<<<<<< HEAD:react-app/src/components/Posts/Post.js
+
 import PostCreate from "./PostCreate";
 import CommentCreate from '../CommentCreate'
 import { get_post } from '../../store/posts'
-import { checkPropTypes } from "prop-types";
 
-========
-
-import CommentCreate from '../CommentCreate'
 import { get_post, delete_comments } from '../../store/posts'
->>>>>>>> origin:react-app/src/components/posts/Post.js
 
-const Post = () => {
+
+const Course = () => {
     let user = useSelector(state => state.session.user)
     let post = useSelector(state => state.posts)
 
