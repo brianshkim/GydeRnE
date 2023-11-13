@@ -17,8 +17,8 @@ class Post(db.Model):
      research_paper=db.Column(db.String)
      root= db.Column(db.Boolean)
      resp_id = db.Column(db.Integer)
-     created_at = db.Column(db.DateTime)
-     updated_at = db.Column(db.DateTime)
+     created_at = db.Column(db.BigInteger)
+     updated_at = db.Column(db.BigInteger)
 
      users = db.relationship("User", back_populates="posts")
      comments = db.relationship('Post',
