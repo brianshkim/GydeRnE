@@ -4,19 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom'
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignupForm';
-import NavHeader from './components/NavHeader';
-import NavBar from './components/NavBar';
+import NavHeader from './components/NavBars/NavHeader';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import Test from './components/test';
-
-
 import CV from './components/CV';
 import { Splash } from './components/Splash';
 import SearchBar from './components/search/SearchBar';
 import { authenticate } from './store/session';
 import Profile from './components/profile/Profile';
-import Post from './components/posts/AllPosts';
+import Post from './components/Posts/Post';
 
 import { get_all_users } from './store/user';
 import { get_all_posts } from './store/posts';
@@ -47,7 +44,7 @@ function App() {
 
       {/* <NavBar /> */}
       <Switch>
-        <Route path='/post'>
+        <Route path='/posts/:postId'>
           <NavHeader />
           <Post />
         </Route>

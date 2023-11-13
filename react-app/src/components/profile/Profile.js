@@ -6,6 +6,7 @@ import { load_user } from "../../store/user";
 import ProfilePosts from "./ProfilePageContent";
 import { get_user_posts } from "../../store/posts";
 import ProfileNav from './ProfileNav'
+import SideNavMain from "../NavBars/SideNavMain";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const Profile = () => {
       <div className='profile-page-wrapper'>
         <div className="profile-page-left">
           <ProfilePageCard />
-          <ProfileNav />
+          <SideNavMain/>
 
         </div>
         <div className="profile-page-right">
