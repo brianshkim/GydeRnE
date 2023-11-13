@@ -69,10 +69,10 @@ export const get_all_posts = () => async (dispatch) => {
 };
 
 export const get_post = (id) => async (dispatch) => {
-    const response = await fetch(`/api/posts/${id}/`);
+    const response = await fetch(`/api/posts/${id}`);
     const data = await response.json()
     console.log(data)
-    dispatch(getPost(data.userposts));
+    dispatch(getPost(data));
 
 }
 

@@ -8,13 +8,12 @@ import NavHeader from './components/NavBars/NavHeader';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import Test from './components/test';
-import AllPosts from './components/posts/AllPosts';
 import CV from './components/CV';
 import { Splash } from './components/Splash';
 import SearchBar from './components/search/SearchBar';
 import { authenticate } from './store/session';
 import Profile from './components/profile/Profile';
-import Post from './components/posts/AllPosts';
+import Post from './components/Posts/Post';
 
 import { get_all_users } from './store/user';
 import { get_all_posts } from './store/posts';
@@ -45,7 +44,7 @@ function App() {
 
       {/* <NavBar /> */}
       <Switch>
-        <Route path='/post'>
+        <Route path='/posts/:postId'>
           <NavHeader />
           <Post />
         </Route>

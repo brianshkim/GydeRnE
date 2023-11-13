@@ -44,6 +44,7 @@ const ProfilePosts = () => {
                                 <NavLink className="profile-post-link" to={`/posts/${post.id}`}>
                                     <div className="profile-feed-post-names">
                                         <div className="feed-post-display-name">{`${post.poster_details.firstname} ${post.poster_details.firstname} at ${getDate(post.created_at)} ${post.updated_at !==null ? getDate(post.updated_at) : ""}`}</div>
+                                        <div>{post.title}</div>
                                         <div className="feed-post-username">@{post.poster_details.username}<p className="dot">·</p></div>
 
                                     </div>

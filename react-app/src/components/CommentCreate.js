@@ -25,6 +25,7 @@ const CommentCreate = ({originalpost, postid}) => {
     const handleSubmit = (e) => {
         e.stopPropagation()
         e.preventDefault()
+
         dispatch(create_comments(postid,user.id,  content, originalpost))
 
 
@@ -44,7 +45,7 @@ const CommentCreate = ({originalpost, postid}) => {
 
             <div>
             </div>
-            <button type="submit" >Create Post</button>
+            <button type="submit" >{originalpost===postid? "Comment" : "Reply"}</button>
             </form>
 
 
