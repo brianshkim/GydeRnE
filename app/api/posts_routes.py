@@ -2,6 +2,8 @@ from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import Post, db, comments_replies
 from app.awsS3 import (upload_file_to_s3, allowed_file, get_unique_filename)
+from datetime import datetime
+
 
 posts_routes = Blueprint('posts', __name__)
 
@@ -57,6 +59,7 @@ def upload_image():
 @posts_routes.route('/upload', methods=['post'])
 @login_required
 def create_posts():
+
     req = request.get_json()
     post = Post(
         user_id=current_user.id,
@@ -64,7 +67,8 @@ def create_posts():
         content=req['content'],
         root=True,
         research=req['research'],
-        research_paper=req['research_paper']
+        research_paper=req['research_paper'],
+        created_at=req['created_at']
         )
     db.session.add(post)
     db.session.commit()

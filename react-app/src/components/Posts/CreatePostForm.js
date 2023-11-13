@@ -14,6 +14,7 @@ const CreatePostForm = ({ resp_id }) => {
     let [abstract, setAbstract] = useState('')
     let [researchPaper, setResearchPaper] = useState(null);
     let [fileLoading, setFileLoading] = useState(false)
+    let d = new Date()
 
     // const contentHandler = (e) => setContent(e.target.value);
 
@@ -51,7 +52,7 @@ const CreatePostForm = ({ resp_id }) => {
                 let data = await res.json();
                 setFileLoading(false);
                 console.log(title, abstract, content, research)
-                dispatch(create_post(title, abstract, content, research, data.url))
+                dispatch(create_post(title, abstract, content, research, data.url, d.getTime()))
             }
             else {
                 setFileLoading(false);
@@ -59,7 +60,7 @@ const CreatePostForm = ({ resp_id }) => {
             }
         }
         else{
-            dispatch(create_post(title, abstract, content, research, null))
+            dispatch(create_post(title, abstract, content, research, null,d.getTime()))
         }
     }
     // const newPost = {

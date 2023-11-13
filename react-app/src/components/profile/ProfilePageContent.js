@@ -8,13 +8,24 @@ const ProfilePosts = () => {
     const usersArray = (Object.values(users))[0].users;
     const { userId } = useParams();
     const user = usersArray.filter(user=>user===Number(userId))[0];
-
     const posts = useSelector(state => state.posts.allposts);
-
     const postsArr = Object.values(posts)[0]
     const userposts = postsArr.filter(post => post.poster_details.id === Number(userId))
     const latestUserposts = [];
+    const months = {0:"Jan", 1:"Feb", 2:"Mar", 3:"Apr", 4:"May", 5:"Jun", 6:"Jul", 7:"Aug", 8:"Sep", 9:"Oct", 10:"Nov", 11:"Dec"}
 
+
+
+    const getDate = (date)=>{
+        let d = new Date(date)
+        let thisYear = new Date().getFullYear()
+        let timeOfDay = d.getHours() >= 12 ? "pm":"am"
+        let hours = d.getHours() === 0 ? 12 : d.getHours()%12
+        let minutes = d.getMinutes()
+        if(d.getFullYear()===thisYear){
+            return `${months[d.getMonth()]} ${d.getDate()} ${hours}:${minutes} ${timeOfDay}`
+        }
+    }
     userposts.forEach(post => {
         latestUserposts.unshift(post);
     });
@@ -32,7 +43,7 @@ const ProfilePosts = () => {
                             <div className="profile-feed-post-username-and-edit-btn">
                                 <NavLink className="profile-post-link" to={`/posts/${post.id}`}>
                                     <div className="profile-feed-post-names">
-                                        <div className="feed-post-display-name">{`${post.poster_details.firstname} ${post.poster_details.firstname}`}</div>
+                                        <div className="feed-post-display-name">{`${post.poster_details.firstname} ${post.poster_details.firstname} at ${getDate(post.created_at)} ${post.updated_at !==null ? getDate(post.updated_at) : ""}`}</div>
                                         <div className="feed-post-username">@{post.poster_details.username}<p className="dot">·</p></div>
 
                                     </div>
