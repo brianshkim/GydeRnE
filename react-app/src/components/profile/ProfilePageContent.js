@@ -10,7 +10,7 @@ const ProfilePosts = () => {
     const user = usersArray.filter(user=>user===Number(userId))[0];
     const posts = useSelector(state => state.posts.allposts);
     const postsArr = Object.values(posts)[0]
-    const userposts = postsArr.filter(post => post.poster_details.id === Number(userId))
+    const userposts = postsArr.filter(post => post.poster_details.id === Number(userId) && post.root === true)
     const latestUserposts = [];
     const months = {0:"Jan", 1:"Feb", 2:"Mar", 3:"Apr", 4:"May", 5:"Jun", 6:"Jul", 7:"Aug", 8:"Sep", 9:"Oct", 10:"Nov", 11:"Dec"}
 

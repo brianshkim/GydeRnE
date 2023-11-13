@@ -5,7 +5,7 @@ import ProfilePageCard from "./ProfilePageCard";
 import { load_user } from "../../store/user";
 import ProfilePosts from "./ProfilePageContent";
 import { get_user_posts } from "../../store/posts";
-import ProfileNav from './ProfileNav'
+
 import SideNavMain from "../NavBars/SideNavMain";
 
 const Profile = () => {
