@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom"
-import { update_user } from "../store/session";
-import { getUserImage, uploadImage, deleteImage, editImage } from "../store/profilepic";
-import { set_profile_image } from "../store/user";
+import { update_user } from "../../store/session";
+import { getUserImage, uploadImage, deleteImage, editImage } from "../../store/profilepic";
+import { set_profile_image } from "../../store/user";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 const  ProfileCardEdit=()=> {
   const dispatch = useDispatch();
@@ -68,7 +68,7 @@ const  ProfileCardEdit=()=> {
     setErrors([]);
 
     dispatch(update_user(
-      sessionUser.id, 
+      sessionUser.id,
       sessionUser.firstname,
       sessionUser.lastname,
       sessionUser.bio,
@@ -88,7 +88,7 @@ const  ProfileCardEdit=()=> {
           // setEditContent(false);
         }
     }
-  ) 
+  )
 }
 
 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom"
-import { getUserImage } from "../store/profilepic";
-import usertempimage from "../components/images/usertempimage.jpg"
-import { Modal } from "./context/Modal";
+import { getUserImage } from "../../store/profilepic";
+import usertempimage from "../images/usertempimage.jpg"
+import { Modal } from "../context/Modal";
 import ProfileCardEdit from "./ProfileCardEdit";
 import "./Profile.css";
 
