@@ -13,7 +13,7 @@ import { Splash } from './components/Splash';
 import SearchBar from './components/search/SearchBar';
 import { authenticate } from './store/session';
 import Profile from './components/profile/Profile';
-import Post from './components/Posts/Post';
+import Post from './components/Posts/SinglePost';
 
 import { get_all_users } from './store/user';
 import { get_all_posts } from './store/posts';
@@ -44,7 +44,7 @@ function App() {
 
       {/* <NavBar /> */}
       <Switch>
-        <Route path='/posts/:postId'>
+        <Route path='/users/:userId/posts/:postId'>
           <NavHeader />
           <Post />
         </Route>
