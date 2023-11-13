@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
+import usericon from '../images/usertempimage.jpg';
+import './ProfilePosts.css';
 
 const ProfilePosts = () => {
 
@@ -27,7 +29,7 @@ const ProfilePosts = () => {
             {latestUserposts?.map(post => {
                 return (
                     <div key={post.id} className="profile-posts">
-                        <img className='profile-posts-profile-pic' alt='' src={user?.profile_img === '' ? 'https://i.pinimg.com/originals/be/8d/27/be8d2760940422c69bb64e2833f012ed.jpg' : user?.profile_img} />
+                        <img className='profile-posts-profile-pic' src={user?.profile_image === '' ? {usericon} : user?.profile_image} />
                         <div className='profile-posts-everything-minus-pic'>
                             <div className="profile-feed-post-username-and-edit-btn">
                                 <NavLink className="profile-post-link" to={`/posts/${post.id}`}>
