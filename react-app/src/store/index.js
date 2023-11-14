@@ -4,12 +4,14 @@ import session from './session'
 import education from './education'
 import posts from './posts'
 import users from './user'
+import courses from './courses'
 
 const rootReducer = combineReducers({
   session,
   education,
   posts,
-  users
+  users,
+  courses
 });
 
 

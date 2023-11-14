@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { create_comments} from '../../store/posts'
+
 const CommentCreate = ({originalpost, postid}) => {
     console.log(originalpost)
     let user = useSelector(state => state.session.user)
-
+    const formData = new FormData();
     let dispatch = useDispatch()
 
     let [content, setContent] = useState('')

@@ -14,6 +14,7 @@ import SearchBar from './components/search/SearchBar';
 import { authenticate } from './store/session';
 import Profile from './components/profile/Profile';
 import Post from './components/Posts/Post';
+import Course from './components/courses/Course';
 
 import { get_all_users } from './store/user';
 import { get_all_posts } from './store/posts';
@@ -21,6 +22,7 @@ import { get_all_posts } from './store/posts';
 
 
 function App() {
+
   const user = useSelector(state=>state.session.user)
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
@@ -47,6 +49,10 @@ function App() {
         <Route path='/posts/:postId'>
           <NavHeader />
           <Post />
+        </Route>
+        <Route path='/Course'>
+          <NavHeader />
+          <Course />
         </Route>
         <Route path='/test'>
           <NavHeader />
@@ -75,7 +81,8 @@ function App() {
           <h1>My Home Page</h1>
       </ProtectedRoute>*/}
         <Route path = '*'>
-            <Redirect to={`/`} />
+          {user && <Redirect to={`/users/${user.id}`} />}
+          <Redirect to={`/`} />
           </Route>
       </Switch>
     </BrowserRouter>

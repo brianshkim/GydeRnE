@@ -33,7 +33,7 @@ def posts():
 
 @posts_routes.route('/uploadpdf', methods=['post'])
 @login_required
-def upload_image():
+def upload_pdf():
     if "pdf" not in request.files:
         return {"errors": "pdf required"}, 400
 
@@ -56,6 +56,35 @@ def upload_image():
     # flask_login allows us to get the current user from the request
     return {"url": url}
 
+@posts_routes.route('/uploadimages', methods=['post'])
+@login_required
+def upload_image():
+    if "image" not in request.files:
+        return {"errors": "Image Required."}, 400
+
+    image = request.files["image"]
+    if not allowed_file(image.filename):
+
+        return {"errors": "Could not upload - file type must be JPG or PNG."}, 400
+
+    image.filename = get_unique_filename(image.filename)
+
+    upload = upload_file_to_s3(image)
+
+    if "url" not in upload:
+        # if the dictionary doesn't have a url key
+        # it means that there was an error when we tried to upload
+        # so we send back that error message
+        return upload, 400
+
+    url = upload["url"]
+    # flask_login allows us to get the current user from the request
+
+    db.session.commit()
+
+    return {"url":url}
+
+
 @posts_routes.route('/upload', methods=['post'])
 @login_required
 def create_posts():
@@ -73,6 +102,7 @@ def create_posts():
     db.session.add(post)
     db.session.commit()
     return post.to_dict()
+
 
 
 @posts_routes.route('/<int:postid>', methods=['post'])

@@ -9,21 +9,11 @@ class Course(db.Model):
      professor_id = db.Column(db.Integer, db.ForeignKey('users.id'))
      title = db.Column(db.String(400))
      subject = db.Column(db.String(400))
-     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
      grades = db.Column(ARRAY(db.JSON))
      announcements = db.Column(ARRAY(db.JSON))
      syllabus = db.Column(ARRAY(db.JSON))
 
 
-     def to_dict(self):
-        return {
-            'id': self.id,
-            'professor_id': self.professor_id,
-            'title': self.title,
-            'subject': self.subject,
-            'notes': self.get_posts(),
-            'students': self.get_students()
-        }
 
      users = db.relationship("User", secondary=courseusers, back_populates="courses", cascade="all, delete")
      professor = db.relationship("User", back_populates='courses')
@@ -33,3 +23,15 @@ class Course(db.Model):
 
      def get_posts(self):
          return [post.to_dict() for post in self.posts]
+
+
+     def to_dict(self):
+        return {
+            'id': self.id,
+            'professor_id': self.professor_id,
+            'title': self.title,
+            'subject': self.subject,
+            'notes': self.get_posts(),
+            'students': self.get_students(),
+            'posts': self.get_posts()
+        }

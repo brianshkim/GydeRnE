@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Redirect, useParams } from "react-router-dom";
 import ProfilePageCard from "./ProfilePageCard";
 import { load_user } from "../../store/user";
-import ProfilePosts from "./ProfilePageContent";
+import ProfilePosts from "./ProfilePage";
 import { get_user_posts } from "../../store/posts";
 
 import SideNavMain from "../NavBars/SideNavMain";
