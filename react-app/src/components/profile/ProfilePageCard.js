@@ -12,7 +12,7 @@ const ProfilePageCard = () => {
   const users = useSelector(state => state.users);
   const usersArray = (Object.values(users))[0].users;
   const { userId } = useParams();
-  const user = usersArray.filter(user=>user.id===Number(userId))[0];
+  const user = usersArray?.filter(user=>user.id===Number(userId))[0];
   const dispatch = useDispatch(); //for dispatching friend requests later
   const sessionUser = useSelector((state) => state.session.user);
   const profilePicture = user?.profile_image;
