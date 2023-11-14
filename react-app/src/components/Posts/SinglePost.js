@@ -19,7 +19,7 @@ const Post = () => {
     const users = useSelector(state => state.users);
     const usersArray = (Object.values(users))[0].users;
     const { userId } = useParams();
-    const post = useSelector(state => state.posts)
+    const post = useSelector(state => state.posts.singlepost)
     const postuser = usersArray[userId - 1];
 
     const profilePicture = user?.profile_image;
@@ -114,7 +114,7 @@ const Post = () => {
                                             No abstract for this post
                                         </div>
                                     )}
-                                    
+
                                 </div>
                                 <div className="post-content">{post?.content}</div>
                             </div>
