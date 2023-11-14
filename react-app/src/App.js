@@ -7,7 +7,7 @@ import SignUpForm from './components/auth/SignupForm';
 import NavHeader from './components/NavBars/NavHeader';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
-import Test from './components/test';
+
 import CV from './components/CV';
 import { Splash } from './components/Splash';
 import SearchBar from './components/search/SearchBar';
@@ -54,10 +54,6 @@ function App() {
         <Route path='/Course'>
           <NavHeader />
           <Course />
-        </Route>
-        <Route path='/test'>
-          <NavHeader />
-          <Test />
         </Route>
         <ProtectedRoute path='/users/:userId' exact={true} >
           <NavHeader />

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { create_post } from '../../store/posts';
 import { Redirect, useHistory } from 'react-router-dom'
 import './CreatePostModal.css'
+import DragAndDrop from './DragAndDrop';
 
 const CreatePostForm = ({ resp_id }) => {
 
@@ -15,11 +16,15 @@ const CreatePostForm = ({ resp_id }) => {
     let [research, setResearch] = useState(false)
     let [abstract, setAbstract] = useState('')
     let [researchPaper, setResearchPaper] = useState(null);
-    let [images,setImages] = useState([])
+    let [images, setImages] = useState([])
+    let [urls, setUrls] = useState([])
+    let [i, setI] = useState(0)
     let [fileLoading, setFileLoading] = useState(false)
     let [imageLoading, setImageLoading] = useState(false)
     let [imageError, setImageError] = useState({})
-    let d = new Date()
+    const d = new Date()
+
+
 
     // const contentHandler = (e) => setContent(e.target.value);
 
@@ -27,6 +32,16 @@ const CreatePostForm = ({ resp_id }) => {
     //     const file = e.target.files[0];
     //     setImage(file);
     // }
+
+    function drop(event) {
+        event.preventDefault();
+        let data = event.dataTransfer.getData("text");
+        document.getElementById("preview").innerText = document.getElementById("preview").value + "  " + data;
+    }
+    function allow(event) {
+        event.preventDefault();
+    }
+
 
     useEffect(() => {
 
@@ -36,13 +51,40 @@ const CreatePostForm = ({ resp_id }) => {
         }
     }, [title, content])
 
+    useEffect(()=>{
+        let newimages = []
+
+        images.forEach(async (image,index) => {
+
+            const formData = new FormData();
+            formData.append("image", image);
+            const res = await fetch(`/api/posts/uploadimages`, {
+              method: "POST",
+              body: formData,
+            });
+            const data = await res.json()
+            newimages.push(data.url)
+
+
+
+    })
+
+
+    setUrls(newimages)
+
+},[images])
+
     // const removeImage = (e) => setImage(null);
 
     // const reset = () => setContent('');
+    console.log(images)
+
+
 
     const handleSubmit = async (e) => {
         e.stopPropagation()
         e.preventDefault();
+        let newpost
 
 
 
@@ -58,8 +100,8 @@ const CreatePostForm = ({ resp_id }) => {
                 let data = await res.json();
                 setFileLoading(false);
                 console.log(title, abstract, content, research)
-                let newpost=await dispatch(create_post(title, abstract, content, research, data.url, images,d.getTime()))
-                history.push(`/posts/${newpost.id}`)
+                newpost=await dispatch(create_post(title, abstract, content, research, data.url, urls,d.getTime()))
+
             }
             else {
                 setFileLoading(false);
@@ -67,33 +109,17 @@ const CreatePostForm = ({ resp_id }) => {
             }
         }
         else{
-            let newpost=await dispatch(create_post(title, abstract, content, research, images, null,d.getTime()))
-            history.push(`/posts/${newpost.id}`)
+            newpost=await dispatch(create_post(title, abstract, content, research, null, urls,d.getTime()))
+
         }
+        history.push(`/posts/${newpost.id}`)
 
 
-    }
-
-
-    const uploadImages = async(e) =>{
-        const formData = new FormData();
-        formData.append("image", researchPaper);
-            setImageLoading(true)
-            const res = await fetch(`/api/posts/uploadimages`, {
-                method: "POST",
-                body: formData,
-            });
-            if (res.ok && fileLoading) {
-                let data = await res.json();
-                setImageLoading(false);
-                setImages([...images, data.url])
-            }
-            else{
-                setImageLoading(false)
-                setImageError("Error: Your image did not upload correctly")
-            }
 
     }
+
+
+
     // const newPost = {
     //     user_id: user.id,
     //     title,
@@ -129,6 +155,7 @@ const CreatePostForm = ({ resp_id }) => {
                         onChange={(e) => setTitle(e.target.value)}
                         value={title} />
                 </div>
+
                 <div className='post-input-box'>
                     <textarea
                         placeholder='Abstract'
@@ -137,17 +164,25 @@ const CreatePostForm = ({ resp_id }) => {
                         onChange={(e) => setAbstract(e.target.value)}
                         value={abstract} />
                 </div>
+
+
                 <div className='post-input-box'>
                     <textarea
                         placeholder='Write your post here...'
                         className="post-area"
                         onChange={(e) => setContent(e.target.value)}
-                        value={content} />
+                        value={content}
+                        ondrop={e => drop(e)}
+                        ondragover={e => allow(e)}
+
+                    />
                     <div className='post-preview-header'>
                         Post Preview:
                     </div>
-                    <p className="post-area-preview">{content}</p>
+                    <p id="preview" className="post-area-preview">{content}</p>
                 </div>
+
+
 
                 <div class="post-modal-bottom">
                     <div class="bottom-left">
@@ -164,6 +199,7 @@ const CreatePostForm = ({ resp_id }) => {
                             </div>
                         </form>
                     </div>
+                    <DragAndDrop setImages={setImages} images={images} setImageLoading={setImageLoading} />
                     <div class="bottom-right">
                         <div className="post-char-count">
                             <span className={(content.length > 2000 || (content.length === 0)) ? "char-over" : "char-under"}>{content.length} /2000</span>
