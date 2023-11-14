@@ -103,7 +103,8 @@ export const create_post = (
             "content": content,
             "research": research,
             "research_paper": research_paper,
-            'created_at': created_at
+            'created_at': created_at,
+            'images': images
 
         })
     });
