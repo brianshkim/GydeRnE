@@ -18,6 +18,7 @@ const CreatePostForm = ({ resp_id }) => {
     let [images,setImages] = useState([])
     let [fileLoading, setFileLoading] = useState(false)
     let [imageLoading, setImageLoading] = useState(false)
+    let [imageError, setImageError] = useState({})
     let d = new Date()
 
     // const contentHandler = (e) => setContent(e.target.value);
@@ -84,8 +85,12 @@ const CreatePostForm = ({ resp_id }) => {
             });
             if (res.ok && fileLoading) {
                 let data = await res.json();
-                setFileLoading(false);
-
+                setImageLoading(false);
+                setImages([...images, data.url])
+            }
+            else{
+                setImageLoading(false)
+                setImageError("Error: Your image did not upload correctly")
             }
 
     }
