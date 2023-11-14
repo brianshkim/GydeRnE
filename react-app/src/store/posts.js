@@ -236,11 +236,11 @@ export const delete_comments = (id, originalid) => async (dispatch) => {
 
 
 
-let initialState = {userposts:[], allposts:[]};
+let initialState = {userposts:[], allposts:[], singlepost:{}};
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case LOAD_POST:
-            return action.post
+            return {...state, singlepost:action.post}
         case LOAD_USER_POSTS:
             let posts = []
             action.posts.userposts.forEach((post)=>{

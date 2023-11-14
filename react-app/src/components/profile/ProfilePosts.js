@@ -6,7 +6,7 @@ import './ProfilePosts.css';
 
 const ProfilePosts = () => {
 
-    const users = useSelector(state => state.users);
+    const users = useSelector(state => state?.users);
     const usersArray = (Object.values(users))[0].users;
     const { userId } = useParams();
     const user = usersArray.filter(user=>user===Number(userId))[0];
@@ -34,7 +34,7 @@ const ProfilePosts = () => {
     });
 
 
-    
+
 
 
 
