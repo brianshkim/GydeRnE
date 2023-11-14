@@ -29,6 +29,10 @@ const LoginForm = () => {
     setPassword(e.target.value);
   };
 
+  if(!user){
+    history.push('/login')
+  }
+
   if (user) {
      history.push(`/users/${user.id}`);
   }

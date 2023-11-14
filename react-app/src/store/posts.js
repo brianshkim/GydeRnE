@@ -88,6 +88,7 @@ export const create_post = (
     content,
     research,
     research_paper,
+    images,
     created_at
 ) => async (dispatch) => {
     console.log(title)
@@ -121,6 +122,8 @@ export const create_post = (
         return ['An error occurred. Please try again.']
     }
 
+
+
 }
 
 export const update_post = (
@@ -133,6 +136,7 @@ export const update_post = (
     research_paper,
     root,
     resp_id,
+    images
 
 ) => async (dispatch) => {
     const response = await fetch(`/api/posts/${id}`, {
@@ -147,6 +151,7 @@ export const update_post = (
             "abstract": abstract,
             "research": research,
             "research_paper": research_paper,
+            'images':images
 
         })
     });

@@ -19,6 +19,8 @@ class Post(db.Model):
      resp_id = db.Column(db.Integer)
      created_at = db.Column(db.BigInteger)
      updated_at = db.Column(db.BigInteger)
+     course_id=db.Column(db.Integer, db.ForeignKey('courses.id'))
+     images = db.Column(ARRAY(db.String))
 
      users = db.relationship("User", back_populates="posts")
      comments = db.relationship('Post',

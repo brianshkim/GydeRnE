@@ -10,17 +10,6 @@ def courses():
     return [course.to_dict() for course in courses]
 
 
-@courses_routes.route('/<int:courseid>', methods=['delete'])
-@login_required
-def delete_courses(courseid):
-    courses = Course.query.get(id=courseid)
-    Course.delete()
-    db.session.commit()
-    return jsonify(id)
-
-
-
-
 @courses_routes.route('/', methods=['post'])
 @login_required
 def create_courses():
@@ -37,6 +26,13 @@ def create_courses():
     return courses.to_dict()
 
 
+@courses_routes.route('/<int:courseid>')
+def single_course(courseid):
+    course = Course.query.get(courseid)
+    return course.to_dict()
+
+
+
 @courses_routes.route('/<int:courseid>', methods=['post'])
 @login_required
 def edit_courses(courseid):
@@ -48,7 +44,16 @@ def edit_courses(courseid):
     db.session.commit()
     return courses.to_dict()
 
-@courses_routes.route('/<int:courseid>', methods=['post'])
+@courses_routes.route('/<int:courseid>', methods=['delete'])
+@login_required
+def delete_courses(courseid):
+    courses = Course.query.get(courseid)
+    Course.delete()
+    db.session.commit()
+    return jsonify(id)
+
+
+@courses_routes.route('/<int:courseid>/join', methods=['post'])
 @login_required
 def join_courses(courseid):
     req = request.get_json(courseid)

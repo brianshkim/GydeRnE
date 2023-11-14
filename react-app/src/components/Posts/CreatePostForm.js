@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { create_post } from '../../store/posts';
+import { Redirect, useHistory } from 'react-router-dom'
 import './CreatePostModal.css'
 
 const CreatePostForm = ({ resp_id }) => {
 
     let user = useSelector(state => state.session.user);
+    let history = useHistory()
     const dispatch = useDispatch();
     // const [image, setImage] = useState("");
     let [title, setTitle] = useState('')
@@ -13,7 +15,9 @@ const CreatePostForm = ({ resp_id }) => {
     let [research, setResearch] = useState(false)
     let [abstract, setAbstract] = useState('')
     let [researchPaper, setResearchPaper] = useState(null);
+    let [images,setImages] = useState([])
     let [fileLoading, setFileLoading] = useState(false)
+    let [imageLoading, setImageLoading] = useState(false)
     let d = new Date()
 
     // const contentHandler = (e) => setContent(e.target.value);
@@ -40,6 +44,7 @@ const CreatePostForm = ({ resp_id }) => {
         e.preventDefault();
 
 
+
         const formData = new FormData();
         if (researchPaper) {
             formData.append("pdf", researchPaper);
@@ -52,7 +57,8 @@ const CreatePostForm = ({ resp_id }) => {
                 let data = await res.json();
                 setFileLoading(false);
                 console.log(title, abstract, content, research)
-                dispatch(create_post(title, abstract, content, research, data.url, d.getTime()))
+                let newpost=await dispatch(create_post(title, abstract, content, research, data.url, images,d.getTime()))
+                history.push(`/posts/${newpost.id}`)
             }
             else {
                 setFileLoading(false);
@@ -60,8 +66,28 @@ const CreatePostForm = ({ resp_id }) => {
             }
         }
         else{
-            dispatch(create_post(title, abstract, content, research, null,d.getTime()))
+            let newpost=await dispatch(create_post(title, abstract, content, research, images, null,d.getTime()))
+            history.push(`/posts/${newpost.id}`)
         }
+
+
+    }
+
+
+    const uploadImages = async(e) =>{
+        const formData = new FormData();
+        formData.append("image", researchPaper);
+            setImageLoading(true)
+            const res = await fetch(`/api/posts/uploadimages`, {
+                method: "POST",
+                body: formData,
+            });
+            if (res.ok && fileLoading) {
+                let data = await res.json();
+                setFileLoading(false);
+
+            }
+
     }
     // const newPost = {
     //     user_id: user.id,

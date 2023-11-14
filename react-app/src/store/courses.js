@@ -1,4 +1,5 @@
 const LOAD_COURSES = 'COURSES/GET_COURSES'
+const LOAD_SINGLE_COURSE = 'COURSES/LOAD_SINGLE_COURSE'
 const CREATE_COURSE = 'COURSES/CREATE_COURSE'
 const UPDATE_COURSES = 'COURSES/UPDATE_COURSE'
 const DELETE_COURSE = 'COURSES/DELETE_COURSE'
@@ -8,6 +9,11 @@ const loadCourses = (course) => ({
     type: LOAD_COURSES,
     course
 });
+
+const loadSingleCourse =(course)=>({
+    type:LOAD_SINGLE_COURSE,
+    course
+})
 
 const createCourse = (course) => ({
     type: CREATE_COURSE,
@@ -43,10 +49,18 @@ export const load_courses = (id) => async (dispatch) => {
 
 }
 
+export const get_single_course=(id)=>async(dispatch)=>{
+    const response = await fetch(`/api/courses/${id}`);
+    const data = await response.json()
+    dispatch(loadSingleCourse(data))
 
 
-export const get_course = (id) => async (dispatch) => {
-    const response = await fetch(`/api/course/${id}`);
+}
+
+
+
+export const get_courses = (id) => async (dispatch) => {
+    const response = await fetch(`/api/courses/${id}`);
     const data = await response.json()
     console.log(data)
     dispatch(loadCourses(data));
@@ -59,7 +73,7 @@ export const create_course = (
     subject,
 
        ) => async (dispatch) => {
-    const response = await fetch(`/api/course/`, {
+    const response = await fetch(`/api/courses/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -133,6 +147,8 @@ export const delete_course = (id) => async (dispatch) => {
 let initialState = {list:[], studentlist:[]};
 export default function reducer(state = initialState, action) {
     switch (action.type) {
+        case LOAD_SINGLE_COURSE:
+            return action.course
         case LOAD_COURSES:
             let courselist = []
             action.courses.forEach(course => {
