@@ -32,10 +32,31 @@ const DragAndDrop = ({ setImages, images, setImageLoading }) => {
 
 
   const onDrop = useCallback(acceptedimages => {
-
+    console.log(acceptedimages)
+    for(let i = 0;images.length;i++){
+      images.shift()
+    }
     let newimages = [...images]
-    newimages.push(...acceptedimages)
-    setImages(newimages);
+
+
+
+    for (let acceptedimage of acceptedimages) {
+      console.log(acceptedimage)
+      if (images.length === 0) {
+        newimages.push(acceptedimage)
+        setImages(newimages);
+      }
+      for (let image of images) {
+        console.log(typeof image.name)
+
+        if (image.name !== acceptedimage.name) {
+          newimages.push(acceptedimage)
+          setImages(newimages);
+        }
+      }
+    }
+
+
     acceptedimages.map(file => Object.assign(file, {
       preview: URL.createObjectURL(file)
     }))
@@ -52,6 +73,7 @@ const DragAndDrop = ({ setImages, images, setImageLoading }) => {
 
 
     setFiles([...files, ...acceptedimages]);
+    console.log(files)
 
 
   }, [images, setImages, files]);

@@ -97,7 +97,9 @@ def create_posts():
         root=True,
         research=req['research'],
         research_paper=req['research_paper'],
-        created_at=req['created_at']
+        created_at=req['created_at'],
+        images=req['images']
+
         )
     db.session.add(post)
     db.session.commit()
@@ -117,6 +119,7 @@ def edit_posts(postid):
         post.comment=req['comment']
         post.resesarch=req['research']
         post.updated_at=req['updated_at']
+        images=req['images']
 
 
     db.session.commit()

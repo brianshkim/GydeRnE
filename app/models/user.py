@@ -7,6 +7,7 @@ from .folder import Folder
 from .accomplishment import Accomplishment
 from .publication import Publication
 from .journals_committee import journalscommittee
+from .users_assignments import usersassignments
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -30,7 +31,7 @@ class User(db.Model, UserMixin):
     confirmed_on = db.Column(db.DateTime, nullable=True)
 
 
-    madecourses = db.relationship('Course', back_populates="users")
+    madecourses = db.relationship('Course', back_populates='users', cascade='all,delete')
     education = db.relationship('Education', back_populates="users")
     accomplishments = db.relationship("Accomplishment", back_populates="users")
     courses = db.relationship("Course", secondary=courseusers, back_populates="users", cascade="all, delete")
@@ -38,9 +39,12 @@ class User(db.Model, UserMixin):
     journals = db.relationship("Journal", secondary=journalscommittee, back_populates="users", cascade="all, delete")
     posts = db.relationship("Post", back_populates="users", cascade='all,delete')
     folders = db.relationship("Folder", back_populates="users")
+    assignments = db.relationship("Assignment", secondary=usersassignments, back_populates="users", cascade="all, delete")
     friendedFirst = db.relationship('Friend', back_populates='user', foreign_keys='[Friend.userId]')
     friendedSecond = db.relationship('Friend', back_populates='user2', foreign_keys='[Friend.userId2]')
     friend_requests = db.relationship('FriendReq', back_populates='users')
+    solutions = db.relationship('Solution', back_populates='users', cascade='all,delete')
+    scores = db.relationship('Score', back_populates='users', cascade='all,delete')
 
 
     @property
@@ -67,6 +71,9 @@ class User(db.Model, UserMixin):
     def get_courses(self):
         return [course.to_dict() for course in self.courses]
 
+    def get_assignments(self):
+        return [assignment.to_dict() for assignment in self.assignments]
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -89,7 +96,8 @@ class User(db.Model, UserMixin):
             'accomplishments': self.get_accomplishments(),
             'folders': self.get_folders(),
             'courses': self.get_courses(),
-            'madecourses': [course.to_dict() for course in self.madecourses if self.professor==True]
+            'madecourses': [course.to_dict() for course in self.madecourses if self.professor==True],
+            'get_assignments': self.get_assignments()
 
 
         }
