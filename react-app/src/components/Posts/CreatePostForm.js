@@ -34,15 +34,6 @@ const CreatePostForm = ({ resp_id }) => {
     //     setImage(file);
     // }
 
-    function drop(event) {
-        event.preventDefault();
-        let data = event.dataTransfer.getData("text");
-        document.getElementById("preview").innerText = document.getElementById("preview").value + "  " + data;
-    }
-    function allow(event) {
-        event.preventDefault();
-    }
-
 
     useEffect(() => {
 
@@ -51,29 +42,29 @@ const CreatePostForm = ({ resp_id }) => {
             window.MathJax.typeset()
         }
     }, [title, content])
-
-    useEffect(()=>{
-        let newimages = []
-
-        images.forEach(async (image,index) => {
-
-            const formData = new FormData();
-            formData.append("image", image);
-            const res = await fetch(`/api/posts/uploadimages`, {
-              method: "POST",
-              body: formData,
-            });
-            const data = await res.json()
-            newimages.push(data.url)
-
-
-
-    })
-
-
-    setUrls(newimages)
-
-},[images])
+//
+//    useEffect(()=>{
+//        let newimages = []
+//
+//        images.forEach(async (image,index) => {
+//
+//            const formData = new FormData();
+//            formData.append("image", image);
+//            const res = await fetch(`/api/posts/uploadimages`, {
+//              method: "POST",
+//              body: formData,
+//            });
+//            const data = await res.json()
+//            newimages.push(data.url)
+//
+//
+//
+//    })
+//
+//
+//    setUrls(newimages)
+//
+//},[images])
 
     // const removeImage = (e) => setImage(null);
 
@@ -85,7 +76,7 @@ const CreatePostForm = ({ resp_id }) => {
     const handleSubmit = async (e) => {
         e.stopPropagation()
         e.preventDefault();
-        let newpost
+
 
 
 
@@ -101,8 +92,8 @@ const CreatePostForm = ({ resp_id }) => {
                 let data = await res.json();
                 setFileLoading(false);
                 console.log(title, abstract, content, research)
-                newpost=await dispatch(create_post(title, abstract, content, research, data.url, urls,d.getTime()))
-
+                let newpost=await dispatch(create_post(title, abstract, content, research, data.url, urls,d.getTime()))
+                history.push(`/users/${user.id}/posts/${newpost.id}`)
             }
             else {
                 setFileLoading(false);
@@ -110,10 +101,12 @@ const CreatePostForm = ({ resp_id }) => {
             }
         }
         else{
-            newpost=await dispatch(create_post(title, abstract, content, research, null, urls,d.getTime()))
+            let newpost=await dispatch(create_post(title, abstract, content, research, null, urls,d.getTime()))
+            history.push(`/users/${user.id}/posts/${newpost.id}`)
 
         }
-        history.push(`/posts/${newpost.id}`)
+
+
 
 
 
@@ -173,8 +166,7 @@ const CreatePostForm = ({ resp_id }) => {
                         className="post-area"
                         onChange={(e) => setContent(e.target.value)}
                         value={content}
-                        ondrop={e => drop(e)}
-                        ondragover={e => allow(e)}
+
 
                     />
                     <div className='post-preview-header'>

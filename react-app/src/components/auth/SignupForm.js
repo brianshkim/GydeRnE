@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../store/session';
+import { get_all_users } from '../../store/user';
 import '../context/AuthModals.css';
 //reset
-const SignupForm = () => {
+const SignupForm = ({setShowModal}) => {
 
   const [errors, setErrors] = useState([]);
   const [username, setUsername] = useState('');
@@ -22,15 +23,20 @@ const SignupForm = () => {
   const onSignUp = async (e) => {
 
     e.preventDefault();
+    e.stopPropagation()
     setLoading(true)
 
 
     if (password === repeatPassword) {
       const data = await dispatch(signUp(username, firstname, lastname, email, password, "", professor, "", schoolName));
+
       if (data) {
         setErrors(data)
       }
+
       setLoading(false)
+
+
     }
   };
 
@@ -69,7 +75,7 @@ const SignupForm = () => {
   };
 
   if (user) {
-    return <Redirect to='/profile' />;
+    return <Redirect to={`/users/${user.id}`} />;
   }
 
   return (

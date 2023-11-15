@@ -1,4 +1,5 @@
 // constants
+const LOAD_USER='USER/LOAD_USER'
 const SET_USER = 'session/SET_USER';
 const REMOVE_USER = 'session/REMOVE_USER';
 const UPDATE_USER = 'session/UPDATE_USER';
@@ -17,6 +18,8 @@ const editUser = (user) => ({
   user
 })
 
+
+
 const initialState = { user: null };
 
 export const authenticate = () => async (dispatch) => {
@@ -32,6 +35,8 @@ export const authenticate = () => async (dispatch) => {
     }
 
     dispatch(setUser(data));
+
+
   }
 }
 
@@ -115,10 +120,10 @@ export const signUp = (
   if (response.ok) {
     const data = await response.json();
     dispatch(setUser(data))
-    return null;
+    return data;
   } else if (response.status < 500) {
     const data = await response.json();
-    if (data.errors) {
+    if (data) {
       return data.errors;
     }
   } else {

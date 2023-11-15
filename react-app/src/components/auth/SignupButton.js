@@ -12,7 +12,7 @@ const SignupButton = () => {
     const onsignUp = async (e) => {
       await dispatch(signUp());
     };
-  
+
     return (
         <>
         <button onClick={() => setShowModal(true)}
@@ -27,5 +27,5 @@ const SignupButton = () => {
       </>
     );
   };
-  
+
   export default SignupButton;

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CourseAssignments from './CourseAssignments'
+import CourseNotes from './CourseNotes'
 import { get_single_course } from '../../store/courses'
 import './course.css'
 
@@ -36,8 +37,8 @@ const Course = () => {
                 </div>
                 <div>
                     <ul>
-                        <li>Classnotes</li>
-                        <li onClick={(e) => setMenuItem(2)}>Assignments</li>
+                        <li onClick={()=>setMenuItem(1)}>Class Notes</li>
+                        <li onClick={() => setMenuItem(2)}>Assignments</li>
                         <li>Grades</li>
                         <li>Announcements</li>
                         <li>Syllabus</li>
@@ -46,7 +47,7 @@ const Course = () => {
             </div>
 
             <div className="course-right-container">
-                {menuItem === 1}
+                {menuItem === 1 && <CourseNotes></CourseNotes>}
                 {menuItem === 2 && <CourseAssignments />}
 
             </div>
