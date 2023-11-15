@@ -21,6 +21,7 @@ class Post(db.Model):
      updated_at = db.Column(db.BigInteger)
      course_id=db.Column(db.Integer, db.ForeignKey('courses.id'))
      images = db.Column(ARRAY(db.String))
+     chapter_id = db.Column(db.Integer, db.ForeignKey('chapters.id'))
 
      users = db.relationship("User", back_populates="posts")
      comments = db.relationship('Post',
@@ -31,6 +32,7 @@ class Post(db.Model):
         passive_deletes=True,
         lazy = 'dynamic')
      courses=db.relationship("Course", back_populates="posts")
+     chapters=db.relationship("Chapter", back_populates='posts', cascade='delete,all')
 
 
 

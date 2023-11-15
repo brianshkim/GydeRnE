@@ -48,7 +48,7 @@ function App() {
 
       {/* <NavBar /> */}
       <Switch>
-        <Route path='/users/:userId/posts/:postId'>
+        <Route path='/users/:userId/posts/:postId' exact={true}>
           <NavHeader />
           <Post />
         </Route>

@@ -19,3 +19,4 @@ from .users_assignments import usersassignments
 from .solution import Solution
 from .score import Score
 from .problem import Problem
+from .chapter import Chapter

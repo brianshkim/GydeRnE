@@ -19,6 +19,7 @@ class Course(db.Model):
      professor = db.relationship("User", back_populates='courses')
      posts= db.relationship('Post', back_populates='courses')
      assignments = db.relationship("Assignment", back_populates="courses")
+     chapters = db.relationship('Chapter', back_populates='courses')
      def get_students(self):
         return [user.to_dict() for user in self.users]
 
@@ -27,6 +28,9 @@ class Course(db.Model):
 
      def get_assignments(self):
          return [assignment.to_dict() for assignment in self.assignments]
+
+     def get_chapters(self):
+         return [chapter.to_dict() for chapter in self.chapters]
 
 
      def to_dict(self):
@@ -37,6 +41,7 @@ class Course(db.Model):
             'subject': self.subject,
             'notes': self.get_posts(),
             'students': self.get_students(),
-            'assignments':self.get_assignments()
+            'assignments':self.get_assignments(),
+            'chapters': self.get_chapters()
 
         }
