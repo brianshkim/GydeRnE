@@ -7,6 +7,7 @@ import SignUpForm from './components/auth/SignupForm';
 import NavHeader from './components/NavBars/NavHeader';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
+import Assignment from './components/courses/Assignment';
 
 import CV from './components/CV';
 import { Splash } from './components/Splash';
@@ -51,10 +52,14 @@ function App() {
           <NavHeader />
           <Post />
         </Route>
-        <Route path='/Course'>
+        <Route path='/courses/:courseId' exact={true}>
           <NavHeader />
           <Course />
         </Route>
+        <ProtectedRoute path='/courses/:courseId/assignments/:assignmentsId' exact={true}>
+          <NavHeader />
+          <Course />
+        </ProtectedRoute>
         <ProtectedRoute path='/users/:userId' exact={true} >
           <NavHeader />
           <Profile />

@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
+import CourseAssignments from './CourseAssignments'
 import { get_single_course } from '../../store/courses'
+import './course.css'
 
 const Course = () => {
     let course = useSelector(state => state.courses)
-    let coursemenu = { 1: "Class Notes", 2: "Assignments", 3: "Grades", 4: "Announcements", 5: "Syllabus" }
+    let courseMenu = { 1: "Class Notes", 2: "Assignments", 3: "Grades", 4: "Announcements", 5: "Syllabus" }
+    let [menuItem, setMenuItem] = useState(0)
 
     let dispatch = useDispatch()
 
     useEffect(() => {
 
-        dispatch(get_single_course(3))
+        dispatch(get_single_course(1))
     }, [dispatch])
 
     useEffect(() => {
@@ -24,27 +26,30 @@ const Course = () => {
     }, [dispatch])
 
     return (
-        <div>
-        <div className="course-left-container">
-            <div className="course-left">
-            <div>{course?.title}</div>
-            <div>{course?.content}</div>
-            <div>{course?.subject}</div>
+        <div className="course-container">
+            <div className="course-left-container">
+                <div className="course-left">
+                    <div>{course?.title}</div>
+                    <div>{course?.content}</div>
+                    <div>{course?.subject}</div>
+                    <div>{`${course?.professor?.firstname} ${course?.professor?.lastname}`}</div>
+                </div>
+                <div>
+                    <ul>
+                        <li>Classnotes</li>
+                        <li onClick={(e) => setMenuItem(2)}>Assignments</li>
+                        <li>Grades</li>
+                        <li>Announcements</li>
+                        <li>Syllabus</li>
+                    </ul>
+                </div>
             </div>
-            <div>
-                <ul>
-                    <li>Classnotes</li>
-                    <li>Assignments</li>
-                    <li>Grades</li>
-                    <li>Announcements</li>
-                    <li>Syllabus</li>
-                </ul>
+
+            <div className="course-right-container">
+                {menuItem === 1}
+                {menuItem === 2 && <CourseAssignments />}
+
             </div>
-        </div>
-
-        <div>
-
-        </div>
         </div>
     )
 }

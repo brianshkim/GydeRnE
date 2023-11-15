@@ -1,0 +1,14 @@
+.course-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.course-left-container{
+
+}
+
+
+.assignments-single{
+    display:flex;
+    flex-direction: row;
+}

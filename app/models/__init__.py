@@ -14,3 +14,8 @@ from .folder import Folder
 from .friend import Friend
 from .friend_reqs import FriendReq
 from .comments import comments_replies
+from .assignment import Assignment
+from .users_assignments import usersassignments
+from .solution import Solution
+from .score import Score
+from .problem import Problem
