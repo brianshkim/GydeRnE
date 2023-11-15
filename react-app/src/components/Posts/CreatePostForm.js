@@ -5,6 +5,7 @@ import { Redirect, useHistory } from 'react-router-dom'
 import './CreatePostModal.css'
 import DragAndDrop from './DragAndDrop';
 
+
 const CreatePostForm = ({ resp_id }) => {
 
     let user = useSelector(state => state.session.user);
@@ -199,7 +200,7 @@ const CreatePostForm = ({ resp_id }) => {
                             </div>
                         </form>
                     </div>
-                    <DragAndDrop setImages={setImages} images={images} setImageLoading={setImageLoading} />
+                    {/*<DragAndDrop setImages={setImages} images={images} setImageLoading={setImageLoading} />*/}
                     <div class="bottom-right">
                         <div className="post-char-count">
                             <span className={(content.length > 2000 || (content.length === 0)) ? "char-over" : "char-under"}>{content.length} /2000</span>
