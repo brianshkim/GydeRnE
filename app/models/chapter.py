@@ -12,19 +12,13 @@ class Chapter(db.Model):
      posts = db.relationship('Post', back_populates='chapters')
      courses = db.relationship("Course",back_populates='chapters')
 
-
-     def to_dict_courses(self):
-        return {
-            'id': self.id,
-            'title': self.content,
-            'solutions': [solution.to_dict for solution in self.solutions]
-        }
+     def get_posts(self):
+         return [post.to_dict() for post in self.posts]
 
      def to_dict(self):
         return {
             'id': self.id,
-            'title': self.content,
-            'solutions': [solution.to_dict for solution in self.solutions],
-            'course': self.courses.to_dict()
+            'title': self.title,
+            'posts': self.get_posts()
 
         }

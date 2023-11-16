@@ -37,13 +37,14 @@ class Post(db.Model):
 
 
      def to_dict(self):
+        user = self.users.to_dict()
         return {
             'id': self.id,
             'title': self.title,
             'poster': self.user_id,
-            'poster_details': {"username": self.users.to_dict()['username'],"firstname": self.users.to_dict()['firstname'],
-                               "lastname": self.users.to_dict()['lastname'], "profile_image": self.users.to_dict()['profile_image'],
-                               "id":self.users.to_dict()['id']},
+            'poster_details': {"username": user['username'],"firstname": user['firstname'],
+                               "lastname": user['lastname'], "profile_image": user['profile_image'],
+                               "id":user['id']},
             'content': self.content,
             'abstract': self.abstract,
             'comment': self.comment,

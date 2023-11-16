@@ -17,6 +17,6 @@ class Problem(db.Model):
         return {
             'id': self.id,
             'content': self.content,
-            'solutions': [solution.to_dict for solution in self.solutions]
+            'solutions': [solution.to_dict() for solution in self.solutions]
 
         }

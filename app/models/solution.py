@@ -8,6 +8,8 @@ class Solution(db.Model):
      submission = db.Column(db.String)
      problem_id = db.Column(db.Integer, db.ForeignKey('problems.id'))
      user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+     created_id = db.Column(db.BigInteger)
+
 
 
      problems = db.relationship("Problem", back_populates="solutions")
@@ -18,6 +20,6 @@ class Solution(db.Model):
         return {
             'id': self.id,
             'content': self.content,
-            'user': {'id':user['id'],'name': f'{user["firstname"]} {user["lastname"]}', 'username':user['username']}
+            'user': {'id':user['id'],'firstname': user['firstname'], 'lastname': user['lastname'],'username':user['username']}
 
         }

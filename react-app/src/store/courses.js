@@ -4,6 +4,7 @@ const CREATE_COURSE = 'COURSES/CREATE_COURSE'
 const UPDATE_COURSES = 'COURSES/UPDATE_COURSE'
 const DELETE_COURSE = 'COURSES/DELETE_COURSE'
 const UNLOAD_COURSES = 'COURSES/UNLOAD_COURSES'
+const CREATE_CHAPTER = 'COURSES/CREATE_CHAPTER'
 
 const loadCourses = (course) => ({
     type: LOAD_COURSES,
@@ -36,6 +37,13 @@ const unloadCourses = () => ({
 })
 
 
+const createChapter = (chapter) =>({
+    type:CREATE_CHAPTER,
+    chapter
+
+})
+
+
 export const unload_courses = () => async(dispatch)=>{
     dispatch(unloadCourses())
 }
@@ -58,12 +66,29 @@ export const get_single_course=(id)=>async(dispatch)=>{
 }
 
 
-
 export const get_courses = (id) => async (dispatch) => {
     const response = await fetch(`/api/courses/${id}`);
     const data = await response.json()
     console.log(data)
     dispatch(loadCourses(data));
+
+}
+
+export const create_chapters= (id, title) => async(dispatch)=>{
+    const response = await fetch(`/api/courses/${id}/chapters`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'title':title,
+            'course_id':id,
+
+        })
+    });
+    const data = await response.json()
+
+    dispatch(createChapter(data));
 
 }
 
@@ -147,6 +172,7 @@ export const delete_course = (id) => async (dispatch) => {
 let initialState = {list:[], studentlist:[]};
 export default function reducer(state = initialState, action) {
     switch (action.type) {
+
         case LOAD_SINGLE_COURSE:
             return action.course
         case LOAD_COURSES:
@@ -175,6 +201,9 @@ export default function reducer(state = initialState, action) {
             })
 
             return newstate
+        case CREATE_CHAPTER:
+            state.chapters.push(action.chapter)
+            return {...state}
         case DELETE_COURSE:
 
             return state.list.filter(course=>(
@@ -182,8 +211,8 @@ export default function reducer(state = initialState, action) {
 
             ))
         case UNLOAD_COURSES:
-
             return initialState
+
 
 
         default:

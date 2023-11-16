@@ -26,7 +26,7 @@ class Assignment(db.Model):
             'submits': self.submits,
             'total_score': self.total_score,
             'active':self.active,
-            'score': [score.to_dict for score in self.scores],
-            'problem': [problem.to_dict for problem in self.problems]
+            'score': [score.to_dict() for score in self.scores],
+            'problem': [problem.to_dict() for problem in self.problems]
 
         }
