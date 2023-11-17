@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { create_post } from '../../store/posts';
 import { Redirect, useHistory } from 'react-router-dom'
+
 import './CreatePostModal.css'
 import DragAndDrop from './DragAndDrop';
 
@@ -73,6 +74,9 @@ const CreatePostForm = ({ resp_id }) => {
 
 
 
+
+
+
     const handleSubmit = async (e) => {
         e.stopPropagation()
         e.preventDefault();
@@ -136,6 +140,7 @@ const CreatePostForm = ({ resp_id }) => {
     }
 
     return (
+
         <div className="post-create-wrapper">
             <form onSubmit={handleSubmit} className="post-form">
                 <div className="post-modal-header">
@@ -177,6 +182,7 @@ const CreatePostForm = ({ resp_id }) => {
 
 
 
+
                 <div class="post-modal-bottom">
                     <div class="bottom-left">
                         <div>
@@ -202,6 +208,7 @@ const CreatePostForm = ({ resp_id }) => {
                 <button className='submit-post' type="submit" >Create Post</button>
             </form>
         </div>
+
     )
 }
 

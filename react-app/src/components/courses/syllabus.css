@@ -1,0 +1,27 @@
+button.toggle-pdf {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #ddd;
+  }
+
+  button.toggle-pdf.on {
+    background-color: #5cb85c;
+    color: white;
+  }
+
+  button.toggle-pdf.off {
+    background-color: #d9534f;
+    color: white;
+  }
+
+  .syllabus-container{
+    width: 600px;
+
+  }
+
+  .ql-editor {
+    white-space: normal !important;
+}

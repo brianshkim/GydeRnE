@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import Course, db, course_users, Chapter
+from app.models import Course, db, course_users, Chapter, Announcement, Syllabus
+from app.awsS3 import (upload_file_to_s3, allowed_file, get_unique_filename)
+
 
 courses_routes = Blueprint('courses', __name__)
 
@@ -72,7 +74,7 @@ def create_chapters(courseid):
 
     chapter = Chapter(
         title=req['title'],
-        course_id=req['course_id']
+        course_id=courseid
 
     )
 
@@ -84,7 +86,64 @@ def create_chapters(courseid):
 @login_required
 def create_announcements(courseid):
     req = request.get_json(courseid)
-    course = Course.query.get(courseid)
-    db.session.add(course)
+
+    announcement = Announcement(
+        title=req['title'],
+        content=req['content'],
+        course_id=courseid,
+        created_at=req['created_at']
+
+    )
+
+    db.session.add(announcement)
     db.session.commit()
-    return course.to_dict()
+    return announcement.to_dict()
+
+
+@courses_routes.route('/<int:courseid>/syllabus', methods=['post'])
+@login_required
+def create_syllabus(courseid):
+    req = request.get_json()
+
+    syllabus = Syllabus(
+        htmlcontent = req['htmlcontent'],
+        submission = req['submission'],
+        course_id = courseid
+
+    )
+
+    db.session.add(syllabus)
+    db.session.commit()
+    return syllabus.to_dict()
+
+
+
+@courses_routes.route('/uploadpdf', methods=['post'])
+@login_required
+def upload_pdf():
+
+    if "pdf" not in request.files:
+        return {"errors": "pdf required"}, 400
+
+    pdf = request.files["pdf"]
+    print(pdf.filename)
+    if(pdf.filename):
+        pdf.filename = f'{pdf.filename}.pdf'
+
+
+    if not allowed_file(pdf.filename):
+        return {"errors": "file type not permitted"}, 400
+
+    pdf.filename = get_unique_filename(pdf.filename)
+
+    upload = upload_file_to_s3(pdf)
+
+    if "url" not in upload:
+        # if the dictionary doesn't have a url key
+        # it means that there was an error when we tried to upload
+        # so we send back that error message
+        return upload, 400
+
+    url = upload["url"]
+    # flask_login allows us to get the current user from the request
+    return {"url": url}

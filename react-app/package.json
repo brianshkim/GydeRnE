@@ -3,20 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.22.15",
+    "@react-pdf/renderer": "^3.1.14",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
     "better-react-mathjax": "^2.0.3",
+    "file-saver": "^2.0.5",
+    "html-react-parser": "^5.0.6",
     "http-proxy-middleware": "^1.0.5",
+    "jspdf": "^2.5.1",
     "mathjax": "^3.2.2",
     "mathjax-react": "^2.0.1",
+    "quill-image-resize-module-react": "^3.0.0",
+    "quill-to-pdf": "^1.0.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-dropzone": "^14.2.3",
     "react-quill": "^2.0.0",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.1",
     "react-select": "^5.8.0",
     "redux": "^4.1.0",
     "redux-logger": "^3.0.6",
@@ -44,5 +52,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://localhost:5000",
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+  }
 }

@@ -142,9 +142,6 @@ def delete_posts(postid):
 @login_required
 def create_comments(postid):
     req = request.get_json()
-
-
-
     post = Post(
         comment= True,
         root= False,

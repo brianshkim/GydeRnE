@@ -20,3 +20,6 @@ from .solution import Solution
 from .score import Score
 from .problem import Problem
 from .chapter import Chapter
+from .announcement import Announcement
+from .like import Like
+from .syllabus import Syllabus

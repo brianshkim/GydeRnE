@@ -23,7 +23,7 @@ const ProfilePosts = () => {
         let d = new Date(date)
         let thisYear = new Date().getFullYear()
         let timeOfDay = d.getHours() >= 12 ? "pm":"am"
-        let hours = d.getHours() === 0 ? 12 : d.getHours()%12
+        let hours = d.getHours() === 0 || d.getHours()===12 ? 12 : d.getHours()%12
         let minutes =  d.getMinutes()<10 ? '0'+d.getMinutes() : d.getMinutes()
         if(d.getFullYear()===thisYear){
             return `${months[d.getMonth()]} ${d.getDate()} ${hours}:${minutes} ${timeOfDay}`

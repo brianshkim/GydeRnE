@@ -5,14 +5,16 @@ const UPDATE_COURSES = 'COURSES/UPDATE_COURSE'
 const DELETE_COURSE = 'COURSES/DELETE_COURSE'
 const UNLOAD_COURSES = 'COURSES/UNLOAD_COURSES'
 const CREATE_CHAPTER = 'COURSES/CREATE_CHAPTER'
+const CREATE_ANNOUNCEMENT = 'COURSES/CREATE_ANNOUNCEMENT'
+const CREATE_SYLLABUS = 'COURSES/CREATE_SYLLABUS'
 
 const loadCourses = (course) => ({
     type: LOAD_COURSES,
     course
 });
 
-const loadSingleCourse =(course)=>({
-    type:LOAD_SINGLE_COURSE,
+const loadSingleCourse = (course) => ({
+    type: LOAD_SINGLE_COURSE,
     course
 })
 
@@ -37,14 +39,24 @@ const unloadCourses = () => ({
 })
 
 
-const createChapter = (chapter) =>({
-    type:CREATE_CHAPTER,
+const createChapter = (chapter) => ({
+    type: CREATE_CHAPTER,
     chapter
 
 })
 
+const createAnnouncement = (announcement) => ({
+    type: CREATE_ANNOUNCEMENT,
+    announcement
+})
 
-export const unload_courses = () => async(dispatch)=>{
+
+const createSyllabus = (syllabus) => ({
+    type: CREATE_SYLLABUS,
+    syllabus
+})
+
+export const unload_courses = () => async (dispatch) => {
     dispatch(unloadCourses())
 }
 
@@ -57,7 +69,7 @@ export const load_courses = (id) => async (dispatch) => {
 
 }
 
-export const get_single_course=(id)=>async(dispatch)=>{
+export const get_single_course = (id) => async (dispatch) => {
     const response = await fetch(`/api/courses/${id}`);
     const data = await response.json()
     dispatch(loadSingleCourse(data))
@@ -74,15 +86,15 @@ export const get_courses = (id) => async (dispatch) => {
 
 }
 
-export const create_chapters= (id, title) => async(dispatch)=>{
+export const create_chapters = (id, title) => async (dispatch) => {
     const response = await fetch(`/api/courses/${id}/chapters`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            'title':title,
-            'course_id':id,
+            'title': title,
+            'course_id': id,
 
         })
     });
@@ -92,21 +104,59 @@ export const create_chapters= (id, title) => async(dispatch)=>{
 
 }
 
+export const create_announcement = (id, title, content, created_at) => async (dispatch) => {
+    const response = await fetch(`/api/courses/${id}/announcements`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'title': title,
+            'content': content,
+            'created_at': created_at
+
+        })
+    });
+    const data = await response.json()
+
+    dispatch(createAnnouncement(data));
+
+}
+
+export const create_syllabus = (id, htmlcontent, submission="") => async (dispatch) => {
+    const response = await fetch(`/api/courses/${id}/syllabus`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'htmlcontent': htmlcontent,
+            'submission': submission,
+
+        })
+    });
+    const data = await response.json()
+    dispatch(createSyllabus(data));
+    return data
+
+}
+
+
 export const create_course = (
     professor_id,
     title,
     subject,
 
-       ) => async (dispatch) => {
+) => async (dispatch) => {
     const response = await fetch(`/api/courses/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            'professor_id':professor_id,
-            'title':title,
-            'subject':subject,
+            'professor_id': professor_id,
+            'title': title,
+            'subject': subject,
 
         })
     });
@@ -139,9 +189,9 @@ export const update_course = (
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            'professor_id':professor_id,
-            'title':title,
-            'subject':subject,
+            'professor_id': professor_id,
+            'title': title,
+            'subject': subject,
 
         })
     });
@@ -169,7 +219,7 @@ export const delete_course = (id) => async (dispatch) => {
     dispatch(deleteCourse(Number(data)));
 }
 
-let initialState = {list:[], studentlist:[]};
+let initialState = { list: [], studentlist: [] };
 export default function reducer(state = initialState, action) {
     switch (action.type) {
 
@@ -180,20 +230,20 @@ export default function reducer(state = initialState, action) {
             action.courses.forEach(course => {
                 courselist.push(course)
             })
-            courselist.sort((a, b)=>{
+            courselist.sort((a, b) => {
                 return a.title.localeCompare(b.name)
             })
-            return {...state, list: courselist}
+            return { ...state, list: courselist }
         case CREATE_COURSE:
 
             state.list.push(action.course)
-            state.list.sort((a, b)=>{
+            state.list.sort((a, b) => {
                 return a.title.localeCompare(b.name)
             })
-            return {...state}
+            return { ...state }
         case UPDATE_COURSES:
-            let newstate = state.list.map((course)=>{
-                if( course.id === action.course.id){
+            let newstate = state.list.map((course) => {
+                if (course.id === action.course.id) {
                     course.title = action.course.title
                 }
                 return course
@@ -202,11 +252,18 @@ export default function reducer(state = initialState, action) {
 
             return newstate
         case CREATE_CHAPTER:
-            state.chapters.push(action.chapter)
-            return {...state}
+            state.chapters.unshift(action.chapter)
+            return { ...state }
+        case CREATE_ANNOUNCEMENT:
+            state.announcements.push(action.announcement)
+            return { ...state }
+
+        case CREATE_SYLLABUS:
+            state.syllabus.push(action.syllabus)
+            return { ...state }
         case DELETE_COURSE:
 
-            return state.list.filter(course=>(
+            return state.list.filter(course => (
                 course.id !== action.course
 
             ))

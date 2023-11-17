@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CourseAssignments from './CourseAssignments'
 import CourseNotes from './CourseNotes'
-import CourseAnnouncements from "./CourseAnnouncements";
+import CourseAnnouncements from './CourseAnnouncements';
+import CourseSyllabus from "./CourseSyllabus"
 import { get_single_course } from '../../store/courses'
 import './course.css'
+import usertempimage from "../images/usertempimage.jpg"
 
 const Course = () => {
     let course = useSelector(state => state.courses)
@@ -34,6 +36,7 @@ const Course = () => {
                     <div>{course?.title}</div>
                     <div>{course?.content}</div>
                     <div>{course?.subject}</div>
+                    <div><img src={course?.professor?.profile_image ? course?.professor?.profile_image: usertempimage} height={120} width={120}/></div>
                     <div>{`${course?.professor?.firstname} ${course?.professor?.lastname}`}</div>
                 </div>
                 <div>
@@ -42,7 +45,7 @@ const Course = () => {
                         <li onClick={() => setMenuItem(2)}>Assignments</li>
                         <li >Grades</li>
                         <li onClick={() => setMenuItem(4)}>Announcements</li>
-                        <li>Syllabus</li>
+                        <li onClick={()=>setMenuItem(5)}>Syllabus</li>
                     </ul>
                 </div>
             </div>
@@ -50,7 +53,8 @@ const Course = () => {
             <div className="course-right-container">
                 {menuItem === 1 && <CourseNotes />}
                 {menuItem === 2 && <CourseAssignments />}
-                {menuItem === 4 && <CourseAnnouncements/> }
+                {menuItem === 4 && <CourseAnnouncements /> }
+                {menuItem === 5 && <CourseSyllabus /> }
 
             </div>
         </div>

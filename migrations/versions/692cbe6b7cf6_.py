@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 74f7571ff1c2
+Revision ID: 692cbe6b7cf6
 Revises: 
-Create Date: 2023-11-13 19:07:49.742004
+Create Date: 2023-11-16 22:51:14.462748
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '74f7571ff1c2'
+revision = '692cbe6b7cf6'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -71,8 +71,6 @@ def upgrade():
     sa.Column('title', sa.String(length=400), nullable=True),
     sa.Column('subject', sa.String(length=400), nullable=True),
     sa.Column('grades', postgresql.ARRAY(sa.JSON()), nullable=True),
-    sa.Column('announcements', postgresql.ARRAY(sa.JSON()), nullable=True),
-    sa.Column('syllabus', postgresql.ARRAY(sa.JSON()), nullable=True),
     sa.ForeignKeyConstraint(['professor_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -128,11 +126,58 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('announcements',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('title', sa.String(length=600), nullable=True),
+    sa.Column('content', sa.String(length=1000), nullable=True),
+    sa.Column('course_id', sa.Integer(), nullable=True),
+    sa.Column('created_at', sa.BigInteger(), nullable=True),
+    sa.Column('modified_at', sa.BigInteger(), nullable=True),
+    sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('assignments',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('title', sa.String(length=1000), nullable=True),
+    sa.Column('submits', postgresql.ARRAY(sa.JSON()), nullable=True),
+    sa.Column('course', sa.Integer(), nullable=True),
+    sa.Column('total_score', sa.Integer(), nullable=True),
+    sa.Column('active', sa.Boolean(), nullable=True),
+    sa.ForeignKeyConstraint(['course'], ['courses.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('chapters',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('title', sa.String(length=600), nullable=True),
+    sa.Column('course_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('courseusers',
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('course_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], )
+    )
+    op.create_table('publicationcitations',
+    sa.Column('publication_id', sa.Integer(), nullable=True),
+    sa.Column('citation_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['citation_id'], ['citations.id'], ),
+    sa.ForeignKeyConstraint(['publication_id'], ['publications.id'], )
+    )
+    op.create_table('publicationusers',
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('publication_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['publication_id'], ['publications.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], )
+    )
+    op.create_table('syllabuses',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('htmlcontent', sa.Text(), nullable=True),
+    sa.Column('submission', sa.String(), nullable=True),
+    sa.Column('course_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('posts',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -149,20 +194,32 @@ def upgrade():
     sa.Column('updated_at', sa.BigInteger(), nullable=True),
     sa.Column('course_id', sa.Integer(), nullable=True),
     sa.Column('images', postgresql.ARRAY(sa.String()), nullable=True),
+    sa.Column('chapter_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['chapter_id'], ['chapters.id'], ),
     sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('publicationcitations',
-    sa.Column('publication_id', sa.Integer(), nullable=True),
-    sa.Column('citation_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['citation_id'], ['citations.id'], ),
-    sa.ForeignKeyConstraint(['publication_id'], ['publications.id'], )
+    op.create_table('problems',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('content', sa.Text(), nullable=True),
+    sa.Column('assignment_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['assignment_id'], ['assignments.id'], ),
+    sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('publicationusers',
+    op.create_table('scores',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('score', sa.Float(), nullable=True),
+    sa.Column('assignment_id', sa.Integer(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
-    sa.Column('publication_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['publication_id'], ['publications.id'], ),
+    sa.ForeignKeyConstraint(['assignment_id'], ['assignments.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('usersassignments',
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('assignment_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['assignment_id'], ['assignments.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], )
     )
     op.create_table('commentsreplies',
@@ -172,16 +229,45 @@ def upgrade():
     sa.ForeignKeyConstraint(['replyId'], ['posts.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('commentId', 'replyId')
     )
+    op.create_table('likes',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('count', sa.Integer(), nullable=True),
+    sa.Column('announcement_id', sa.Integer(), nullable=True),
+    sa.Column('post_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['announcement_id'], ['announcements.id'], ),
+    sa.ForeignKeyConstraint(['post_id'], ['posts.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('solutions',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('content', sa.Text(), nullable=True),
+    sa.Column('submission', sa.String(), nullable=True),
+    sa.Column('problem_id', sa.Integer(), nullable=True),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('created_id', sa.BigInteger(), nullable=True),
+    sa.ForeignKeyConstraint(['problem_id'], ['problems.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     # ### end Alembic commands ###
 
 
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
+    op.drop_table('solutions')
+    op.drop_table('likes')
     op.drop_table('commentsreplies')
+    op.drop_table('usersassignments')
+    op.drop_table('scores')
+    op.drop_table('problems')
+    op.drop_table('posts')
+    op.drop_table('syllabuses')
     op.drop_table('publicationusers')
     op.drop_table('publicationcitations')
-    op.drop_table('posts')
     op.drop_table('courseusers')
+    op.drop_table('chapters')
+    op.drop_table('assignments')
+    op.drop_table('announcements')
     op.drop_table('publications')
     op.drop_table('journalscommittee')
     op.drop_table('friends')

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useParams, useHistory } from 'react-router-dom'
 
+
 import ProfilePageCard from "../profile/ProfilePageCard";
 import SideNavMain from "../NavBars/SideNavMain";
 
@@ -21,6 +22,7 @@ const Post = () => {
     const { userId } = useParams();
     const post = useSelector(state => state.posts.singlepost)
     const postuser = usersArray[userId - 1];
+
 
     const profilePicture = user?.profile_image;
 

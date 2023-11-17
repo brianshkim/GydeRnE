@@ -23,6 +23,8 @@ class Post(db.Model):
      images = db.Column(ARRAY(db.String))
      chapter_id = db.Column(db.Integer, db.ForeignKey('chapters.id'))
 
+
+
      users = db.relationship("User", back_populates="posts")
      comments = db.relationship('Post',
         secondary = comments_replies,
@@ -33,6 +35,7 @@ class Post(db.Model):
         lazy = 'dynamic')
      courses=db.relationship("Course", back_populates="posts")
      chapters=db.relationship("Chapter", back_populates='posts', cascade='delete,all')
+     likes = db.relationship('Like', back_populates="posts")
 
 
 

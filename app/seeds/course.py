@@ -5,11 +5,6 @@ def seed_courses():
         professor_id=3,
         title="Multivariable Calculus",
         subject="Calculus",
-        announcements=["Homework due 12/2"],
-        syllabus=['hello']
-
-
-
 
 
 
@@ -17,8 +12,6 @@ def seed_courses():
 
 
     db.session.add(course1)
-
-
     db.session.commit()
 
 

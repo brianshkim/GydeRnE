@@ -10,8 +10,7 @@ class Course(db.Model):
      title = db.Column(db.String(400))
      subject = db.Column(db.String(400))
      grades = db.Column(ARRAY(db.JSON))
-     announcements = db.Column(ARRAY(db.JSON))
-     syllabus = db.Column(ARRAY(db.JSON))
+
 
 
 
@@ -20,8 +19,13 @@ class Course(db.Model):
      posts= db.relationship('Post', back_populates='courses')
      assignments = db.relationship("Assignment", back_populates="courses", cascade='all,delete')
      chapters = db.relationship('Chapter', back_populates='courses')
+     announcements=db.relationship("Announcement", back_populates='courses', cascade='all,delete')
+     syllabuses = db.relationship('Syllabus', back_populates="courses", cascade='all,delete')
      def get_students(self):
         return [user.to_dict() for user in self.users]
+
+     def get_syllabus(self):
+         return [syllabus.to_dict() for syllabus in self.syllabuses]
 
      def get_posts(self):
          return [post.to_dict() for post in self.posts]
@@ -33,19 +37,22 @@ class Course(db.Model):
          return [chapter.to_dict() for chapter in self.chapters]
 
 
+     def get_announcements(self):
+         return [announcement.to_dict() for announcement in self.announcements]
+
+
      def to_dict(self):
         return {
             'id': self.id,
             'professor': self.professor.to_dict(),
             'title': self.title,
             'subject': self.subject,
-            'announcements': self.announcements,
-            'syllabus': self.syllabus,
+            'announcements': self.get_announcements(),
+            'syllabus': self.get_syllabus(),
             'notes': self.get_posts(),
             'students': self.get_students(),
             'assignments':self.get_assignments(),
             'chapters': self.get_chapters(),
-            'posts': self.get_posts(),
 
 
         }
