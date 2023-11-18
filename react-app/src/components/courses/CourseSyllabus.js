@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ReactQuill from 'react-quill'
 import { useParams, useHistory } from 'react-router-dom'
 import CourseSyllabusEditor from "./CourseSyllabusEditor";
+import CourseSyllabusEditorPDF from "./CourseSyllabusEditorPDF";
 import './syllabus.css'
 import parse from 'html-react-parser'
 
@@ -11,6 +12,7 @@ const CourseSyllabus = () => {
     let syllabuses = useSelector(state => state.courses.syllabus)
     let user = useSelector(state=>state.session.user)
     const [newSyllabus, setNewSyllabus] = useState(false)
+    let [toggle, setToggle] = useState(false)
     let { postid } = useParams()
     let history = useHistory
     let dispatch = useDispatch()
@@ -28,7 +30,9 @@ const CourseSyllabus = () => {
     return (
         <div className="syllabus-container">
             {!newSyllabus && <button onClick={()=>setNewSyllabus(!newSyllabus)}>Create New Syllabus</button>}
-            {newSyllabus && <CourseSyllabusEditor setNewSyllabus={setNewSyllabus}/>}
+            <button class={toggle ? "toggle-pdf on" : "toggle-pdf off"} onClick={(() => setToggle(!toggle))}> {toggle ? "pdf" : "html"}</button>
+            {newSyllabus && !toggle && <CourseSyllabusEditor setNewSyllabus={setNewSyllabus}/>}
+            {newSyllabus && toggle && <CourseSyllabusEditorPDF setNewSyllabus={setNewSyllabus}/>}
             {!newSyllabus &&
                 <div>
                     {parse(syllabus.content)}

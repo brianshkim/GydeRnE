@@ -36,7 +36,7 @@ const Course = () => {
                     <div>{course?.title}</div>
                     <div>{course?.content}</div>
                     <div>{course?.subject}</div>
-                    <div><img src={course?.professor?.profile_image ? course?.professor?.profile_image: usertempimage} height={120} width={120}/></div>
+                    <div><img src={course?.professor?.profile_image ? course?.professor?.profile_image: usertempimage}  alt="" height={120} width={120}/></div>
                     <div>{`${course?.professor?.firstname} ${course?.professor?.lastname}`}</div>
                 </div>
                 <div>
